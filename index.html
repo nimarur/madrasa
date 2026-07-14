@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>നൂറുൽ ഇർഫാൻ | മദ്രസ മാനേജ്മെന്റ് സിസ്റ്റം</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --ivory:#FBF7EE; --paper:#F4EEDF; --sand:#EDE4CD; --line:#E1D5B0;
+  --emerald-900:#0B3D2E; --emerald-800:#0F4A38; --emerald-700:#155943;
+  --emerald-600:#1B6E52; --emerald-500:#217C5E;
+  --gold-700:#95701E; --gold-600:#B8872A; --gold-500:#C9972F; --gold-100:#F4E7C8;
+  --ink:#1C2B25; --ink-soft:#516058; --ink-faint:#7C8A81;
+  --danger:#AE3B2E; --danger-bg:#F7E2DD; --success:#1B6E52; --success-bg:#DEEEE4;
+  --warn:#A5761E; --warn-bg:#F6EAD2; --info:#2E6785; --info-bg:#DEE9EF;
+  --radius:14px; --radius-lg:22px;
+  --shadow-sm:0 1px 2px rgba(28,43,37,.06), 0 1px 1px rgba(28,43,37,.04);
+  --shadow:0 6px 20px -6px rgba(11,61,46,.18);
+  --shadow-lg:0 20px 45px -12px rgba(11,61,46,.28);
+  --font-display:'Noto Sans Malayalam', sans-serif;
+  --font-body:'Noto Sans Malayalam', sans-serif;
+  --font-num:'Inter', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{-webkit-tap-highlight-color:transparent;}
+body{font-family:var(--font-body);background:var(--ivory);color:var(--ink);min-height:100vh;line-height:1.5;}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-track{background:var(--paper);}
+::-webkit-scrollbar-thumb{background:var(--gold-500);border-radius:10px;}
+:focus-visible{outline:2px solid var(--gold-600);outline-offset:2px;}
+button{font-family:inherit;}
+
+/* Loader CSS */
+#loader-overlay {
+  position: fixed; inset: 0; background: var(--ivory); z-index: 99999;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 0.4s ease;
+}
+.loader-book {
+  width: 60px; height: 60px; background: linear-gradient(160deg, var(--gold-500), var(--gold-700));
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 30px; animation: bounce 1s infinite alternate; box-shadow: var(--shadow-lg);
+}
+@keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-15px); } }
+.loader-text { margin-top: 20px; font-weight: 700; color: var(--emerald-900); font-size: 16px; }
+
+.motif-dark{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cpath d='M32 4 L37 22 L55 16 L43 30 L55 44 L37 38 L32 56 L27 38 L9 44 L21 30 L9 16 L27 22 Z' fill='none' stroke='%23C9972F' stroke-width='0.8' opacity='0.35'/%3E%3C/svg%3E");background-size:64px 64px;}
+.star-bullet::before{content:"✦";color:var(--gold-600);font-size:.78em;margin-inline-end:8px;position:relative;top:-1px;}
+.arch{border-radius:50% 50% 6px 6px / 62% 62% 6px 6px;}
+
+.login-shell{min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr;}
+.login-brand-panel{background:linear-gradient(175deg,var(--emerald-900) 0%, var(--emerald-800) 60%, var(--emerald-700) 100%);color:#F3EFDF;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:56px 40px;position:relative;text-align:center;}
+.login-brand-panel .arch{width:104px;height:104px;background:linear-gradient(160deg, var(--gold-500), var(--gold-700));display:flex;align-items:center;justify-content:center;font-size:44px;box-shadow:0 14px 30px -8px rgba(0,0,0,.45);position:relative;z-index:1;margin-bottom:22px;}
+.login-brand-panel h1{font-size:34px;font-weight:800;position:relative;z-index:1;letter-spacing:.2px;}
+.login-brand-panel .tagline{color:var(--gold-100);font-size:15px;margin-top:8px;position:relative;z-index:1;max-width:360px;}
+.login-brand-panel .divider{width:60px;height:2px;background:var(--gold-500);margin:22px 0;position:relative;z-index:1;}
+.login-form-panel{display:flex;align-items:center;justify-content:center;padding:40px 24px;background:var(--ivory);}
+.login-card{width:100%;max-width:380px;}
+.login-card h2{font-size:22px;font-weight:800;color:var(--ink);margin-bottom:4px;}
+.login-card p.sub{color:var(--ink-faint);font-size:13.5px;margin-bottom:28px;}
+.login-form .form-group{margin-bottom:16px;}
+.login-form label{display:block;font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;}
+.login-form input{width:100%;padding:13px 16px;border:1.5px solid var(--line);border-radius:var(--radius);font-size:14.5px;background:#fff;transition:.15s;font-family:inherit;color:var(--ink);}
+.login-form input:focus{border-color:var(--gold-600);box-shadow:0 0 0 3px rgba(201,151,47,.16);outline:none;}
+.login-btn{width:100%;padding:14px;margin-top:6px;background:linear-gradient(135deg,var(--emerald-700),var(--emerald-500));color:#fff;border:none;border-radius:var(--radius);font-size:15.5px;font-weight:700;cursor:pointer;transition:.2s;box-shadow:0 8px 18px -6px rgba(11,61,46,.45);}
+@media (max-width:860px){.login-shell{grid-template-columns:1fr;}.login-brand-panel{padding:40px 24px;min-height:220px;}.login-brand-panel h1{font-size:26px;}}
+
+.app-shell{display:flex;min-height:100vh;}
+.sidebar{width:250px;flex-shrink:0;background:linear-gradient(185deg,var(--emerald-900),var(--emerald-800));color:#EFEADA;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;transition:transform .25s ease;z-index:40;}
+.sidebar .brand-row{display:flex;align-items:center;gap:12px;padding:22px 20px 18px;border-bottom:1px solid rgba(243,239,223,.12);}
+.sidebar .brand-row .arch{width:42px;height:42px;font-size:19px;background:linear-gradient(160deg,var(--gold-500),var(--gold-700));display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sidebar .brand-row .name{font-weight:800;font-size:15.5px;}
+.sidebar nav{flex:1;overflow-y:auto;padding:14px 12px;}
+.sidebar nav button{width:100%;display:flex;align-items:center;gap:11px;padding:11px 14px;border:none;background:transparent;color:rgba(239,234,218,.78);border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;text-align:left;transition:.15s;margin-bottom:2px;}
+.sidebar nav button:hover{background:rgba(243,239,223,.08);color:#fff;}
+.sidebar nav button.active{background:rgba(201,151,47,.16);color:#fff;font-weight:700;}
+.sidebar .foot{padding:16px 20px;border-top:1px solid rgba(243,239,223,.12);}
+.sidebar .foot .who{font-size:13px;font-weight:700;}
+.sidebar .foot button{width:100%;padding:9px;margin-top:10px;border:1px solid rgba(243,239,223,.25);background:transparent;color:#fff;border-radius:40px;font-size:12.5px;cursor:pointer;}
+.main-col{flex:1;min-width:0;display:flex;flex-direction:column;}
+.topbar{display:none;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--ivory);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;}
+.content{flex:1;padding:24px 28px 60px;max-width:1280px;width:100%;margin:0 auto;}
+
+.settings-bar{background:#fff;border-radius:var(--radius-lg);padding:14px 20px;margin-bottom:18px;box-shadow:var(--shadow-sm);border:1px solid var(--line);display:flex;flex-wrap:wrap;gap:16px;align-items:center;}
+.page-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px;}
+.page-head h2{font-size:21px;font-weight:800;color:var(--emerald-900);}
+.card{background:#fff;border-radius:var(--radius-lg);padding:22px;margin-bottom:18px;box-shadow:var(--shadow-sm);border:1px solid var(--line);}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:18px;}
+.stat-card{background:linear-gradient(165deg,#fff, var(--paper) 140%);padding:18px 20px;border-radius:var(--radius);border:1px solid var(--line);}
+.table-responsive{overflow-x:auto;border-radius:var(--radius);}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;}
+thead th{background:var(--paper);padding:11px 14px;text-align:left;font-weight:700;color:var(--emerald-800);border-bottom:1.5px solid var(--line);}
+tbody td{padding:11px 14px;border-bottom:1px solid var(--sand);vertical-align:middle;}
+.btn{padding:9px 18px;border:none;border-radius:40px;font-weight:700;font-size:13px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px;}
+.btn-primary{background:linear-gradient(135deg,var(--emerald-700),var(--emerald-500));color:#fff;}
+.btn-gold{background:linear-gradient(135deg,var(--gold-600),var(--gold-500));color:#fff;}
+.btn-success{background:var(--success);color:#fff;}
+.btn-danger{background:var(--danger);color:#fff;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{margin-bottom:16px;}
+.form-group label{display:block;font-size:12.5px;font-weight:700;margin-bottom:5px;}
+.form-group input, .form-group select{width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:var(--radius);font-size:14px;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+.hide{display:none !important;}
+
+#toastHost{position:fixed;bottom:20px;right:20px;z-index:100;display:flex;flex-direction:column;gap:10px;max-width:320px;}
+.toast{background:var(--emerald-900);color:#F3EFDF;padding:13px 18px;border-radius:12px;font-size:13.5px;font-weight:600;box-shadow:var(--shadow-lg);border-left:4px solid var(--gold-500);}
+
+@media (max-width:980px){
+  .sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .topbar{display:flex;}
+  .content{padding:18px 16px 50px;}
+  .form-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div id="loader-overlay">
+  <div class="loader-book">📖</div>
+  <div class="loader-text">ഡാറ്റ ലഭ്യമാക്കുന്നു...</div>
+</div>
+
+<div id="toastHost"></div>
+
+<div id="loginScreen" class="login-shell">
+  <div class="login-brand-panel motif-dark">
+    <div class="arch">📖</div>
+    <h1 id="loginSchoolName">നൂറുൽ ഇർഫാൻ മദ്രസ</h1>
+    <div class="divider"></div>
+    <p class="tagline">അറിവിന്റെ വെളിച്ചം പകരുന്ന ഒരിടം — വിദ്യാർത്ഥികളുടെയും അധ്യാപകരുടെയും ദൈനംദിന പുരോഗതി ഒരൊറ്റയിടത്ത്.</p>
+  </div>
+  <div class="login-form-panel">
+    <div class="login-card">
+      <h2>സ്വാഗതം</h2>
+      <p class="sub">തുടരാൻ നിങ്ങളുടെ വിവരങ്ങൾ നൽകുക</p>
+      <form class="login-form" onsubmit="event.preventDefault(); handleLogin();">
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> യൂസർ ഐഡി</label>
+          <input type="text" id="loginUser" placeholder="യൂസർ ഐഡി നൽകുക" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-lock"></i> പാസ്സ്‌വേർഡ്</label>
+          <input type="password" id="loginPass" placeholder="പാസ്സ്‌വേർഡ്" required>
+        </div>
+        <button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> ലോഗിൻ ചെയ്യുക</button>
+      </form>
+      </div>
+  </div>
+</div>
+
+<div id="mainApp" class="app-shell hide">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand-row">
+      <div class="arch">📖</div>
+      <div>
+        <div class="name" id="headerSchoolName">നൂറുൽ ഇർഫാൻ</div>
+      </div>
+    </div>
+    <nav id="tabBar">
+      <button class="active" data-tab="dashboard" onclick="switchTab('dashboard')">ഡാഷ്ബോർഡ്</button>
+      <button data-tab="students" onclick="switchTab('students')">വിദ്യാർത്ഥികൾ</button>
+      <button data-tab="attendance" onclick="switchTab('attendance')">ഹാജർ</button>
+      <button data-tab="marks" onclick="switchTab('marks')">മാർക്ക്</button>
+      <button data-tab="admins" onclick="switchTab('admins')" id="adminsTab">അഡ്മിൻ</button>
+    </nav>
+    <div class="foot">
+      <div class="who" id="userName">അഡ്മിൻ</div>
+      <button onclick="logout()">ലോഗൗട്ട്</button>
+    </div>
+  </aside>
+
+  <div class="main-col">
+    <div class="topbar">
+      <button onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+      <div id="topbarBrand">നൂറുൽ ഇർഫാൻ</div>
+    </div>
+
+    <div class="content">
+      <div class="settings-bar" id="settingsBar">
+        <div class="form-group" style="margin:0;display:flex;gap:10px;">
+          <input type="text" id="schoolNameInput" value="നൂറുൽ ഇർഫാൻ മദ്രസ">
+          <button class="btn btn-primary btn-sm" onclick="updateSchoolName()">സേവ്</button>
+        </div>
+      </div>
+
+      <div id="tabDashboard" class="tab-content active">
+        <div class="page-head"><h2>ഡാഷ്ബോർഡ്</h2></div>
+        <div class="stats-grid">
+          <div class="stat-card">ആകെ വിദ്യാർത്ഥികൾ: <strong id="totalStudents">0</strong></div>
+          <div class="stat-card">ആക്ടീവ്: <strong id="activeStudents">0</strong></div>
+        </div>
+      </div>
+
+      <div id="tabStudents" class="tab-content">
+        <div class="page-head">
+          <h2>വിദ്യാർത്ഥികൾ</h2>
+          <button class="btn btn-gold" onclick="document.getElementById('addStudentForm').classList.toggle('hide')">പുതിയ വിദ്യാർത്ഥി</button>
+        </div>
+        <div class="card">
+          <div id="addStudentForm" class="hide form-grid" style="margin-bottom:20px;">
+            <div class="form-group"><input id="sName" placeholder="പേര്"></div>
+            <div class="form-group"><input type="number" id="sClass" placeholder="ക്ലാസ്"></div>
+            <div class="form-group"><input id="sUser" placeholder="യൂസർ ഐഡി"></div>
+            <div class="form-group"><input id="sPass" placeholder="പാസ്സ്‌വേർഡ്"></div>
+            <button class="btn btn-success" onclick="addStudent()">രജിസ്റ്റർ ചെയ്യുക</button>
+          </div>
+          <div class="table-responsive">
+            <table>
+              <thead><tr><th>പേര്</th><th>ക്ലാസ്</th><th>യൂസർ</th><th>പ്രവർത്തനങ്ങൾ</th></tr></thead>
+              <tbody id="studentTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <div id="tabAdmins" class="tab-content">
+        <div class="page-head"><h2>അഡ്മിൻ മാനേജ്മെന്റ്</h2></div>
+        <div class="card">
+          <div class="form-grid">
+            <div class="form-group"><input id="adminUser" placeholder="പുതിയ അഡ്മിൻ യൂസർ ഐഡി"></div>
+            <div class="form-group"><input id="adminPass" placeholder="പാസ്സ്‌വേർഡ്"></div>
+          </div>
+          <button class="btn btn-success" onclick="addAdmin()">അഡ്മിൻ ആക്കുക</button>
+          <div id="adminList" style="margin-top:20px;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ==========================================
+// IMPORTANT: ഈ URL മാറ്റി നിങ്ങളുടെ ആപ്പ് സ്ക്രിപ്റ്റ് URL നൽകുക
+// ==========================================
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuUnGfrYsyIdClCp_Pi69XOiWK0dZQVBoE4yCFbdiRM5NEKQTrxKIeLNYBWRc5DsEOAw/exec';
+
+let data = {
+  schoolName: 'നൂറുൽ ഇർഫാൻ മദ്രസ', expiryDays: 330, acadStartMonth: 6,
+  students: [], subjects: [], activities: [], marks: [], coCurricular: [],
+  attendance: [], messages: [], teachers: [], admins: [], currentUser: null
+};
+
+// ഡാറ്റ ഗൂഗിൾ ഷീറ്റിൽ നിന്നും ലഭ്യമാക്കുന്നു
+async function loadData() {
+  try {
+    const response = await fetch(SCRIPT_URL);
+    const fetchedData = await response.json();
+    
+    if (Object.keys(fetchedData).length > 0 && fetchedData.admins) {
+      data = { ...data, ...fetchedData };
+    } else {
+      setupInitialData();
+    }
+  } catch (e) {
+    console.error('Fetch error, checking localstorage:', e);
+    const saved = localStorage.getItem('madrasaDbBackup');
+    if(saved) data = { ...data, ...JSON.parse(saved) };
+    else setupInitialData();
+  }
+  
+  document.getElementById('loader-overlay').style.display = 'none';
+}
+
+// ആദ്യമായി തുറക്കുമ്പോൾ അഡ്മിൻ അക്കൗണ്ട് ഉണ്ടാക്കുന്നു
+function setupInitialData() {
+  if (!data.admins.find(a => a.user === 'admin')) {
+    data.admins.push({ user: 'admin', pass: 'admin123', role: 'super' });
+  }
+  saveData();
+}
+
+// ഡാറ്റ ഗൂഗിൾ ഷീറ്റിലേക്ക് സേവ് ചെയ്യുന്നു
+async function saveData() {
+  // ബാക്കപ്പിനായി ബ്രൗസറിലും സേവ് ചെയ്യുന്നു
+  localStorage.setItem('madrasaDbBackup', JSON.stringify(data));
+  
+  try {
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' } // CORS പ്രശ്നം ഒഴിവാക്കാൻ 
+    });
+  } catch (e) {
+    console.error("Save failed", e);
+  }
+}
+
+// UI Functions
+function toast(msg) {
+  const host = document.getElementById('toastHost');
+  const el = document.createElement('div');
+  el.className = 'toast'; el.textContent = msg;
+  host.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+function handleLogin() {
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value.trim();
+  
+  const admin = data.admins.find(a => a.user === user && a.pass === pass);
+  if (admin) {
+    data.currentUser = { user, role: admin.role };
+    document.getElementById('loginScreen').classList.add('hide');
+    document.getElementById('mainApp').classList.remove('hide');
+    renderAll();
+    return;
+  }
+  toast('തെറ്റായ യൂസർ / പാസ്സ്‌വേർഡ്');
+}
+
+function logout() {
+  data.currentUser = null;
+  document.getElementById('mainApp').classList.add('hide');
+  document.getElementById('loginScreen').classList.remove('hide');
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+}
+
+function updateSchoolName() {
+  data.schoolName = document.getElementById('schoolNameInput').value;
+  document.getElementById('loginSchoolName').textContent = data.schoolName;
+  document.getElementById('headerSchoolName').textContent = data.schoolName;
+  saveData(); toast('സേവ് ചെയ്തു');
+}
+
+function addStudent() {
+  const name = document.getElementById('sName').value;
+  const cls = document.getElementById('sClass').value;
+  const user = document.getElementById('sUser').value;
+  const pass = document.getElementById('sPass').value;
+  if(!name || !cls || !user || !pass) return toast('എല്ലാ ഫീൽഡും പൂരിപ്പിക്കുക');
+  
+  data.students.push({ id: Date.now(), name, class: cls, user, pass, active: true });
+  saveData(); renderAll(); toast('ചേർത്തു');
+}
+
+function deleteStudent(id) {
+  data.students = data.students.filter(s => s.id !== id);
+  saveData(); renderAll(); toast('നീക്കം ചെയ്തു');
+}
+
+function addAdmin() {
+  const user = document.getElementById('adminUser').value;
+  const pass = document.getElementById('adminPass').value;
+  if(!user || !pass) return toast('വിവരങ്ങൾ നൽകുക');
+  data.admins.push({ user, pass, role: 'admin' });
+  saveData(); renderAll(); toast('അഡ്മിനെ ചേർത്തു');
+}
+
+function deleteAdmin(user) {
+  if(user === 'admin') return toast('പ്രധാന അഡ്മിനെ നീക്കാൻ കഴിയില്ല');
+  data.admins = data.admins.filter(a => a.user !== user);
+  saveData(); renderAll(); toast('നീക്കം ചെയ്തു');
+}
+
+function renderAll() {
+  document.getElementById('loginSchoolName').textContent = data.schoolName;
+  document.getElementById('headerSchoolName').textContent = data.schoolName;
+  document.getElementById('totalStudents').textContent = data.students.length;
+  document.getElementById('activeStudents').textContent = data.students.filter(s => s.active).length;
+  
+  // Students Table
+  document.getElementById('studentTableBody').innerHTML = data.students.map(s => 
+    `<tr><td>${s.name}</td><td>${s.class}</td><td>${s.user}</td>
+    <td><button class="btn btn-danger btn-sm" onclick="deleteStudent(${s.id})">Delete</button></td></tr>`
+  ).join('');
+
+  // Admins List
+  document.getElementById('adminList').innerHTML = data.admins.map(a => 
+    `<div style="margin:5px 0;padding:10px;background:#f0f0f0;border-radius:8px;display:flex;justify-content:space-between;">
+      <span>${a.user} (Admin)</span>
+      <button class="btn btn-danger btn-sm" onclick="deleteAdmin('${a.user}')">Delete</button>
+    </div>`
+  ).join('');
+}
+
+// ആപ്പ് തുടങ്ങുമ്പോൾ ഡാറ്റ ലോഡ് ചെയ്യുന്നു
+window.onload = loadData;
+</script>
+</body>
+</html>
