@@ -204,6 +204,10 @@ tbody tr:hover{background:var(--paper);}
 .matrix-wrap th{position:sticky;top:0;}
 .matrix-wrap td.name-col,.matrix-wrap th.name-col{position:sticky;left:0;background:var(--paper);z-index:2;font-family:var(--font-body);font-weight:600;text-align:left;min-width:130px;}
 
+/* Timetable Layout fix */
+#timetableBody input { width: 100%; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 6px; font-size: 13.5px; font-family: inherit; }
+#timetableBody input:focus { border-color: var(--gold-600); outline: none; }
+
 /* Homework */
 .hw-item { background:var(--paper); padding:16px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:12px; }
 .hw-header { display:flex; justify-content:space-between; margin-bottom:8px; font-size:12px; color:var(--ink-faint); font-weight:700;}
@@ -298,7 +302,7 @@ tbody tr:hover{background:var(--paper);}
     <h1 id="loginSchoolName">നൂറുൽ ഈമാൻ മദ്രസ</h1>
     <div class="divider"></div>
     <p class="tagline">അറിവിന്റെ വെളിച്ചം പകരുന്ന ഒരിടം — വിദ്യാർത്ഥികളുടെയും അധ്യാപകരുടെയും ദൈനംദിന പുരോഗതി ഒരൊറ്റയിടത്ത്.</p>
-    <div class="brand-foot">മദ്രസ മാനേജ്മെന്റ് സിസ്റ്റം</div>
+    <div class="brand-foot mt-16">മദ്രസ മാനേജ്മെന്റ് സിസ്റ്റം</div>
   </div>
   <div class="login-form-panel">
     <div class="login-card">
@@ -494,7 +498,7 @@ tbody tr:hover{background:var(--paper);}
               <select id="hwClassSelect"></select>
             </div>
             <div class="form-group">
-              <label>വിഷയം (ഡ്രോപ്പ്ഡൗൺ)</label>
+              <label>വിഷയം</label>
               <select id="hwSubjectSelect"></select>
             </div>
             <div class="form-group" style="grid-column: 1 / -1;">
@@ -522,22 +526,25 @@ tbody tr:hover{background:var(--paper);}
         </div>
         <div class="card">
           <div id="addStudentForm" class="hide" style="margin-bottom:16px;padding:20px;background:var(--paper);border-radius:var(--radius);border:1px solid var(--line);">
-            <div class="form-grid">
-              <div class="form-group"><label>പേര്</label><input id="sName" placeholder="പേര്"></div>
+            <div class="form-grid-3">
+              <div class="form-group"><label>First Name (ആദ്യ പേര്)</label><input id="sFirst" placeholder="ആദ്യ പേര്"></div>
+              <div class="form-group"><label>Second Name</label><input id="sSecond" placeholder="രണ്ടാമത്തെ പേര്"></div>
+              <div class="form-group"><label>Last Name</label><input id="sLast" placeholder="അവസാന പേര്"></div>
+              <div class="form-group"><label>House Name (വീട്ടുപേര്)</label><input id="sHouse" placeholder="വീട്ടുപേര്"></div>
               <div class="form-group"><label>വാട്സ്ആപ്പ് നമ്പർ</label><input id="sPhone" type="tel" placeholder="ഉദാ: 9876543210"></div>
               <div class="form-group"><label>ക്ലാസ് (1-12)</label><input type="number" id="sClass" min="1" max="12" placeholder="ക്ലാസ്"></div>
               <div class="form-group"><label>യൂസർ ഐഡി (ലോഗിൻ ചെയ്യാൻ)</label><input id="sUser" placeholder="യൂസർ ഐഡി"></div>
               <div class="form-group"><label>പാസ്സ്‌വേർഡ്</label><input id="sPass" placeholder="പാസ്സ്‌വേർഡ്"></div>
               <div class="form-group"><label>അക്കൗണ്ട് എക്സ്പയറി (ദിവസം)</label><input type="number" id="sExpiry" placeholder="എക്സ്പയറി ദിവസം" value="330"></div>
             </div>
-            <div style="display:flex;gap:8px;">
+            <div style="display:flex;gap:8px;margin-top:10px;">
               <button class="btn btn-success" onclick="addStudent()"><i class="fas fa-save"></i> രജിസ്റ്റർ ചെയ്യുക</button>
               <button class="btn btn-outline" onclick="document.getElementById('addStudentForm').classList.add('hide')">റദ്ദാക്കുക</button>
             </div>
           </div>
 
           <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
-            <input class="pill" id="studentSearch" placeholder="🔍 പേര് / യൂസർ തിരയുക" oninput="renderStudents()" style="flex:1; min-width:200px;">
+            <input class="pill" id="studentSearch" placeholder="🔍 പേര് / വീട്ടുപേര് / യൂസർ തിരയുക..." oninput="renderStudents()" style="flex:1; min-width:200px;">
             <select class="pill" id="classFilter" onchange="renderStudents()"></select>
             <select class="pill" id="statusFilter" onchange="renderStudents()">
               <option value="all">എല്ലാ സ്റ്റാറ്റസ്</option>
@@ -549,7 +556,7 @@ tbody tr:hover{background:var(--paper);}
 
           <div class="table-responsive">
             <table>
-              <thead><tr><th>#</th><th>പേര്</th><th>നമ്പർ</th><th>ക്ലാസ്</th><th>യൂസർ</th><th>എക്സ്പയറി</th><th>സ്റ്റാറ്റസ്</th><th id="thActions">പ്രവർത്തനങ്ങൾ</th></tr></thead>
+              <thead><tr><th>#</th><th>പേര് (പൂർണ്ണരൂപം)</th><th>വീട്ടുപേര്</th><th>നമ്പർ</th><th>ക്ലാസ്</th><th>യൂസർ</th><th>സ്റ്റാറ്റസ്</th><th id="thActions">പ്രവർത്തനം</th></tr></thead>
               <tbody id="studentTableBody"></tbody>
             </table>
           </div>
@@ -567,6 +574,33 @@ tbody tr:hover{background:var(--paper);}
           <div class="stat-card"><div class="stat-label">ബാക്കി ഫണ്ട് (Balance)</div><div class="stat-value" id="totBalance">₹0</div></div>
         </div>
 
+        <div class="card" style="background:var(--info-bg);">
+          <div class="card-title star-bullet">റിപ്പോർട്ട് എടുക്കുക</div>
+          <div class="form-grid-3">
+             <div class="form-group">
+                <label>റിപ്പോർട്ട് തരം</label>
+                <select id="finReportType" onchange="toggleFinReportInputs()">
+                    <option value="acad">Academic Year</option>
+                    <option value="cal">Calendar Year</option>
+                    <option value="custom">Custom Date (മുതൽ-വരെ)</option>
+                </select>
+             </div>
+             <div class="form-group" id="finAcadDiv"><label>Academic Year</label><select id="finAcadYear"></select></div>
+             <div class="form-group hide" id="finCalDiv"><label>Year</label><input type="number" id="finCalYear" value="2024"></div>
+             <div class="form-group hide" id="finCustomStartDiv"><label>മുതൽ (From Date)</label><input type="date" id="finFromDate"></div>
+             <div class="form-group hide" id="finCustomEndDiv"><label>വരെ (To Date)</label><input type="date" id="finToDate"></div>
+          </div>
+          <button class="btn btn-primary" onclick="generateFinReport()"><i class="fas fa-search"></i> സെർച്ച് ചെയ്യുക</button>
+          
+          <div id="finReportResult" class="hide mt-16" style="background:#fff;padding:15px;border-radius:10px;">
+             <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+                 <h4 id="finRepTitle">റിപ്പോർട്ട്</h4>
+                 <button class="btn btn-outline btn-sm" onclick="printFinReport()"><i class="fas fa-print"></i> Print</button>
+             </div>
+             <div id="finRepContent"></div>
+          </div>
+        </div>
+
         <div class="form-grid">
             <div class="card">
                 <div class="card-title star-bullet">ഫീസ് / വരവ് ചേർക്കുക</div>
@@ -576,7 +610,6 @@ tbody tr:hover{background:var(--paper);}
                 <div class="form-group"><label>തിയ്യതി</label><input type="date" id="feeDate"></div>
                 <button class="btn btn-success" onclick="saveFee()"><i class="fas fa-plus"></i> വരവ് രേഖപ്പെടുത്തുക</button>
             </div>
-
             <div class="card">
                 <div class="card-title star-bullet">പുതിയ ചിലവ് ചേർക്കുക</div>
                 <div class="form-group"><label>ചിലവാക്കിയ ആവശ്യം / കാരണം</label><input type="text" id="expReason" placeholder="ഉദാ: ചോക്ക് വാങ്ങിയത്, കറന്റ് ബിൽ"></div>
@@ -626,7 +659,7 @@ tbody tr:hover{background:var(--paper);}
             </div>
           </div>
           <div class="form-grid hide" id="attMonthControls">
-            <div class="form-group"><label>മാസം</label><input type="month" id="attendanceMonth"></div>
+            <div class="form-group"><label>മാസം</label><input type="month" id="attendanceMonth" onchange="renderAttendanceMatrix()"></div>
             <div class="form-group"><label>ക്ലാസ്</label>
               <select id="attendanceMonthClass" onchange="renderAttendanceMatrix()"></select>
             </div>
@@ -679,7 +712,7 @@ tbody tr:hover{background:var(--paper);}
           <div class="flex-between mb-16" id="coCurricularControls">
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
               <input id="newActivity" class="pill" placeholder="പുതിയ പരിപാടി">
-              <button class="btn btn-success" id="btnAddActivity" onclick="addActivity()"><i class="fas fa-plus"></i> ചേർക്കുക</button>
+              <button class="btn btn-success" id="btnAddActivity" onclick="addActivity()"><i class="fas fa-plus"></i> പുതിയത് ചേർക്കുക</button>
             </div>
           </div>
           <div id="activityList" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;"></div>
@@ -690,7 +723,7 @@ tbody tr:hover{background:var(--paper);}
             <div class="form-group"><label>പരിപാടി</label><select id="coActivitySelect"></select></div>
             <div class="form-group"><label>മാർക്ക് / റാങ്ക്</label><input id="coMark" placeholder="ഉദാ: A, 1st, 85"></div>
           </div>
-          <button class="btn btn-success" id="btnSaveCo" onclick="saveCoCurricular()"><i class="fas fa-save"></i> സേവ് ചെയ്യുക</button>
+          <button class="btn btn-success" id="btnSaveCo" onclick="saveCoCurricular()"><i class="fas fa-save"></i> വിദ്യാർത്ഥിക്ക് സേവ് ചെയ്യുക</button>
           <div id="coList" class="mt-16" style="max-height:400px;overflow-y:auto;"></div>
         </div>
       </div>
@@ -777,7 +810,7 @@ tbody tr:hover{background:var(--paper);}
         <div class="page-head"><div><h2>ടീച്ചർമാർ</h2><div class="desc">ക്ലാസ് ചുമതലയുള്ള അധ്യാപകർ</div></div></div>
         <div class="card">
           <div class="form-grid-3" id="teacherAddForm">
-            <div class="form-group"><label>ടീച്ചർ യൂസർ</label><input id="teacherUser" placeholder="യൂസർ ഐഡി"></div>
+            <div class="form-group"><label>ടീച്ചർ യൂസർ ഐഡി</label><input id="teacherUser" placeholder="യൂസർ ഐഡി"></div>
             <div class="form-group"><label>പാസ്സ്‌വേർഡ്</label><input id="teacherPass" placeholder="പാസ്സ്‌വേർഡ്"></div>
             <div class="form-group"><label>അസൈൻ ചെയ്യുന്ന ക്ലാസ്</label>
               <select id="teacherClass">
@@ -789,7 +822,7 @@ tbody tr:hover{background:var(--paper);}
             </div>
           </div>
           <button class="btn btn-success" id="btnAddTeacherBtn" onclick="addTeacher()"><i class="fas fa-user-plus"></i> ടീച്ചർ ആക്കുക</button>
-          <div id="teacherList" class="mt-16"></div>
+          <div id="teacherList" class="mt-16" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
         </div>
       </div>
 
@@ -839,7 +872,7 @@ async function loadData() {
   const loader = document.getElementById('loaderOverlay');
   
   try {
-    const saved = localStorage.getItem('madrasaDataPremiumV9');
+    const saved = localStorage.getItem('madrasaDataPremiumV12');
     if (saved) { 
         data = { ...data, ...JSON.parse(saved) }; 
         if(!data.expenses) data.expenses = [];
@@ -871,17 +904,11 @@ function initDefaults() {
       data.contactAdmin = 'headmaster';
   }
   if (!data.teachers.find(t => t.user === 'teacher')) data.teachers.push({ user: 'teacher', pass: 'teacher123', class: 5 });
-
-  if (data.students.length === 0) {
-    const now = Date.now();
-    const exp = data.expiryDays;
-    data.students.push({ id: 1, name: 'അഹമ്മദ്', phone: '9876543210', class: 5, user: 'ahm', pass: '123', active: true, created: now, expiryDays: exp });
-  }
   saveData();
 }
 
 function saveData() {
-  localStorage.setItem('madrasaDataPremiumV9', JSON.stringify(data));
+  localStorage.setItem('madrasaDataPremiumV12', JSON.stringify(data));
   if (SCRIPT_URL && SCRIPT_URL !== 'YOUR_WEB_APP_URL_HERE') {
     fetch(SCRIPT_URL, {
       method: 'POST',
@@ -1012,6 +1039,7 @@ function enterApp() {
   document.getElementById('userName').textContent = user.user;
   document.getElementById('userAvatar').textContent = user.user.charAt(0).toUpperCase();
 
+  // Role Badges & Form Controls Visbility
   document.getElementById('btnAddStudentTop').classList.toggle('hide', !isAdminOrSuper);
   document.getElementById('thActions').classList.toggle('hide', !isAdminOrSuper);
 
@@ -1022,6 +1050,7 @@ function enterApp() {
   document.getElementById('teacherAddForm').classList.toggle('hide', !isAdminOrSuper);
   document.getElementById('btnAddTeacherBtn').classList.toggle('hide', !isAdminOrSuper);
 
+  // Settings visibility logic
   document.getElementById('adminSettingsSection').classList.toggle('hide', !isAdminOrSuper);
 
   if (isSuper) {
@@ -1030,24 +1059,28 @@ function enterApp() {
   } else if (isAdminRole) {
     document.getElementById('userRole').textContent = '👑 സദർ മുഅല്ലിം (Admin)';
     document.getElementById('adminsTab').classList.add('hide');
+    document.getElementById('adminsTab').style.display = 'none'; // Super Admin tab completely hidden
   } else if (isTeacher) {
     document.getElementById('userRole').textContent = `👨‍🏫 ക്ലാസ് ${user.teacherClass} ടീച്ചർ`;
     document.getElementById('adminsTab').classList.add('hide');
+    document.getElementById('adminsTab').style.display = 'none';
   } else {
     document.getElementById('userRole').textContent = '🎓 വിദ്യാർത്ഥി';
     document.getElementById('adminsTab').classList.add('hide');
+    document.getElementById('adminsTab').style.display = 'none';
   }
 
   document.getElementById('hwAdminSection').classList.toggle('hide', isStudent);
   document.getElementById('reportStudentSelect').classList.toggle('hide', isStudent);
 
+  // Tab Menu Visbility
   const allowedForStudent = ['dashboard', 'report', 'messages', 'homework', 'timetable', 'settings'];
   document.querySelectorAll('#tabBar button').forEach(btn => {
     const tab = btn.dataset.tab;
     if (isStudent && !allowedForStudent.includes(tab)) btn.style.display = 'none';
     else if (isTeacher && (tab === 'admins' || tab === 'teachers' || tab === 'finance')) btn.style.display = 'none';
     else if (isAdminRole && tab === 'admins') btn.style.display = 'none';
-    else btn.style.display = 'flex';
+    else if (btn.style.display !== 'none') btn.style.display = 'flex';
   });
 
   updateClassFilters();
@@ -1056,6 +1089,8 @@ function enterApp() {
   populateReportSelectors();
   document.getElementById('feeDate').value = new Date().toISOString().split('T')[0];
   document.getElementById('expDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('attendanceDate').value = new Date().toISOString().split('T')[0];
+  
   renderAll();
   switchTab('dashboard');
   toggleSidebar(false);
@@ -1129,6 +1164,8 @@ function changeOwnPassword() {
 }
 
 function resetUserPassword(type, identifier) {
+    // Only Admin or Super Admin can reset Student/Teacher passwords.
+    // Only Super Admin can reset Admin passwords.
     const u = data.currentUser;
     if(type === 'admin' && u.role !== 'super') return toast('അനുമതിയില്ല', 'error');
     if((type === 'student' || type === 'teacher') && !['super', 'admin'].includes(u.role)) return toast('അനുമതിയില്ല', 'error');
@@ -1137,7 +1174,7 @@ function resetUserPassword(type, identifier) {
     if(!newPass || !newPass.trim()) return;
 
     let target = null;
-    if(type === 'student') target = data.students.find(s => s.id === identifier);
+    if(type === 'student') target = data.students.find(s => s.id == identifier);
     if(type === 'teacher') target = data.teachers.find(t => t.user === identifier);
     if(type === 'admin') target = data.admins.find(a => a.user === identifier);
 
@@ -1393,7 +1430,7 @@ function renderStudents() {
     else if (status === 'inactive') list = list.filter(s => !s.active);
     else if (status === 'expired') list = list.filter(s => s.active && isAccountExpired(s));
   }
-  if (q) list = list.filter(s => s.name.toLowerCase().includes(q) || s.user.toLowerCase().includes(q) || (s.phone && s.phone.includes(q)));
+  if (q) list = list.filter(s => s.name.toLowerCase().includes(q) || (s.houseName && s.houseName.toLowerCase().includes(q)) || s.user.toLowerCase().includes(q) || (s.phone && s.phone.includes(q)));
 
   const tbody = document.getElementById('studentTableBody');
   tbody.innerHTML = '';
@@ -1416,10 +1453,10 @@ function renderStudents() {
     tr.innerHTML = `
       <td>${idx + 1}</td>
       <td class="mal"><strong>${s.name}</strong></td>
+      <td class="mal">${s.houseName || '—'}</td>
       <td>${s.phone || '—'}</td>
       <td>${s.class}</td>
       <td>${s.user}</td>
-      <td>${expiryDays}</td>
       <td><span class="badge ${statusClass}">${statusText}</span></td>
       ${isAdminOrSuper ? `
       <td>
@@ -1602,6 +1639,9 @@ function populateMessageRecipients() {
         });
     } else if (['super','admin'].includes(u.role)) {
          sel.innerHTML += `<option value="all_students">മദ്രസയിലെ എല്ലാ വിദ്യാർത്ഥികൾക്കും</option>`;
+         getVisibleClasses().filter(c => c !== 'all').forEach(c => {
+             sel.innerHTML += `<option value="class_${c}">ക്ലാസ് ${c} ലെ മുഴുവൻ വിദ്യാർത്ഥികൾക്കും</option>`;
+         });
          data.students.forEach(s => {
             sel.innerHTML += `<option value="student_${s.id}">വിദ്യാർത്ഥി: ${s.name} (Class ${s.class})</option>`;
          });
@@ -1669,29 +1709,30 @@ function renderMessages() {
   if (user.role === 'super') {
       msgs = data.messages;
   } else if (user.role === 'admin') {
-      // Admin sees their own messages, messages to students, messages from students, etc.
       msgs = data.messages.filter(m => 
           m.from === user.user || 
           m.to === `admin_${user.user}` || 
           m.to === 'all_students' ||
+          m.to.startsWith('class_') ||
           m.fromRole === 'student' || 
           m.fromRole === 'teacher' || 
           m.to.startsWith('teacher_') || 
-          m.to.startsWith('student_') || 
-          m.to === 'class_all'
+          m.to.startsWith('student_')
       );
   } else if (user.role === 'teacher') {
       msgs = data.messages.filter(m => 
           m.from === user.user || 
           m.to === `teacher_${user.user}` || 
           m.to === 'class_all' ||
+          m.to === `class_${user.teacherClass}` ||
           m.to === 'all_students'
       );
   } else if (user.role === 'student') {
       msgs = data.messages.filter(m => 
           m.from === user.user || 
           m.to === `student_${user.studentId}` || 
-          (m.to === 'class_all' && m.fromClass == user.class) ||
+          m.to === 'class_all' ||
+          m.to === `class_${user.class}` ||
           m.to === 'all_students'
       );
   }
@@ -1709,6 +1750,7 @@ function renderMessages() {
           toLabel = s ? `വിദ്യാർത്ഥി (${s.name})` : m.to;
       }
       else if(m.to === 'class_all') toLabel = `മുഴുവൻ ക്ലാസ്സിനും (Class ${m.fromClass})`;
+      else if(m.to.startsWith('class_')) toLabel = `മുഴുവൻ കുട്ടികൾക്കും (Class ${m.to.replace('class_','')})`;
       else if(m.to === 'all_students') toLabel = `മദ്രസയിലെ എല്ലാ വിദ്യാർത്ഥികൾക്കും`;
 
       let fromLabel = m.fromName;
@@ -1718,7 +1760,7 @@ function renderMessages() {
       if(m.fromRole === 'super' && user.role !== 'super') fromLabel = "മാനേജ്മെന്റ്";
       if(m.fromRole === 'admin' && (user.role === 'teacher' || user.role === 'student')) fromLabel = "ഹെഡ്മാസ്റ്റർ";
 
-      let canReply = m.from !== user.user && m.fromId && m.to !== 'all_students' && m.to !== 'class_all';
+      let canReply = m.from !== user.user && m.fromId && !m.to.startsWith('class_') && m.to !== 'all_students';
 
       return `<div class="msg-item">
         <div class="msg-header">
@@ -1886,6 +1928,66 @@ function saveExpense() {
     toast('ചിലവ് രേഖപ്പെടുത്തി', 'success');
 }
 
+function toggleFinReportInputs() {
+    const rType = document.getElementById('finReportType').value;
+    document.getElementById('finAcadDiv').classList.toggle('hide', rType !== 'acad');
+    document.getElementById('finCalDiv').classList.toggle('hide', rType !== 'cal');
+    document.getElementById('finCustomStartDiv').classList.toggle('hide', rType !== 'custom');
+    document.getElementById('finCustomEndDiv').classList.toggle('hide', rType !== 'custom');
+    
+    if(rType === 'acad') {
+        document.getElementById('finAcadYear').innerHTML = getAllAcademicYears().map(y=>`<option value="${y}">${y}</option>`).join('');
+    }
+}
+
+function generateFinReport() {
+    const rType = document.getElementById('finReportType').value;
+    let start, end, yearLab, calY;
+    let title = "ഫിനാൻസ് റിപ്പോർട്ട്";
+    
+    if (rType === 'acad') { yearLab = document.getElementById('finAcadYear').value; title += ` (${yearLab})`; }
+    else if (rType === 'cal') { calY = document.getElementById('finCalYear').value; title += ` (${calY})`; }
+    else {
+        start = document.getElementById('finFromDate').value;
+        end = document.getElementById('finToDate').value;
+        if(!start || !end) return toast('തിയ്യതികൾ നൽകുക', 'error');
+        title += ` (${start} മുതൽ ${end} വരെ)`;
+    }
+
+    const matchDate = (dStr) => {
+        if(!dStr) return false;
+        let d = new Date(dStr);
+        if(rType === 'acad') return getAcademicYear(d) === yearLab;
+        if(rType === 'cal') return d.getFullYear() == calY;
+        if(rType === 'custom') return d >= new Date(start) && d <= new Date(end);
+        return true;
+    };
+
+    let fList = data.fees.filter(f => matchDate(f.date));
+    let eList = data.expenses.filter(e => matchDate(e.date));
+
+    let inc = fList.reduce((s,x)=>s+Number(x.amount),0);
+    let exp = eList.reduce((s,x)=>s+Number(x.amount),0);
+    let bal = inc - exp;
+
+    document.getElementById('finRepTitle').innerText = title;
+    document.getElementById('finReportResult').classList.remove('hide');
+    document.getElementById('finRepContent').innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr; gap:10px; text-align:center; margin-bottom:20px;">
+            <div style="padding:15px;background:var(--success-bg);border-radius:10px;"><strong>വരവ്:</strong> ₹${inc}</div>
+            <div style="padding:15px;background:var(--danger-bg);border-radius:10px;"><strong>ചിലവ്:</strong> ₹${exp}</div>
+            <div style="padding:15px;background:var(--info-bg);border-radius:10px;"><strong>ബാക്കി:</strong> ₹${bal}</div>
+        </div>
+    `;
+}
+
+function printFinReport() {
+    const content = document.getElementById('finReportResult').innerHTML;
+    const printArea = document.getElementById('printReceiptArea');
+    printArea.innerHTML = `<div style="padding:20px;width:100%;max-width:800px;margin:0 auto;">${content}</div>`;
+    window.print();
+}
+
 function printReceipt(feeId) {
     const f = data.fees.find(x => x.id == feeId);
     if(!f) return;
@@ -1964,19 +2066,26 @@ function showAddStudent() { document.getElementById('addStudentForm').classList.
 function addStudent() {
   if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');
   
-  const name = document.getElementById('sName').value.trim();
+  const f = document.getElementById('sFirst').value.trim();
+  const s = document.getElementById('sSecond').value.trim();
+  const l = document.getElementById('sLast').value.trim();
+  const h = document.getElementById('sHouse').value.trim();
+  const fullName = [f, s, l, h].filter(Boolean).join(' ');
   const phone = document.getElementById('sPhone').value.trim();
   const cls = parseInt(document.getElementById('sClass').value);
   const user = document.getElementById('sUser').value.trim();
   const pass = document.getElementById('sPass').value.trim();
   const expiryDays = parseInt(document.getElementById('sExpiry').value) || data.expiryDays;
 
-  if (!name || !cls || !user || !pass) return toast('എല്ലാ ഫീൽഡും നൽകുക', 'error');
-  if (data.students.find(s => s.user === user)) return toast('ഈ യൂസർ ഉണ്ട്', 'error');
+  if (!fullName || !cls || !user || !pass) return toast('വിവരങ്ങൾ പൂർണ്ണമാക്കുക', 'error');
+  if (data.students.find(x => x.user === user)) return toast('ഈ യൂസർ ഉണ്ട്', 'error');
 
-  data.students.push({ id: getNextId(data.students), name, phone, class: cls, user, pass, active: true, created: Date.now(), expiryDays });
+  data.students.push({
+      id: getNextId(data.students), firstName: f, secondName: s, lastName: l, houseName: h, name: fullName,
+      phone, class: cls, user, pass, active: true, created: Date.now(), expiryDays
+  });
   saveData();
-  ['sName','sPhone','sClass','sUser','sPass'].forEach(id => document.getElementById(id).value = '');
+  ['sFirst','sSecond','sLast','sHouse','sPhone','sClass','sUser','sPass'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('addStudentForm').classList.add('hide');
   toast('വിദ്യാർത്ഥിയെ ചേർത്തു', 'success'); renderAll();
 }
@@ -2201,7 +2310,7 @@ function switchTab(tab) {
   if (tab === 'students') renderStudents();
   if (tab === 'timetable') renderTimetable();
   if (tab === 'attendance') { renderAttendance(); renderAttendanceMatrix(); }
-  if (tab === 'finance') { updateClassFilters(); populateFeeStudentSelect(); renderFinance(); }
+  if (tab === 'finance') { updateClassFilters(); populateFeeStudentSelect(); renderFinance(); toggleFinReportInputs(); }
   if (tab === 'marks') { populateSelects(); renderMarkList(); }
   if (tab === 'co-curricular') { populateSelects(); renderCoCurricular(); }
   if (tab === 'subjects') renderSubjects();
