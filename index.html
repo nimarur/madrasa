@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>നൂറുൽ ഈമാൻ | മദ്രസ മാനേജ്മെന്റ് സിസ്റ്റം</title>
+<title>നൂറുൽ ഈമാൻ  | മദ്രസ മാനേജ്മെന്റ് സിസ്റ്റം</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 /* ============================================================
-   TOKENS
+   TOKENS — a madrasa's palette
    ============================================================ */
 :root{
   --ivory:#FBF7EE; --paper:#F4EEDF; --sand:#EDE4CD; --line:#E1D5B0;
@@ -286,7 +286,7 @@ tbody tr:hover{background:var(--paper);}
 <div id="loginScreen" class="login-shell">
   <div class="login-brand-panel motif-dark">
     <div class="arch">📖</div>
-    <h1 id="loginSchoolName">നൂറുൽ ഇർഫാൻ മദ്രസ</h1>
+    <h1 id="loginSchoolName">നൂറുൽ ഈമാൻ  മദ്രസ</h1>
     <div class="divider"></div>
     <p class="tagline">അറിവിന്റെ വെളിച്ചം പകരുന്ന ഒരിടം — വിദ്യാർത്ഥികളുടെയും അധ്യാപകരുടെയും ദൈനംദിന പുരോഗതി ഒരൊറ്റയിടത്ത്.</p>
     <div class="brand-foot">മദ്രസ മാനേജ്മെന്റ് സിസ്റ്റം</div>
@@ -306,7 +306,7 @@ tbody tr:hover{background:var(--paper);}
         </div>
         <button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> ലോഗിൻ ചെയ്യുക</button>
       </form>
-      </div>
+    </div>
   </div>
 </div>
 
@@ -316,7 +316,7 @@ tbody tr:hover{background:var(--paper);}
     <div class="brand-row">
       <div class="arch">📖</div>
       <div>
-        <div class="name" id="headerSchoolName">നൂറുൽ ഇർഫാൻ</div>
+        <div class="name" id="headerSchoolName">നൂറുൽ ഈമാൻ </div>
         <div class="sub">മാനേജ്മെന്റ് സിസ്റ്റം</div>
       </div>
     </div>
@@ -343,7 +343,7 @@ tbody tr:hover{background:var(--paper);}
   <div class="main-col">
     <div class="topbar">
       <button class="hamburger" onclick="toggleSidebar(true)"><i class="fas fa-bars"></i></button>
-      <div class="t-brand" id="topbarBrand">നൂറുൽ ഇർഫാൻ</div>
+      <div class="t-brand" id="topbarBrand">നൂറുൽ ഈമാൻ </div>
       <div class="avatar-sm" id="userAvatar">A</div>
     </div>
 
@@ -351,7 +351,7 @@ tbody tr:hover{background:var(--paper);}
       <div class="settings-bar" id="settingsBar">
         <div class="setting-group">
           <label><i class="fas fa-school"></i> മദ്രസ പേര്</label>
-          <input type="text" id="schoolNameInput" value="നൂറുൽ ഇർഫാൻ മദ്രസ">
+          <input type="text" id="schoolNameInput" value="നൂറുൽ ഈമാൻ  മദ്രസ">
           <button class="btn btn-primary btn-sm" onclick="updateSchoolName()">സേവ്</button>
         </div>
         <div class="setting-group">
@@ -674,48 +674,56 @@ tbody tr:hover{background:var(--paper);}
 // ============================================================
 // ഗൂഗിൾ ആപ്പ് സ്ക്രിപ്റ്റ് ലിങ്ക് ഇവിടെ നൽകുക 
 // ============================================================
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuUnGfrYsyIdClCp_Pi69XOiWK0dZQVBoE4yCFbdiRM5NEKQTrxKIeLNYBWRc5DsEOAw/exec'; // <-- ഈ ഭാഗം മാറ്റാൻ മറക്കരുത്
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuUnGfrYsyIdClCp_Pi69XOiWK0dZQVBoE4yCFbdiRM5NEKQTrxKIeLNYBWRc5DsEOAw/exec'; 
 
 // ============================================================
 // DATA LAYER
 // ============================================================
 let data = {
-  schoolName: 'നൂറുൽ ഇർഫാൻ മദ്രസ',
-  expiryDays: 330,
-  acadStartMonth: 6,
-  students: [],
-  subjects: ['ഖുർആൻ', 'ഹിഫ്ള്', 'ഫിഖ്ഹ്', 'തഫ്സീർ', 'അഖീദ'],
+  schoolName: 'നൂറുൽ ഈമാൻ  മദ്രസ',
+  expiryDays: 330, acadStartMonth: 6,
+  students: [], subjects: ['ഖുർആൻ', 'ഹിഫ്ള്', 'ഫിഖ്ഹ്', 'തഫ്സീർ', 'അഖീദ'],
   activities: ['സാഹിത്യ സമാജം', 'പ്രസംഗം', 'പാട്ട്', 'സ്പോർട്സ്', 'കവിതാരചന', 'ക്വിസ്'],
-  marks: [],
-  coCurricular: [],
-  attendance: [],
-  messages: [],
-  teachers: [],
-  admins: [],
-  homework: [],
+  marks: [], coCurricular: [], attendance: [], messages: [], teachers: [], admins: [], homework: [],
   currentUser: null
 };
 
 let attendanceView = 'day';
 
 async function loadData() {
-  document.getElementById('loaderOverlay').classList.remove('hide-loader');
+  const loader = document.getElementById('loaderOverlay');
+  if(loader) loader.classList.remove('hide-loader');
+  
   try {
-    const response = await fetch(SCRIPT_URL);
+    if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {
+      throw new Error("No Google Sheet URL provided");
+    }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 sec timeout
+    
+    const response = await fetch(SCRIPT_URL, { signal: controller.signal });
+    clearTimeout(timeoutId);
+    
     const fetchedData = await response.json();
     if (fetchedData && fetchedData.admins && fetchedData.admins.length > 0) {
       data = { ...data, ...fetchedData };
-    } else { initDefaults(); }
+    } else { 
+      initDefaults(); 
+    }
   } catch (e) {
-    console.error('Fetch error, using local storage backup', e);
-    const saved = localStorage.getItem('madrasaDataPremiumV7');
-    if (saved) { data = { ...data, ...JSON.parse(saved) }; } else { initDefaults(); }
+    console.warn('Using local fallback data', e);
+    try {
+      const saved = localStorage.getItem('madrasaDataPremiumV8');
+      if (saved) { data = { ...data, ...JSON.parse(saved) }; } else { initDefaults(); }
+    } catch(err) {
+      initDefaults();
+    }
+  } finally {
+    if(loader) loader.classList.add('hide-loader');
+    if(!data.homework) data.homework = []; 
+    document.getElementById('loginSchoolName').textContent = data.schoolName || 'നൂറുൽ ഈമാൻ  മദ്രസ';
   }
-  
-  if(!data.homework) data.homework = []; 
-  
-  document.getElementById('loaderOverlay').classList.add('hide-loader');
-  document.getElementById('loginSchoolName').textContent = data.schoolName || 'നൂറുൽ ഇർഫാൻ മദ്രസ';
 }
 
 function initDefaults() {
@@ -727,41 +735,31 @@ function initDefaults() {
     const exp = data.expiryDays;
     data.students.push({ id: 1, name: 'അഹമ്മദ്', class: 5, user: 'ahm', pass: '123', active: true, created: now, expiryDays: exp });
     data.students.push({ id: 2, name: 'ഫാത്തിമ', class: 8, user: 'fat', pass: '123', active: true, created: now, expiryDays: exp });
-    data.students.push({ id: 3, name: 'യൂസുഫ്', class: 5, user: 'yus', pass: '123', active: true, created: now, expiryDays: exp });
-    data.students.push({ id: 4, name: 'അമീന', class: 5, user: 'ami', pass: '123', active: true, created: now, expiryDays: exp });
-
+    
     const today = new Date();
     for (let d = 1; d <= today.getDate(); d++) {
       const dt = new Date(today.getFullYear(), today.getMonth(), d);
       if (dt.getDay() === 0) continue; 
       const iso = dt.toISOString().split('T')[0];
-      [1, 3, 4].forEach(sid => {
-        data.attendance.push({ studentId: sid, date: iso, present: Math.random() > 0.15 });
-      });
-      data.attendance.push({ studentId: 2, date: iso, present: Math.random() > 0.1 });
+      data.attendance.push({ studentId: 1, date: iso, present: Math.random() > 0.15 });
     }
-
     data.marks.push({ studentId: 1, exam: 'class', subject: 'ഖുർആൻ', mark: 85, year: getAcademicYear(new Date()) });
-    data.marks.push({ studentId: 2, exam: 'half', subject: 'ഫിഖ്ഹ്', mark: 92, year: getAcademicYear(new Date()) });
     data.coCurricular.push({ studentId: 1, activity: 'സാഹിത്യ സമാജം', mark: 'A', year: getAcademicYear(new Date()) });
   }
   saveData();
 }
 
 function saveData() {
-  localStorage.setItem('madrasaDataPremiumV7', JSON.stringify(data));
+  localStorage.setItem('madrasaDataPremiumV8', JSON.stringify(data));
   if (SCRIPT_URL && SCRIPT_URL !== 'YOUR_WEB_APP_URL_HERE') {
     fetch(SCRIPT_URL, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-    }).catch(e => console.error("Google Sheet Save Error: ", e));
+    }).catch(e => console.error("Save Error: ", e));
   }
 }
 
-// ============================================================
-// TOAST
-// ============================================================
 function toast(msg, type) {
   const host = document.getElementById('toastHost');
   const el = document.createElement('div');
@@ -772,9 +770,7 @@ function toast(msg, type) {
   setTimeout(() => { el.style.opacity = '0'; el.style.transition = '.25s'; setTimeout(() => el.remove(), 250); }, 3000);
 }
 
-// ============================================================
 // HELPERS
-// ============================================================
 function getStudent(id) { return data.students.find(s => s.id == id); }
 function getNextId(arr) { return arr.length ? Math.max(...arr.map(x => x.id || 0)) + 1 : 1; }
 function getTeacherClass(user) { const t = data.teachers.find(t => t.user === user); return t ? t.class : null; }
@@ -793,8 +789,7 @@ function getAcademicYear(dateObj) {
   const m = dateObj.getMonth() + 1;
   const y = dateObj.getFullYear();
   const yearStart = (m >= startMonth) ? y : y - 1;
-  const label = `${yearStart}-${String((yearStart + 1) % 100).padStart(2, '0')}`;
-  return label;
+  return `${yearStart}-${String((yearStart + 1) % 100).padStart(2, '0')}`;
 }
 
 function getAllAcademicYears() {
@@ -847,9 +842,7 @@ function getTodayAttendance() {
 }
 function getStudentAttendance(studentId, date) { return data.attendance.find(a => a.studentId == studentId && a.date === date); }
 
-// ============================================================
 // AUTH
-// ============================================================
 function handleLogin() {
   const user = document.getElementById('loginUser').value.trim();
   const pass = document.getElementById('loginPass').value.trim();
@@ -865,7 +858,7 @@ function handleLogin() {
   if (student) {
     if (!isActive(student)) {
       if (isAccountExpired(student)) toast('⚠️ അക്കൗണ്ട് കാലാവധി കഴിഞ്ഞു. അഡ്മിനെ ബന്ധപ്പെടുക.', 'error');
-      else toast('❌ അക്കൗണ്ട് ഡിആക്ടീവ് ആണ്. അഡ്മിനെ ബന്ധപ്പെടുക.', 'error');
+      else toast('❌ അക്കൗണ്ട് ഡിആക്ടീവ് ആണ്.', 'error');
       return;
     }
     data.currentUser = { user, role: 'student', studentId: student.id, class: student.class };
@@ -890,7 +883,6 @@ function enterApp() {
   document.getElementById('schoolNameInput').value = data.schoolName;
   document.getElementById('expiryDaysInput').value = data.expiryDays;
   document.getElementById('acadStartInput').value = data.acadStartMonth;
-
   document.getElementById('userName').textContent = user.user;
   document.getElementById('userAvatar').textContent = user.user.charAt(0).toUpperCase();
 
@@ -932,7 +924,6 @@ function enterApp() {
 function updateClassFilters() {
   const classes = getVisibleClasses();
   
-  // classFilter & attendanceClass
   ['classFilter', 'attendanceClass'].forEach(id => {
     const select = document.getElementById(id);
     if (!select) return;
@@ -947,13 +938,11 @@ function updateClassFilters() {
     if (classes.includes(current)) select.value = current;
   });
 
-  // Homework class select
   const hwClsSelect = document.getElementById('hwClassSelect');
   if (hwClsSelect) {
       hwClsSelect.innerHTML = classes.filter(c => c !== 'all').map(c => `<option value="${c}">${c}</option>`).join('');
   }
 
-  const teacherClassSel = document.getElementById('teacherClass');
   const monthClassSel = document.getElementById('attendanceMonthClass');
   if (monthClassSel && data.currentUser.role === 'admin') {
     const tc = getTeacherClass(data.currentUser.user);
@@ -973,9 +962,7 @@ function toggleSidebar(open) {
   document.getElementById('sidebarOverlay').classList.toggle('show', open);
 }
 
-// ============================================================
 // HOMEWORK
-// ============================================================
 function addHomework() {
   const hwClass = document.getElementById('hwClassSelect').value;
   const hwSub = document.getElementById('hwSubjectSelect').value;
@@ -1033,10 +1020,7 @@ function renderHomework() {
   `).join('');
 }
 
-
-// ============================================================
 // RENDER — CORE
-// ============================================================
 function renderAll() {
   renderDashboard();
   renderHomework();
@@ -1156,7 +1140,7 @@ function renderAttendance() {
   if (cls !== 'all') students = students.filter(s => s.class == cls);
 
   const presentCount = students.filter(s => { const a = getStudentAttendance(s.id, date); return a && a.present; }).length;
-  document.getElementById('attSummary').innerHTML = `📌 <strong>${students.length}</strong> വിദ്യാർത്ഥികളിൽ <strong style="color:var(--success)">${presentCount}</strong> പേർ ഹാജർ — ${new Date(date).toLocaleDateString('ml-IN', { day:'numeric', month:'long', year:'numeric' })}`;
+  document.getElementById('attSummary').innerHTML = `📌 <strong>${students.length}</strong> വിദ്യാർത്ഥികളിൽ <strong style="color:var(--success)">${presentCount}</strong> പേർ ഹാജർ`;
 
   const tbody = document.getElementById('attendanceTableBody');
   tbody.innerHTML = '';
@@ -1186,7 +1170,7 @@ function toggleAttendance(studentId, date) {
   if (!student) return;
   if (data.currentUser?.role === 'admin') {
     const teacherClass = getTeacherClass(data.currentUser.user);
-    if (teacherClass != student.class) { toast('⚠️ നിങ്ങൾക്ക് ഈ വിദ്യാർത്ഥിയുടെ ഹാജർ മാറ്റാൻ അനുമതിയില്ല', 'error'); return; }
+    if (teacherClass != student.class) { toast('⚠️ നിങ്ങൾക്ക് അനുമതിയില്ല', 'error'); return; }
   }
   const existing = data.attendance.find(a => a.studentId == studentId && a.date === date);
   if (existing) existing.present = !existing.present;
@@ -1205,7 +1189,7 @@ function renderAttendanceMatrix() {
   const [year, month] = monthInput.value.split('-').map(Number);
   const cls = document.getElementById('attendanceMonthClass').value;
   const visible = getVisibleStudents().filter(s => s.class == cls);
-  const numDays = daysInMonth(year, month - 1);
+  const numDays = new Date(year, month, 0).getDate();
   const isEditable = data.currentUser?.role === 'super' || (data.currentUser?.role === 'admin' && getTeacherClass(data.currentUser.user));
 
   if (!visible.length) {
@@ -1240,7 +1224,7 @@ function cycleAttendanceCell(studentId, iso) {
   if (data.currentUser?.role === 'admin') {
     const teacherClass = getTeacherClass(data.currentUser.user);
     const student = getStudent(studentId);
-    if (student && teacherClass != student.class) { toast('⚠️ അനുമതിയില്ല', 'error'); return; }
+    if (student && teacherClass != student.class) return toast('⚠️ അനുമതിയില്ല', 'error');
   }
   const existing = data.attendance.find(a => a.studentId == studentId && a.date === iso);
   if (!existing) { data.attendance.push({ studentId, date: iso, present: true }); } 
@@ -1248,8 +1232,6 @@ function cycleAttendanceCell(studentId, iso) {
   else { data.attendance = data.attendance.filter(a => !(a.studentId == studentId && a.date === iso)); }
   saveData(); renderAttendanceMatrix(); renderDashboard();
 }
-function daysInMonth(year, month) { return new Date(year, month + 1, 0).getDate(); }
-
 
 function renderSubjects() {
   const container = document.getElementById('subjectList');
@@ -1299,7 +1281,7 @@ function renderMessages() {
 function renderTeachers() {
   const container = document.getElementById('teacherList');
   const isEditable = data.currentUser?.role === 'super' || data.currentUser?.role === 'admin';
-  if (!isEditable) { container.innerHTML = '<p class="text-muted"><i class="fas fa-lock"></i> ടീച്ചർമാരെ മാനേജ് ചെയ്യാൻ അഡ്മിന് മാത്രം പ്രാപ്യം</p>'; return; }
+  if (!isEditable) { container.innerHTML = '<p class="text-muted"><i class="fas fa-lock"></i> അഡ്മിന് മാത്രം പ്രാപ്യം</p>'; return; }
   container.innerHTML = data.teachers.map((t, i) =>
     `<div class="chip"><i class="fas fa-chalkboard-teacher" style="color:var(--gold-600);"></i> ${t.user} (ക്ലാസ് ${t.class}) ${data.currentUser?.role === 'super' ? `<button class="btn btn-danger btn-sm" onclick="removeTeacher(${i})"><i class="fas fa-times"></i></button>` : ''}</div>`
   ).join('');
@@ -1329,6 +1311,7 @@ function populateStudentSelect() {
   if (sel) sel.innerHTML = options;
   if (coSel) coSel.innerHTML = options;
 }
+
 function populateSubjectSelect() { 
   const sel = document.getElementById('markSubject'); 
   const hwSel = document.getElementById('hwSubjectSelect');
@@ -1336,7 +1319,11 @@ function populateSubjectSelect() {
   if (sel) sel.innerHTML = opts; 
   if (hwSel) hwSel.innerHTML = opts;
 }
-function populateActivitySelect() { const sel = document.getElementById('coActivitySelect'); if (sel) sel.innerHTML = data.activities.map(a => `<option value="${a}">${a}</option>`).join(''); }
+
+function populateActivitySelect() { 
+  const sel = document.getElementById('coActivitySelect'); 
+  if (sel) sel.innerHTML = data.activities.map(a => `<option value="${a}">${a}</option>`).join(''); 
+}
 
 function renderMarkList() {
   const container = document.getElementById('markList');
@@ -1350,4 +1337,281 @@ function renderMarkList() {
 
 function updateSchoolName() {
   const name = document.getElementById('schoolNameInput').value.trim() || 'മദ്രസ';
-  data.schoolName =
+  data.schoolName = name; saveData();
+  document.getElementById('headerSchoolName').textContent = name;
+  document.getElementById('topbarBrand').textContent = name;
+  document.getElementById('loginSchoolName').textContent = name;
+  toast('മദ്രസ പേര് സേവ് ചെയ്തു', 'success');
+}
+function updateExpiryDays() {
+  const val = parseInt(document.getElementById('expiryDaysInput').value);
+  if (val > 0) { data.expiryDays = val; saveData(); toast('സജ്ജീകരിച്ചു', 'success'); }
+  else toast('ദയവായി 1-നു മുകളിൽ നൽകുക', 'error');
+}
+function updateAcadStart() {
+  data.acadStartMonth = parseInt(document.getElementById('acadStartInput').value);
+  saveData(); populateReportSelectors(); renderReport();
+  toast('സേവ് ചെയ്തു', 'success');
+}
+
+function showAddStudent() { document.getElementById('addStudentForm').classList.toggle('hide'); document.getElementById('sExpiry').value = data.expiryDays; }
+
+function addStudent() {
+  const name = document.getElementById('sName').value.trim();
+  const cls = parseInt(document.getElementById('sClass').value);
+  const user = document.getElementById('sUser').value.trim();
+  const pass = document.getElementById('sPass').value.trim();
+  const expiryDays = parseInt(document.getElementById('sExpiry').value) || data.expiryDays;
+
+  if (!name || !cls || !user || !pass) return toast('എല്ലാ ഫീൽഡും നൽകുക', 'error');
+  if (data.students.find(s => s.user === user)) return toast('ഈ യൂസർ ഉണ്ട്', 'error');
+
+  if (data.currentUser?.role === 'admin') {
+    const teacherClass = getTeacherClass(data.currentUser.user);
+    if (teacherClass != cls) return toast(`ക്ലാസ് ${teacherClass} മാത്രമേ മാനേജ് ചെയ്യാൻ കഴിയൂ`, 'error');
+  }
+
+  data.students.push({ id: getNextId(data.students), name, class: cls, user, pass, active: true, created: Date.now(), expiryDays });
+  saveData();
+  ['sName','sClass','sUser','sPass'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('addStudentForm').classList.add('hide');
+  toast('വിദ്യാർത്ഥിയെ ചേർത്തു', 'success'); renderAll();
+}
+
+function editStudent(id) {
+  const s = getStudent(id);
+  if (!s) return;
+  const newName = prompt('പേര് മാറ്റുക:', s.name);
+  if (newName && newName.trim()) s.name = newName.trim();
+  const newExpiry = prompt('എക്സ്പയറി ദിവസം:', s.expiryDays || data.expiryDays);
+  if (newExpiry && parseInt(newExpiry) > 0) s.expiryDays = parseInt(newExpiry);
+  saveData(); renderAll();
+}
+
+function toggleStudent(id) {
+  const s = getStudent(id);
+  if (!s) return;
+  if (data.currentUser?.role === 'admin') {
+    const teacherClass = getTeacherClass(data.currentUser.user);
+    if (teacherClass != s.class) return toast('അനുമതിയില്ല', 'error');
+  }
+  s.active = !s.active;
+  if (s.active) s.created = Date.now();
+  saveData(); renderAll();
+}
+
+function deleteStudent(id) {
+  if (!confirm('നീക്കം ചെയ്യണോ?')) return;
+  data.students = data.students.filter(s => s.id !== id);
+  data.marks = data.marks.filter(m => m.studentId !== id);
+  data.attendance = data.attendance.filter(a => a.studentId !== id);
+  data.coCurricular = data.coCurricular.filter(c => c.studentId !== id);
+  saveData(); renderAll(); toast('നീക്കം ചെയ്തു', 'success');
+}
+
+function saveMark() {
+  const sid = parseInt(document.getElementById('markStudentSelect').value);
+  const exam = document.getElementById('examType').value;
+  const subject = document.getElementById('markSubject').value;
+  const mark = parseFloat(document.getElementById('markValue').value);
+
+  if (!sid || !subject || isNaN(mark)) return toast('വിവരങ്ങൾ നൽകുക', 'error');
+  if (!canManageStudent(sid)) return toast('അനുമതിയില്ല', 'error');
+
+  data.marks.push({ studentId: sid, exam, subject, mark, year: getAcademicYear(new Date()) });
+  saveData(); document.getElementById('markValue').value = '';
+  renderMarkList(); renderDashboard(); toast('സേവ് ചെയ്തു', 'success');
+}
+
+function saveCoCurricular() {
+  const sid = parseInt(document.getElementById('coStudentSelect').value);
+  const activity = document.getElementById('coActivitySelect').value;
+  const mark = document.getElementById('coMark').value.trim();
+
+  if (!sid || !activity || !mark) return toast('വിവരങ്ങൾ നൽകുക', 'error');
+  if (!canManageStudent(sid)) return toast('അനുമതിയില്ല', 'error');
+
+  data.coCurricular.push({ studentId: sid, activity, mark, year: getAcademicYear(new Date()) });
+  saveData(); document.getElementById('coMark').value = '';
+  renderCoCurricular(); renderDashboard(); toast('സേവ് ചെയ്തു', 'success');
+}
+
+function removeCoCurricular(studentId, activity) {
+  if (!confirm('നീക്കം ചെയ്യണോ?')) return;
+  data.coCurricular = data.coCurricular.filter(c => !(c.studentId == studentId && c.activity === activity));
+  saveData(); renderCoCurricular();
+}
+
+function addSubject() {
+  const val = document.getElementById('newSubject').value.trim();
+  if (!val || data.subjects.includes(val)) return toast('ഇതിനകം ഉണ്ട്', 'error');
+  data.subjects.push(val); saveData(); document.getElementById('newSubject').value = ''; renderSubjects();
+}
+function removeSubject(i) { if (!confirm('നീക്കം ചെയ്യണോ?')) return; data.subjects.splice(i, 1); saveData(); renderSubjects(); }
+
+function addActivity() {
+  const val = document.getElementById('newActivity').value.trim();
+  if (!val || data.activities.includes(val)) return toast('ഇതിനകം ഉണ്ട്', 'error');
+  data.activities.push(val); saveData(); document.getElementById('newActivity').value = ''; renderActivities(); populateActivitySelect();
+}
+function removeActivity(i) { if (!confirm('നീക്കം ചെയ്യണോ?')) return; data.activities.splice(i, 1); saveData(); renderActivities(); populateActivitySelect(); }
+
+function sendMessage() {
+  const to = document.getElementById('msgRecipient').value;
+  const content = document.getElementById('msgContent').value.trim();
+  if (!content) return toast('സന്ദേശം എഴുതുക', 'error');
+  data.messages.push({ from: data.currentUser.user, to, content, time: Date.now() });
+  saveData(); document.getElementById('msgContent').value = ''; renderMessages(); toast('അയച്ചു', 'success');
+}
+
+function addTeacher() {
+  if (data.currentUser?.role !== 'super' && data.currentUser?.role !== 'admin') return toast('അനുമതിയില്ല', 'error');
+  const user = document.getElementById('teacherUser').value.trim();
+  const pass = document.getElementById('teacherPass').value.trim();
+  const cls = parseInt(document.getElementById('teacherClass').value);
+  if (!user || !pass) return toast('വിവരങ്ങൾ നൽകുക', 'error');
+  if (data.teachers.find(t => t.user === user) || data.admins.find(a => a.user === user) || data.students.find(s => s.user === user)) return toast('യൂസർ ഉപയോഗത്തിലാണ്', 'error');
+  data.teachers.push({ user, pass, class: cls });
+  saveData(); document.getElementById('teacherUser').value = ''; document.getElementById('teacherPass').value = '';
+  renderTeachers(); renderDashboard(); toast('ടീച്ചറെ ചേർത്തു', 'success');
+}
+function removeTeacher(i) { if (!confirm('നീക്കം ചെയ്യണോ?')) return; data.teachers.splice(i, 1); saveData(); renderTeachers(); renderDashboard(); }
+
+function addAdmin() {
+  if (data.currentUser?.role !== 'super') return toast('സൂപ്പർ അഡ്മിന് മാത്രം പ്രാപ്യം', 'error');
+  const user = document.getElementById('adminUser').value.trim();
+  const pass = document.getElementById('adminPass').value.trim();
+  if (!user || !pass) return toast('വിവരങ്ങൾ നൽകുക', 'error');
+  if (data.admins.find(a => a.user === user) || data.teachers.find(t => t.user === user) || data.students.find(s => s.user === user)) return toast('യൂസർ ഉപയോഗത്തിലാണ്', 'error');
+  data.admins.push({ user, pass, role: 'admin' });
+  saveData(); document.getElementById('adminUser').value = ''; document.getElementById('adminPass').value = '';
+  renderAdmins(); renderDashboard(); toast('അഡ്മിനെ ചേർത്തു', 'success');
+}
+function removeAdmin(i) {
+  if (data.admins[i].user === 'admin') return toast('നീക്കം ചെയ്യാനാവില്ല', 'error');
+  if (!confirm('നീക്കം ചെയ്യണോ?')) return;
+  data.admins.splice(i, 1); saveData(); renderAdmins(); renderDashboard();
+}
+
+function populateReportSelectors() {
+  const yrSel = document.getElementById('reportYearSelect');
+  const years = getAllAcademicYears();
+  yrSel.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join('');
+
+  const stSel = document.getElementById('reportStudentSelect');
+  const visible = getVisibleStudents();
+  stSel.innerHTML = visible.map(s => `<option value="${s.id}">${s.name} (ക്ലാസ് ${s.class})</option>`).join('');
+}
+
+function getReportStudentId() {
+  if (data.currentUser.role === 'student') return data.currentUser.studentId;
+  const val = document.getElementById('reportStudentSelect').value;
+  return val ? parseInt(val) : null;
+}
+
+function monthsOfAcademicYear(yearLabel) {
+  const startMonth = data.acadStartMonth || 6;
+  const startYear = parseInt(yearLabel.split('-')[0]);
+  const names = ['ജനുവരി','ഫെബ്രുവരി','മാർച്ച്','ഏപ്രിൽ','മെയ്','ജൂൺ','ജൂലൈ','ഓഗസ്റ്റ്','സെപ്റ്റംബർ','ഒക്ടോബർ','നവംബർ','ഡിസംബർ'];
+  const months = [];
+  for (let i = 0; i < 12; i++) {
+    const m = ((startMonth - 1 + i) % 12);
+    const y = startYear + Math.floor((startMonth - 1 + i) / 12);
+    months.push({ year: y, month: m + 1, label: names[m] });
+  }
+  return months;
+}
+
+function renderReport() {
+  const yrSel = document.getElementById('reportYearSelect');
+  if (!yrSel.options.length) populateReportSelectors();
+  const year = yrSel.value || getAcademicYear(new Date());
+  const sid = getReportStudentId();
+  const student = sid ? getStudent(sid) : null;
+
+  document.getElementById('reportStudentName').textContent = student ? student.name : 'വിദ്യാർത്ഥിയെ തിരഞ്ഞെടുക്കുക';
+  document.getElementById('reportStudentMeta').textContent = student ? `ക്ലാസ് ${student.class} • അധ്യയന വർഷം ${year}` : '';
+
+  if (!student) {
+    document.getElementById('reportAttPct').textContent = '—';
+    document.getElementById('reportMonthBars').innerHTML = '';
+    document.getElementById('rTotalDays').textContent = '0';
+    document.getElementById('rPresentDays').textContent = '0';
+    document.getElementById('reportCoList').innerHTML = '';
+    document.getElementById('reportMarksBody').innerHTML = '';
+    return;
+  }
+
+  const months = monthsOfAcademicYear(year);
+  let totalMarked = 0, totalPresent = 0;
+  let barsHtml = '';
+  months.forEach(mo => {
+    const recs = data.attendance.filter(a => {
+      if (a.studentId !== student.id) return false;
+      const d = new Date(a.date);
+      return d.getFullYear() === mo.year && (d.getMonth() + 1) === mo.month;
+    });
+    const marked = recs.length;
+    const present = recs.filter(r => r.present).length;
+    totalMarked += marked; totalPresent += present;
+    const pct = marked ? Math.round((present / marked) * 100) : 0;
+    barsHtml += `<div class="bar-row"><div class="m-label">${mo.label}</div><div class="bar-track"><div class="bar-fill" style="width:${marked ? pct : 0}%;"></div></div><div class="m-val">${marked ? pct + '%' : '—'}</div></div>`;
+  });
+  document.getElementById('reportMonthBars').innerHTML = barsHtml;
+
+  const overallPct = totalMarked ? Math.round((totalPresent / totalMarked) * 100) : 0;
+  document.getElementById('reportAttPct').textContent = totalMarked ? overallPct + '%' : '—';
+  document.getElementById('rTotalDays').textContent = totalMarked;
+  document.getElementById('rPresentDays').textContent = totalPresent;
+
+  const coList = data.coCurricular.filter(c => c.studentId == student.id && (c.year || getAcademicYear(new Date())) === year);
+  document.getElementById('reportCoList').innerHTML = coList.length
+    ? coList.map(c => `<div class="co-item"><div><span class="co-activity">${c.activity}</span></div><span class="co-mark">${c.mark}</span></div>`).join('')
+    : '<p class="text-muted">ഈ വർഷം പാഠ്യേതര വിവരങ്ങൾ ഇല്ല</p>';
+
+  const marksForYear = data.marks.filter(m => m.studentId == student.id && (m.year || getAcademicYear(new Date())) === year);
+  const subjectsUsed = Array.from(new Set(marksForYear.map(m => m.subject)));
+  const examCols = ['class', 'half', 'mid', 'annual'];
+  const body = subjectsUsed.length ? subjectsUsed.map(sub => {
+    const cells = examCols.map(ec => {
+      const found = marksForYear.find(m => m.subject === sub && m.exam === ec);
+      return `<td>${found ? found.mark : '—'}</td>`;
+    }).join('');
+    return `<tr><td class="mal"><strong>${sub}</strong></td>${cells}</tr>`;
+  }).join('') : `<tr><td colspan="5" class="text-muted text-center" style="padding:20px;">ഈ വർഷം മാർക്ക് രേഖപ്പെടുത്തിയിട്ടില്ല</td></tr>`;
+  document.getElementById('reportMarksBody').innerHTML = body;
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  const idMap = { 'co-curricular': 'tabCoCurricular', 'homework': 'tabHomework' };
+  const targetId = idMap[tab] || ('tab' + tab.charAt(0).toUpperCase() + tab.slice(1));
+  const target = document.getElementById(targetId);
+  if (target) target.classList.add('active');
+
+  document.querySelectorAll('#tabBar button').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`#tabBar button[data-tab="${tab}"]`);
+  if (btn) btn.classList.add('active');
+
+  if (tab === 'students') renderStudents();
+  if (tab === 'attendance') { renderAttendance(); renderAttendanceMatrix(); }
+  if (tab === 'marks') { populateSelects(); renderMarkList(); }
+  if (tab === 'co-curricular') { populateSelects(); renderCoCurricular(); }
+  if (tab === 'subjects') renderSubjects();
+  if (tab === 'messages') renderMessages();
+  if (tab === 'teachers') renderTeachers();
+  if (tab === 'admins') renderAdmins();
+  if (tab === 'homework') renderHomework();
+  if (tab === 'report') { populateReportSelectors(); renderReport(); }
+  if (tab === 'dashboard') renderDashboard();
+
+  toggleSidebar(false);
+}
+
+// INIT
+loadData();
+document.getElementById('attendanceDate').value = new Date().toISOString().split('T')[0];
+
+</script>
+</body>
+</html>
