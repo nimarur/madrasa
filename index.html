@@ -760,12 +760,13 @@ tbody tr:hover{background:var(--paper);}
           <div style="background:var(--warn-bg);padding:12px 16px;border-radius:var(--radius);margin-bottom:16px;color:var(--warn);font-size:14px;display:flex;align-items:center;gap:8px;">
             <i class="fas fa-exclamation-triangle"></i> സൂപ്പർ അഡ്മിന് മാത്രം പ്രാപ്യം
           </div>
+          <p class="text-muted mb-16" style="font-size:13px;"><i class="fas fa-info-circle"></i> വിദ്യാർത്ഥികൾക്കും അധ്യാപകർക്കും മെസ്സേജ് അയക്കാൻ ഏത് അഡ്മിനെയാണ് കാണിക്കേണ്ടത് എന്ന് തീരുമാനിക്കാൻ പേരിനൊപ്പമുള്ള <b>Radio Button</b> 🔘 ക്ലിക്ക് ചെയ്യുക.</p>
           <div class="form-grid">
             <div class="form-group"><label>പുതിയ ഹെഡ് മാസ്റ്റർ (Admin) യൂസർ</label><input id="adminUser" placeholder="യൂസർ ഐഡി"></div>
             <div class="form-group"><label>പാസ്സ്‌വേർഡ്</label><input id="adminPass" placeholder="പാസ്സ്‌വേർഡ്"></div>
           </div>
           <button class="btn btn-success" onclick="addAdmin()"><i class="fas fa-user-plus"></i> അഡ്മിൻ ആക്കുക</button>
-          <div id="adminList" class="mt-16"></div>
+          <div id="adminList" class="mt-16" style="display:flex; flex-direction:column; gap:8px; align-items:flex-start;"></div>
         </div>
       </div>
 
@@ -789,6 +790,7 @@ let data = {
   activities: ['സാഹിത്യ സമാജം', 'പ്രസംഗം', 'പാട്ട്', 'സ്പോർട്സ്', 'കവിതാരചന', 'ക്വിസ്'],
   marks: [], coCurricular: [], attendance: [], messages: [], teachers: [], admins: [], homework: [],
   timetable: [], fees: [],
+  contactAdmin: '', // NEW: മെസ്സേജ് സ്വീകരിക്കുന്ന അഡ്മിനെ തിരിച്ചറിയാൻ
   currentUser: null
 };
 
@@ -826,7 +828,10 @@ async function loadData() {
 
 function initDefaults() {
   if (!data.admins.find(a => a.user === 'admin')) data.admins.push({ user: 'admin', pass: 'admin123', role: 'super' });
-  if (!data.admins.find(a => a.user === 'headmaster')) data.admins.push({ user: 'headmaster', pass: 'head123', role: 'admin' });
+  if (!data.admins.find(a => a.user === 'headmaster')) {
+      data.admins.push({ user: 'headmaster', pass: 'head123', role: 'admin' });
+      data.contactAdmin = 'headmaster';
+  }
   if (!data.teachers.find(t => t.user === 'teacher')) data.teachers.push({ user: 'teacher', pass: 'teacher123', class: 5 });
 
   if (data.students.length === 0) {
@@ -939,7 +944,7 @@ function handleLogin() {
   const student = data.students.find(s => s.user === user && s.pass === pass);
   if (student) {
     if (!isActive(student)) {
-      if (isAccountExpired(student)) toast('⚠️ അക്കൗണ്ട് കാലാവധി കഴിഞ്ഞു. അഡ്മിനെ ബന്ധപ്പെടുക.', 'error');
+      if (isAccountExpired(student)) toast('⚠️ അക്കൗണ്ട് കാലാവധി കഴിഞ്ഞു. സദർ മുഅല്ലിമിനെ ബന്ധപ്പെടുക.', 'error');
       else toast('❌ അക്കൗണ്ട് ഡിആക്ടീവ് ആണ്.', 'error');
       return;
     }
@@ -971,7 +976,6 @@ function enterApp() {
   document.getElementById('userAvatar').textContent = user.user.charAt(0).toUpperCase();
 
   // Role Badges & Form Controls Visbility
-  // Rule 1: Only Admin/Super Admin can add/edit students
   document.getElementById('btnAddStudentTop').classList.toggle('hide', !isAdminOrSuper);
   document.getElementById('thActions').classList.toggle('hide', !isAdminOrSuper);
 
@@ -986,7 +990,7 @@ function enterApp() {
     document.getElementById('userRole').textContent = '🛡️ സൂപ്പർ അഡ്മിൻ';
     document.getElementById('adminsTab').classList.remove('hide');
   } else if (isAdminRole) {
-    document.getElementById('userRole').textContent = '👑 ഹെഡ് മാസ്റ്റർ (Admin)';
+    document.getElementById('userRole').textContent = '👑 സദർ മുഅല്ലിം (Admin)';
     document.getElementById('adminsTab').classList.add('hide');
   } else if (isTeacher) {
     document.getElementById('userRole').textContent = `👨‍🏫 ക്ലാസ് ${user.teacherClass} ടീച്ചർ`;
@@ -1491,10 +1495,22 @@ function populateMessageRecipients() {
     const u = data.currentUser;
     if(!u) return;
     
-    // All roles can see admins specifically named
-    data.admins.forEach(a => {
-        sel.innerHTML += `<option value="admin_${a.user}">അഡ്മിൻ: ${a.user} ${a.role === 'super' ? '(Super)' : ''}</option>`;
-    });
+    // Super Admin can message other admins
+    if (u.role === 'super') {
+        data.admins.forEach(a => {
+            if (a.user !== u.user) {
+                sel.innerHTML += `<option value="admin_${a.user}">അഡ്മിൻ: ${a.user} ${a.role === 'super' ? '(Super)' : ''}</option>`;
+            }
+        });
+    } 
+    // Teachers and Students only see the designated "Contact Admin"
+    else if (u.role === 'teacher' || u.role === 'student') {
+        const contactA = data.admins.find(a => a.user === data.contactAdmin && a.role !== 'super') || data.admins.find(a => a.role !== 'super');
+        if (contactA) {
+            sel.innerHTML += `<option value="admin_${contactA.user}">ഹെഡ്മാസ്റ്റർ (അഡ്മിൻ)</option>`;
+        }
+    }
+    // Headmaster ('admin') does not see any option to message other admins or super admin
 
     if (u.role === 'student') {
         const t = data.teachers.find(t => t.class == u.class);
@@ -1513,6 +1529,7 @@ function sendMessage() {
   const to = document.getElementById('msgRecipient').value;
   const content = document.getElementById('msgContent').value.trim();
   if (!content) return toast('സന്ദേശം എഴുതുക', 'error');
+  if (!to) return toast('സ്വീകർത്താവിനെ തിരഞ്ഞെടുക്കുക', 'error');
 
   let fromName = data.currentUser.user;
   let fromRole = data.currentUser.role;
@@ -1544,18 +1561,20 @@ function renderMessages() {
   const user = data.currentUser;
   let msgs = [];
 
-  if (user.role === 'super' || user.role === 'admin') {
-      // Admins see everything sent to admins, plus all student->teacher / teacher->student messages
+  if (user.role === 'super') {
       msgs = data.messages;
+  } else if (user.role === 'admin') {
+      // Admin only sees messages strictly to or from them. They don't see Super Admin or other Admin's messages.
+      msgs = data.messages.filter(m => 
+          m.from === user.user || m.to === `admin_${user.user}`
+      );
   } else if (user.role === 'teacher') {
-      // Teachers see messages sent to them, sent from them, or to their class_all
       msgs = data.messages.filter(m => 
           m.from === user.user || 
           m.to === `teacher_${user.user}` || 
           m.to === 'class_all'
       );
   } else if (user.role === 'student') {
-      // Students see messages to/from them, or to class_all of their class
       msgs = data.messages.filter(m => 
           m.from === user.user || 
           m.to === `student_${user.studentId}` || 
@@ -1565,7 +1584,13 @@ function renderMessages() {
 
   box.innerHTML = msgs.slice().reverse().map(m => {
       let toLabel = m.to;
-      if(m.to.startsWith('admin_')) toLabel = `അഡ്മിൻ (${m.to.replace('admin_', '')})`;
+      if(m.to.startsWith('admin_')) {
+          if (user.role === 'teacher' || user.role === 'student') {
+              toLabel = "ഹെഡ്മാസ്റ്റർ";
+          } else {
+              toLabel = `അഡ്മിൻ (${m.to.replace('admin_', '')})`;
+          }
+      }
       else if(m.to.startsWith('teacher_')) toLabel = `ടീച്ചർ (${m.to.replace('teacher_', '')})`;
       else if(m.to.startsWith('student_')) {
           const sid = parseInt(m.to.replace('student_', ''));
@@ -1577,6 +1602,10 @@ function renderMessages() {
       let fromLabel = m.fromName;
       if(m.fromRole === 'student') fromLabel = `${m.fromName} (Class ${m.fromClass})`;
       if(m.fromRole === 'teacher') fromLabel = `${m.fromName} (Teacher Class ${m.fromClass})`;
+      
+      // Mask Super admin & Admins names for privacy to end users
+      if(m.fromRole === 'super' && user.role !== 'super') fromLabel = "മാനേജ്മെന്റ്";
+      if(m.fromRole === 'admin' && (user.role === 'teacher' || user.role === 'student')) fromLabel = "ഹെഡ്മാസ്റ്റർ";
 
       return `<div class="msg-item">
         <div class="msg-header">
@@ -1586,6 +1615,12 @@ function renderMessages() {
         <div class="msg-content">${m.content}</div>
       </div>`;
   }).join('') || '<p class="text-muted">സന്ദേശങ്ങൾ ഇല്ല</p>';
+}
+
+function setContactAdmin(userStr) {
+    data.contactAdmin = userStr;
+    saveData();
+    toast('മെസ്സേജ് ലഭിക്കേണ്ട അഡ്മിനെ മാറ്റി', 'success');
 }
 
 function renderTeachers() {
@@ -1600,9 +1635,16 @@ function renderTeachers() {
 function renderAdmins() {
   const container = document.getElementById('adminList');
   if (data.currentUser?.role !== 'super') { container.innerHTML = '<p class="text-muted"><i class="fas fa-lock"></i> സൂപ്പർ അഡ്മിന് മാത്രം പ്രാപ്യം</p>'; return; }
-  container.innerHTML = data.admins.map((a, i) =>
-    `<div class="chip"><i class="fas fa-user-shield"></i> ${a.user} ${a.role === 'super' ? '⭐' : ''} ${a.user !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="removeAdmin(${i})"><i class="fas fa-times"></i></button>` : ''}</div>`
-  ).join('');
+  
+  container.innerHTML = data.admins.map((a, i) => {
+    let isSuper = a.role === 'super';
+    let isContact = data.contactAdmin === a.user;
+    let radioBtn = !isSuper ? `<input type="radio" name="contactAdmin" onchange="setContactAdmin('${a.user}')" ${isContact ? 'checked' : ''} style="margin-left:8px;cursor:pointer;" title="മെസ്സേജ് സ്വീകരിക്കാൻ ഈ അഡ്മിനെ തിരഞ്ഞെടുക്കുക">` : '';
+    return `<div class="chip" style="min-width: 250px; justify-content: space-between;">
+      <span><i class="fas fa-user-shield"></i> ${a.user} ${isSuper ? '⭐' : radioBtn}</span>
+      ${a.user !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="removeAdmin(${i})"><i class="fas fa-times"></i></button>` : ''}
+    </div>`;
+  }).join('');
 }
 
 // FEES
@@ -1857,12 +1899,22 @@ function addAdmin() {
   if (!user || !pass) return toast('വിവരങ്ങൾ നൽകുക', 'error');
   if (data.admins.find(a => a.user === user) || data.teachers.find(t => t.user === user) || data.students.find(s => s.user === user)) return toast('യൂസർ ഉപയോഗത്തിലാണ്', 'error');
   data.admins.push({ user, pass, role: 'admin' });
+  
+  // If this is the first non-super admin, make them default contact
+  if(!data.contactAdmin) data.contactAdmin = user;
+
   saveData(); document.getElementById('adminUser').value = ''; document.getElementById('adminPass').value = '';
   renderAdmins(); renderDashboard(); toast('ഹെഡ് മാസ്റ്ററെ ചേർത്തു', 'success');
 }
 function removeAdmin(i) {
   if (data.admins[i].user === 'admin') return toast('നീക്കം ചെയ്യാനാവില്ല', 'error');
   if (!confirm('നീക്കം ചെയ്യണോ?')) return;
+  
+  // If we delete the contact admin, reset it
+  if(data.contactAdmin === data.admins[i].user) {
+      data.contactAdmin = '';
+  }
+  
   data.admins.splice(i, 1); saveData(); renderAdmins(); renderDashboard();
 }
 
