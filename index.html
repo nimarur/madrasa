@@ -36,38 +36,47 @@ body{font-family:var(--font-body); background:var(--ivory); color:var(--ink); mi
 :focus-visible{outline:2px solid var(--gold-600);outline-offset:2px;}
 button{font-family:inherit;}
 
-/* Loader */
 #loaderOverlay {position: fixed; inset: 0; background: var(--ivory); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center;}
 .hide-loader { display: none !important; }
 .loader-spinner {width: 50px; height: 50px; border: 5px solid var(--line); border-top-color: var(--emerald-700); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px;}
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Login */
+.motif-dark{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cpath d='M32 4 L37 22 L55 16 L43 30 L55 44 L37 38 L32 56 L27 38 L9 44 L21 30 L9 16 L27 22 Z' fill='none' stroke='%23C9972F' stroke-width='0.8' opacity='0.35'/%3E%3C/svg%3E"); background-size:64px 64px;}
+.star-bullet::before{content:"✦";color:var(--gold-600);font-size:.78em;margin-inline-end:8px;position:relative;top:-1px;}
+
 .login-shell{min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr;}
 .login-brand-panel{background:linear-gradient(175deg,var(--emerald-900) 0%, var(--emerald-800) 60%, var(--emerald-700) 100%);color:#F3EFDF;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:56px 40px;position:relative;text-align:center;}
 .login-brand-panel .arch{width:80px;height:80px;background:linear-gradient(160deg, var(--gold-500), var(--gold-700));display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 14px 30px -8px rgba(0,0,0,.45);position:relative;z-index:1;margin-bottom:22px;border-radius:50% 50% 6px 6px / 62% 62% 6px 6px;}
 .login-brand-panel h1{font-size:28px;font-weight:800;position:relative;z-index:1;letter-spacing:.2px;}
+.login-brand-panel .tagline{color:var(--gold-100);font-size:14px;margin-top:8px;position:relative;z-index:1;max-width:360px;}
+.login-brand-panel .divider{width:60px;height:2px;background:var(--gold-500);margin:22px 0;position:relative;z-index:1;}
+.login-brand-panel .brand-foot{font-size:12.5px;color:rgba(243,239,223,.6);position:relative;z-index:1;}
+
 .login-form-panel{display:flex;align-items:center;justify-content:center;padding:30px 20px;background:var(--ivory);}
 .login-card{width:100%;max-width:380px;}
 .login-card h2{font-size:22px;font-weight:800;color:var(--ink);margin-bottom:4px;}
+.login-card p.sub{color:var(--ink-faint);font-size:13.5px;margin-bottom:28px;}
 .login-form .form-group{margin-bottom:16px;}
 .login-form label{display:block;font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;}
 .login-form input{width:100%;padding:13px 16px;border:1.5px solid var(--line);border-radius:var(--radius);font-size:14.5px;background:#fff;transition:.15s;font-family:inherit;color:var(--ink);}
 .login-form input:focus{border-color:var(--gold-600);box-shadow:0 0 0 3px rgba(201,151,47,.16);outline:none;}
 .login-btn{width:100%;padding:14px;margin-top:6px;background:linear-gradient(135deg,var(--emerald-700),var(--emerald-500));color:#fff;border:none;border-radius:var(--radius);font-size:15.5px;font-weight:700;cursor:pointer;transition:.2s;box-shadow:0 8px 18px -6px rgba(11,61,46,.45);}
 
-@media (max-width:860px){.login-shell{grid-template-columns:1fr;} .login-brand-panel{padding:40px 24px;min-height:220px;}}
-
-/* Shell & Navigation */
 .app-shell{display:flex;min-height:100vh;}
 .sidebar{width:250px;flex-shrink:0;background:linear-gradient(185deg,var(--emerald-900),var(--emerald-800));color:#EFEADA;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;transition:transform .25s ease;z-index:40;}
 .sidebar .brand-row{display:flex;align-items:center;gap:12px;padding:22px 20px 18px;border-bottom:1px solid rgba(243,239,223,.12);}
+.sidebar .brand-row .arch{width:42px;height:42px;font-size:19px;background:linear-gradient(160deg,var(--gold-500),var(--gold-700));display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sidebar .brand-row .name{font-weight:800;font-size:15.5px;line-height:1.2;}
 .sidebar nav{flex:1;overflow-y:auto;padding:14px 12px;}
-.sidebar nav button{width:100%;display:flex;align-items:center;gap:11px;padding:11px 14px;border:none;background:transparent;color:rgba(239,234,218,.78);border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;text-align:left;transition:.15s;margin-bottom:2px;position:relative;}
+.sidebar nav button{width:100%;display:flex;align-items:center;gap:11px;padding:11px 14px;border:none;background:transparent;color:rgba(239,234,218,.78);border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;text-align:left;transition:.15s;margin-bottom:2px;}
+.sidebar nav button i{width:18px;text-align:center;}
 .sidebar nav button:hover{background:rgba(243,239,223,.08);color:#fff;}
 .sidebar nav button.active{background:rgba(201,151,47,.16);color:#fff;font-weight:700;}
 .sidebar .foot{padding:16px 20px;border-top:1px solid rgba(243,239,223,.12);}
-.sidebar .foot button{width:100%;padding:9px;border:1px solid rgba(243,239,223,.25);background:transparent;color:rgba(239,234,218,.85);border-radius:40px;font-size:12.5px;font-weight:600;cursor:pointer;margin-top:10px;}
+.sidebar .foot .who{font-size:13px;font-weight:700;}
+.sidebar .foot .role{font-size:11.5px;color:var(--gold-100);margin-bottom:10px;}
+.sidebar .foot button{width:100%;padding:9px;border:1px solid rgba(243,239,223,.25);background:transparent;color:rgba(239,234,218,.85);border-radius:40px;font-size:12.5px;font-weight:600;cursor:pointer;}
+.sidebar .foot button:hover{background:var(--danger);border-color:var(--danger);color:#fff;}
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(11,20,17,.45);z-index:35;}
 
 .main-col{flex:1;min-width:0;display:flex;flex-direction:column;}
@@ -77,11 +86,11 @@ button{font-family:inherit;}
 
 .page-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px;}
 .page-head h2{font-size:21px;font-weight:800;color:var(--emerald-900);}
+.page-head .desc{font-size:13px;color:var(--ink-faint);margin-top:2px;}
+
 .card{background:#fff;border-radius:var(--radius-lg);padding:22px;margin-bottom:18px;box-shadow:var(--shadow-sm);border:1px solid var(--line);}
 .card-title{font-size:16.5px;font-weight:700;margin-bottom:16px;color:var(--emerald-900);display:flex;align-items:center;}
-.star-bullet::before{content:"✦";color:var(--gold-600);font-size:.78em;margin-inline-end:8px;position:relative;top:-1px;}
 
-/* Components */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:18px;}
 .stat-card{background:linear-gradient(165deg,#fff, var(--paper) 140%);padding:18px 20px;border-radius:var(--radius);border:1px solid var(--line);position:relative;}
 .stat-card .stat-label{font-size:12.5px;color:var(--ink-soft);font-weight:600;}
@@ -96,11 +105,14 @@ tbody tr:hover{background:var(--paper);}
 .badge{padding:4px 12px;border-radius:40px;font-size:11.5px;font-weight:700;display:inline-block;}
 .badge-success{background:var(--success-bg);color:var(--success);}
 .badge-danger{background:var(--danger-bg);color:var(--danger);}
+.badge-warning{background:var(--warn-bg);color:var(--warn);}
 
 .btn{padding:9px 18px;border:none;border-radius:40px;font-weight:700;font-size:13px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px;}
 .btn-primary{background:linear-gradient(135deg,var(--emerald-700),var(--emerald-500));color:#fff;}
 .btn-success{background:var(--success);color:#fff;}
 .btn-danger{background:var(--danger);color:#fff;}
+.btn-warning{background:var(--warn);color:#fff;}
+.btn-secondary{background:var(--ink-faint);color:#fff;}
 .btn-outline{background:transparent;border:1.5px solid var(--emerald-600);color:var(--emerald-700);}
 .btn-sm{padding:5px 12px;font-size:12px;}
 
@@ -122,7 +134,22 @@ tbody tr:hover{background:var(--paper);}
 .pill{padding:8px 16px;border-radius:40px;border:1.5px solid var(--line);font-size:13px;}
 .chip{background:var(--paper);padding:8px 16px;border-radius:40px;border:1px solid var(--line);display:inline-flex;align-items:center;gap:8px;font-size:13.5px;}
 
-.report-head{background:linear-gradient(160deg,var(--emerald-900),var(--emerald-700));color:#F3EFDF;border-radius:var(--radius-lg);padding:26px 28px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;}
+.co-item{background:var(--paper);padding:12px 16px;border-radius:var(--radius);border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+
+.seg{display:inline-flex;background:var(--paper);border:1px solid var(--line);border-radius:40px;padding:3px;}
+.seg button{border:none;background:transparent;padding:8px 18px;border-radius:40px;font-size:13px;font-weight:700;color:var(--ink-soft);cursor:pointer;}
+.seg button.active{background:linear-gradient(135deg,var(--emerald-700),var(--emerald-500));color:#fff;}
+
+.att-cell{width:30px;height:30px;border-radius:8px;border:none;font-family:var(--font-num);font-weight:700;font-size:11.5px;cursor:pointer;}
+.att-cell.p{background:var(--success-bg);color:var(--success);}
+.att-cell.a{background:var(--danger-bg);color:var(--danger);}
+.att-cell.n{background:var(--sand);color:var(--ink-faint);}
+
+.hw-item{background:var(--paper);padding:16px;border-radius:var(--radius);border:1px solid var(--line);margin-bottom:12px;}
+.hw-header{display:flex;justify-content:space-between;margin-bottom:8px;font-size:12px;color:var(--ink-faint);font-weight:700;}
+.hw-subject{font-size:16px;font-weight:800;color:var(--emerald-900);margin-bottom:6px;}
+
+.report-head{background:linear-gradient(160deg,var(--emerald-900),var(--emerald-700));color:#F3EFDF;border-radius:var(--radius-lg);padding:26px 28px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:flex-end;}
 .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .bar-track{flex:1;height:10px;background:var(--sand);border-radius:20px;}
 .bar-fill{height:100%;background:var(--emerald-500);border-radius:20px;}
@@ -134,6 +161,8 @@ tbody tr:hover{background:var(--paper);}
   body > *:not(#printReceiptArea) { display: none !important; }
   #printReceiptArea { display: flex !important; justify-content: center; position: absolute; left: 0; top: 0; width: 100%; background: white; padding: 40px; }
   .receipt-box { border: 3px solid #111; padding: 40px; border-radius: 12px; width: 100%; max-width: 650px; text-align: center; }
+  .receipt-box .amount { font-size: 32px; font-weight: bold; margin: 30px 0; padding: 15px 0; border-top: 2px solid #111; border-bottom: 2px solid #111; }
+  .receipt-sig-area { display:flex; justify-content:space-between; margin-top:50px; font-size:14px; text-align:center;}
 }
 
 @media (max-width:980px){
@@ -141,9 +170,7 @@ tbody tr:hover{background:var(--paper);}
   .sidebar.open{transform:translateX(0);} .sidebar-overlay.show{display:block;}
   .topbar{display:flex;} .content{padding:18px 16px 50px;}
 }
-@media (max-width:768px){
-  .form-grid, .form-grid-3 { grid-template-columns: 1fr !important; }
-}
+@media (max-width:768px){.form-grid, .form-grid-3 { grid-template-columns: 1fr !important; }}
 </style>
 </head>
 <body>
@@ -154,7 +181,10 @@ tbody tr:hover{background:var(--paper);}
 
 <div id="loginScreen" class="login-shell">
   <div class="login-brand-panel motif-dark">
-    <div class="arch">📖</div><h1 id="loginSchoolName">നൂറുൽ ഈമാൻ മദ്രസ</h1>
+    <div class="arch">📖</div>
+    <h1 id="loginSchoolName">നൂറുൽ ഈമാൻ മദ്രസ</h1>
+    <div class="divider"></div>
+    <p class="tagline">അറിവിന്റെ വെളിച്ചം പകരുന്ന ഒരിടം — വിദ്യാർത്ഥികളുടെയും അധ്യാപകരുടെയും ദൈനംദിന പുരോഗതി ഒരൊറ്റയിടത്ത്.</p>
     <div class="brand-foot mt-16">മദ്രസ മാനേജ്മെന്റ് സിസ്റ്റം</div>
   </div>
   <div class="login-form-panel">
@@ -205,15 +235,27 @@ tbody tr:hover{background:var(--paper);}
     </div>
 
     <div class="content">
+
+      <!-- DASHBOARD -->
       <div id="tabDashboard" class="tab-content active">
         <div class="page-head"><h2>ഡാഷ്ബോർഡ്</h2></div>
         <div class="stats-grid">
           <div class="stat-card"><div class="stat-label">ആകെ വിദ്യാർത്ഥികൾ</div><div class="stat-value" id="totalStudents">0</div></div>
           <div class="stat-card"><div class="stat-label">ആക്ടീവ്</div><div class="stat-value" id="activeStudents">0</div></div>
           <div class="stat-card"><div class="stat-label">ഇന്നത്തെ ഹാജർ</div><div class="stat-value" id="todayAttendance">0</div></div>
+          <div class="stat-card"><div class="stat-label">ടീച്ചർമാർ</div><div class="stat-value" id="teacherCount">0</div></div>
+        </div>
+        <div class="card hide" id="expiryAlertSection">
+          <div class="card-title" style="color:var(--danger);">സബ്സ്ക്രിപ്ഷൻ തീരുന്നവർ</div>
+          <div id="expiryAlerts"></div>
+        </div>
+        <div class="form-grid">
+            <div class="card"><div class="card-title">ഏറ്റവും പുതിയ മാർക്ക്</div><div id="recentMarks" class="text-muted">മാർക്ക് ലഭ്യമല്ല</div></div>
+            <div class="card"><div class="card-title">അറിയിപ്പുകൾ</div><div id="messagePreview" class="msg-container"></div></div>
         </div>
       </div>
 
+      <!-- STUDENTS -->
       <div id="tabStudents" class="tab-content">
         <div class="page-head">
           <h2>വിദ്യാർത്ഥികൾ</h2>
@@ -239,17 +281,70 @@ tbody tr:hover{background:var(--paper);}
           <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
             <input class="pill" id="studentSearch" placeholder="🔍 പേര് / വീട്ടുപേര് തിരയുക..." oninput="renderStudents()" style="flex:1;">
             <select class="pill" id="classFilter" onchange="renderStudents()"></select>
+            <select class="pill" id="statusFilter" onchange="renderStudents()">
+              <option value="all">എല്ലാ സ്റ്റാറ്റസ്</option><option value="active">ആക്ടീവ്</option>
+              <option value="inactive">ഡിആക്ടീവ്</option><option value="expired">കാലാവധി കഴിഞ്ഞു</option>
+            </select>
           </div>
 
           <div class="table-responsive">
             <table>
-              <thead><tr><th>പേര് (പൂർണ്ണരൂപം)</th><th>വീട്ടുപേര്</th><th>നമ്പർ</th><th>ക്ലാസ്</th><th>യൂസർ</th><th>സ്റ്റാറ്റസ്</th><th id="thActions">പ്രവർത്തനം</th></tr></thead>
+              <thead><tr><th>പേര്</th><th>വീട്ടുപേര്</th><th>നമ്പർ</th><th>ക്ലാസ്</th><th>യൂസർ</th><th>സ്റ്റാറ്റസ്</th><th id="thActions">പ്രവർത്തനം</th></tr></thead>
               <tbody id="studentTableBody"></tbody>
             </table>
           </div>
         </div>
       </div>
 
+      <!-- SETTINGS -->
+      <div id="tabSettings" class="tab-content">
+        <div class="page-head"><h2>സെറ്റിംഗ്സ്</h2><button class="btn btn-outline btn-sm" onclick="renderAll()">ഡാറ്റ പുതുക്കുക</button></div>
+        <div class="card" id="passwordChangeSection">
+            <div class="card-title">പാസ്സ്‌വേർഡ് മാറ്റുക</div>
+            <div class="form-grid-3">
+                <div class="form-group"><label>നിലവിലെ പാസ്സ്‌വേർഡ്</label><input type="password" id="currentPassInput"></div>
+                <div class="form-group"><label>പുതിയ പാസ്സ്‌വേർഡ്</label><input type="password" id="newPassInput"></div>
+                <div class="form-group"><label>ആവർത്തിക്കുക</label><input type="password" id="confirmPassInput"></div>
+            </div>
+            <button class="btn btn-success" onclick="changeOwnPassword()">പാസ്സ്‌വേർഡ് സേവ് ചെയ്യുക</button>
+        </div>
+        <div class="card" id="adminSettingsSection">
+          <div class="card-title" style="color:var(--danger);">മദ്രസ അഡ്മിനിസ്ട്രേഷൻ</div>
+          <div class="form-grid mt-16">
+            <div class="form-group"><label>മദ്രസ പേര്</label><input type="text" id="schoolNameInput"><button class="btn btn-primary mt-16" onclick="updateSchoolName()">സേവ്</button></div>
+            <div class="form-group"><label>അക്കൗണ്ട് കാലാവധി</label><input type="number" id="expiryDaysInput"><button class="btn btn-primary mt-16" onclick="updateExpiryDays()">സേവ്</button></div>
+            <div class="form-group"><label>അധ്യയന വർഷം തുടങ്ങുന്ന മാസം (1-12)</label><input type="number" id="acadStartInput"><button class="btn btn-primary mt-16" onclick="updateAcadStart()">സേവ്</button></div>
+            <div class="form-group"><label>എക്സ്പയറി നോട്ടിഫിക്കേഷൻ</label><input type="number" id="alertDaysInput"><button class="btn btn-primary mt-16" onclick="updateAlertDays()">സേവ്</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMETABLE -->
+      <div id="tabTimetable" class="tab-content">
+        <div class="page-head"><h2>ടൈംടേബിൾ</h2></div>
+        <div class="card">
+          <div class="form-group mb-16"><label>ക്ലാസ്</label><select id="timetableClass" onchange="renderTimetable()"></select></div>
+          <div id="timetableEditor" class="hide">
+            <div class="table-responsive">
+              <table>
+                <thead><tr><th>ദിവസം</th><th>പീരിയഡ് 1</th><th>പീരിയഡ് 2</th><th>പീരിയഡ് 3</th><th>പീരിയഡ് 4</th></tr></thead>
+                <tbody id="timetableBody"></tbody>
+              </table>
+            </div>
+            <button class="btn btn-success mt-16" onclick="saveTimetable()">സേവ് ചെയ്യുക</button>
+          </div>
+          <div id="timetableViewer" class="hide">
+             <div class="table-responsive">
+              <table>
+                <thead><tr><th>ദിവസം</th><th>പീരിയഡ് 1</th><th>പീരിയഡ് 2</th><th>പീരിയഡ് 3</th><th>പീരിയഡ് 4</th></tr></thead>
+                <tbody id="timetableReadBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HOMEWORK -->
       <div id="tabHomework" class="tab-content">
         <div class="page-head"><h2>ഹോം വർക്ക്</h2></div>
         <div class="card" id="hwAdminSection">
@@ -257,12 +352,141 @@ tbody tr:hover{background:var(--paper);}
             <div class="form-group"><label>ക്ലാസ്</label><select id="hwClassSelect"></select></div>
             <div class="form-group"><label>വിഷയം</label><select id="hwSubjectSelect"></select></div>
             <div class="form-group" style="grid-column:1/-1;"><label>വിവരണം</label><textarea id="hwDesc"></textarea></div>
+            <div class="form-group" style="grid-column:1/-1;"><label>ഫയൽ ലിങ്ക്</label><input type="url" id="hwLink"></div>
           </div>
           <button class="btn btn-success" onclick="addHomework()">പബ്ലിഷ് ചെയ്യുക</button>
         </div>
         <div class="card"><div id="hwListContainer"></div></div>
       </div>
 
+      <!-- FINANCE -->
+      <div id="tabFinance" class="tab-content">
+        <div class="page-head"><h2>വരവ് / ചിലവ് (അക്കൗണ്ട്സ്)</h2></div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-label">മൊത്തം വരവ്</div><div class="stat-value" id="totIncome" style="color:var(--success);">₹0</div></div>
+          <div class="stat-card"><div class="stat-label">മൊത്തം ചിലവ്</div><div class="stat-value" id="totExpense" style="color:var(--danger);">₹0</div></div>
+          <div class="stat-card"><div class="stat-label">ബാക്കി ഫണ്ട്</div><div class="stat-value" id="totBalance">₹0</div></div>
+        </div>
+        <div class="card" style="background:var(--info-bg);">
+          <div class="card-title">റിപ്പോർട്ട് എടുക്കുക</div>
+          <div class="form-grid-3">
+             <div class="form-group"><label>റിപ്പോർട്ട് തരം</label><select id="finReportType" onchange="toggleFinReportInputs()"><option value="acad">Academic Year</option><option value="cal">Calendar Year</option><option value="custom">Custom Date</option></select></div>
+             <div class="form-group" id="finAcadDiv"><label>Academic Year</label><select id="finAcadYear"></select></div>
+             <div class="form-group hide" id="finCalDiv"><label>Year</label><input type="number" id="finCalYear" value="2024"></div>
+             <div class="form-group hide" id="finCustomStartDiv"><label>മുതൽ (From Date)</label><input type="date" id="finFromDate"></div>
+             <div class="form-group hide" id="finCustomEndDiv"><label>വരെ (To Date)</label><input type="date" id="finToDate"></div>
+          </div>
+          <button class="btn btn-primary" onclick="generateFinReport()">സെർച്ച് ചെയ്യുക</button>
+          <div id="finReportResult" class="hide mt-16" style="background:#fff;padding:15px;border-radius:10px;">
+             <div style="display:flex;justify-content:space-between;margin-bottom:10px;"><h4 id="finRepTitle">റിപ്പോർട്ട്</h4><button class="btn btn-outline btn-sm" onclick="printFinReport()">Print</button></div>
+             <div id="finRepContent"></div>
+          </div>
+        </div>
+        <div class="form-grid">
+            <div class="card">
+                <div class="card-title">ഫീസ് / വരവ് ചേർക്കുക</div>
+                <div class="form-group"><label>ക്ലാസ്</label><select id="feeClassSelect" onchange="populateFeeStudentSelect()"></select></div>
+                <div class="form-group"><label>വിദ്യാർത്ഥി</label><select id="feeStudentSelect"></select></div>
+                <div class="form-group"><label>തുക (₹)</label><input type="number" id="feeAmount"></div>
+                <div class="form-group"><label>തിയ്യതി</label><input type="date" id="feeDate"></div>
+                <button class="btn btn-success" onclick="saveFee()">രേഖപ്പെടുത്തുക</button>
+            </div>
+            <div class="card">
+                <div class="card-title">പുതിയ ചിലവ് ചേർക്കുക</div>
+                <div class="form-group"><label>ആവശ്യം / കാരണം</label><input type="text" id="expReason"></div>
+                <div class="form-group"><label>തുക (₹)</label><input type="number" id="expAmount"></div>
+                <div class="form-group"><label>തിയ്യതി</label><input type="date" id="expDate"></div>
+                <button class="btn btn-danger" onclick="saveExpense()">രേഖപ്പെടുത്തുക</button>
+            </div>
+        </div>
+        <div class="form-grid">
+            <div class="card"><div class="card-title">വരവ് വിവരങ്ങൾ</div><div class="table-responsive"><table id="feeTableBody"></table></div></div>
+            <div class="card"><div class="card-title">ചിലവുകൾ</div><div class="table-responsive"><table id="expenseTableBody"></table></div></div>
+        </div>
+      </div>
+
+      <!-- ATTENDANCE -->
+      <div id="tabAttendance" class="tab-content">
+        <div class="page-head">
+          <h2>ഹാജർ</h2>
+          <div class="seg"><button id="attSegDay" class="active" onclick="setAttendanceView('day')">ദിവസം</button><button id="attSegMonth" onclick="setAttendanceView('month')">മാസം</button></div>
+        </div>
+        <div class="card">
+          <div class="form-grid" id="attDayControls">
+            <div class="form-group"><label>തീയതി</label><input type="date" id="attendanceDate" onchange="renderAttendance()"></div>
+            <div class="form-group"><label>ക്ലാസ്</label><select id="attendanceClass" onchange="renderAttendance()"></select></div>
+          </div>
+          <div class="form-grid hide" id="attMonthControls">
+            <div class="form-group"><label>മാസം</label><input type="month" id="attendanceMonth" onchange="renderAttendanceMatrix()"></div>
+            <div class="form-group"><label>ക്ലാസ്</label><select id="attendanceMonthClass" onchange="renderAttendanceMatrix()"></select></div>
+          </div>
+          <div id="attDaySection">
+            <div id="attSummary" class="mb-16"></div>
+            <div class="table-responsive"><table><thead><tr><th>പേര്</th><th>ക്ലാസ്</th><th>ഹാജർ</th><th>പ്രവർത്തനം</th></tr></thead><tbody id="attendanceTableBody"></tbody></table></div>
+          </div>
+          <div id="attMonthSection" class="hide"><div class="table-responsive matrix-wrap" id="attMatrixWrap"></div></div>
+        </div>
+      </div>
+
+      <!-- MARKS -->
+      <div id="tabMarks" class="tab-content">
+        <div class="page-head"><h2>മാർക്ക്</h2></div>
+        <div class="card">
+          <div class="form-grid">
+            <div>
+              <div class="form-group"><label>വിദ്യാർത്ഥി</label><select id="markStudentSelect" onchange="renderMarkList()"></select></div>
+              <div class="form-group"><label>പരീക്ഷ</label><select id="examType"><option value="class">ക്ലാസ് ടെസ്റ്റ്</option><option value="half">ഹാഫ് ഇയർ</option><option value="mid">മിഡ് ടൈം</option><option value="annual">കൊല്ലപ്പരീക്ഷ</option></select></div>
+              <div class="form-group"><label>വിഷയം</label><select id="markSubject"></select></div>
+              <div class="form-group"><label>മാർക്ക്</label><input type="number" id="markValue"></div>
+              <button class="btn btn-success" id="btnSaveMark" onclick="saveMark()">സേവ് ചെയ്യുക</button>
+            </div>
+            <div><div class="card-title">മാർക്ക് ലിസ്റ്റ്</div><div id="markList"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CO-CURRICULAR -->
+      <div id="tabCoCurricular" class="tab-content">
+        <div class="page-head"><h2>പാഠ്യേതരം</h2></div>
+        <div class="card">
+          <div class="flex-between mb-16" id="coCurricularControls">
+            <div style="display:flex;gap:8px;"><input id="newActivity" class="pill"><button class="btn btn-success" id="btnAddActivity" onclick="addActivity()">ചേർക്കുക</button></div>
+          </div>
+          <div id="activityList" style="display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;"></div>
+          <div class="form-grid-3">
+            <div class="form-group"><label>വിദ്യാർത്ഥി</label><select id="coStudentSelect"></select></div>
+            <div class="form-group"><label>പരിപാടി</label><select id="coActivitySelect"></select></div>
+            <div class="form-group"><label>മാർക്ക് / റാങ്ക്</label><input id="coMark"></div>
+          </div>
+          <button class="btn btn-success" id="btnSaveCo" onclick="saveCoCurricular()">സേവ് ചെയ്യുക</button>
+          <div id="coList" class="mt-16"></div>
+        </div>
+      </div>
+
+      <!-- REPORT -->
+      <div id="tabReport" class="tab-content">
+        <div class="page-head">
+          <h2>റിപ്പോർട്ട്</h2>
+          <div style="display:flex;gap:10px;"><select class="pill" id="reportStudentSelect" onchange="renderReport()"></select><select class="pill" id="reportYearSelect" onchange="renderReport()"></select><button class="btn btn-outline" onclick="window.print()">പ്രിന്റ്</button></div>
+        </div>
+        <div class="report-head"><div><h3 id="reportStudentName">—</h3><div class="yr" id="reportStudentMeta">—</div></div><div style="text-align:right;"><div style="font-size:34px;font-weight:800;" id="reportAttPct">—</div><div class="yr">ഹാജർ ശതമാനം</div></div></div>
+        <div class="report-grid">
+          <div class="card"><div class="card-title">മാസം തിരിച്ചുള്ള ഹാജർ</div><div id="reportMonthBars"></div></div>
+          <div class="card"><div class="card-title">ഹാജർ ചുരുക്കം</div>
+            <div class="stats-grid" style="grid-template-columns:1fr 1fr;"><div class="stat-card"><div class="stat-label">ദിവസങ്ങൾ</div><div class="stat-value" id="rTotalDays">0</div></div><div class="stat-card"><div class="stat-label">ഹാജരായത്</div><div class="stat-value" id="rPresentDays">0</div></div></div>
+            <div class="card-title mt-16">പാഠ്യേതര നേട്ടങ്ങൾ</div><div id="reportCoList"></div>
+          </div>
+        </div>
+        <div class="card"><div class="card-title">മാർക്ക് വിവരങ്ങൾ</div><div class="table-responsive"><table><thead><tr><th>വിഷയം</th><th>ക്ലാസ് ടെസ്റ്റ്</th><th>ഹാഫ് ഇയർ</th><th>മിഡ് ടൈം</th><th>കൊല്ലപ്പരീക്ഷ</th></tr></thead><tbody id="reportMarksBody"></tbody></table></div></div>
+      </div>
+
+      <!-- SUBJECTS -->
+      <div id="tabSubjects" class="tab-content">
+        <div class="page-head"><h2>വിഷയങ്ങൾ</h2><div style="display:flex;gap:8px;"><input id="newSubject" class="pill"><button class="btn btn-success" id="btnAddSub" onclick="addSubject()">ചേർക്കുക</button></div></div>
+        <div class="card"><div id="subjectList" style="display:flex;flex-wrap:wrap;gap:8px;"></div></div>
+      </div>
+
+      <!-- MESSAGES -->
       <div id="tabMessages" class="tab-content">
         <div class="page-head"><h2>സന്ദേശങ്ങൾ</h2></div>
         <div class="card">
@@ -273,304 +497,485 @@ tbody tr:hover{background:var(--paper);}
         </div>
       </div>
 
-      <div id="tabFinance" class="tab-content">
-        <div class="page-head"><h2>വരവ് / ചിലവ് (അക്കൗണ്ട്സ്)</h2></div>
-        
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-label">മൊത്തം വരവ്</div><div class="stat-value" id="totIncome" style="color:var(--success);">₹0</div></div>
-          <div class="stat-card"><div class="stat-label">മൊത്തം ചിലവ്</div><div class="stat-value" id="totExpense" style="color:var(--danger);">₹0</div></div>
-          <div class="stat-card"><div class="stat-label">ബാക്കി ഫണ്ട്</div><div class="stat-value" id="totBalance">₹0</div></div>
-        </div>
-
-        <div class="card" style="background:var(--info-bg);">
-          <div class="card-title star-bullet">റിപ്പോർട്ട് എടുക്കുക</div>
-          <div class="form-grid-3">
-             <div class="form-group">
-                <label>റിപ്പോർട്ട് തരം</label>
-                <select id="finReportType" onchange="toggleFinReportInputs()">
-                    <option value="acad">Academic Year</option>
-                    <option value="cal">Calendar Year</option>
-                    <option value="custom">Custom Date (മുതൽ-വരെ)</option>
-                </select>
-             </div>
-             <div class="form-group" id="finAcadDiv"><label>Academic Year</label><select id="finAcadYear"></select></div>
-             <div class="form-group hide" id="finCalDiv"><label>Year</label><input type="number" id="finCalYear" value="2024"></div>
-             <div class="form-group hide" id="finCustomStartDiv"><label>മുതൽ (From Date)</label><input type="date" id="finFromDate"></div>
-             <div class="form-group hide" id="finCustomEndDiv"><label>വരെ (To Date)</label><input type="date" id="finToDate"></div>
+      <!-- TEACHERS -->
+      <div id="tabTeachers" class="tab-content">
+        <div class="page-head"><h2>ടീച്ചർമാർ</h2></div>
+        <div class="card">
+          <div class="form-grid-3" id="teacherAddForm">
+            <div class="form-group"><label>യൂസർ ഐഡി</label><input id="teacherUser"></div>
+            <div class="form-group"><label>പാസ്സ്‌വേർഡ്</label><input id="teacherPass"></div>
+            <div class="form-group"><label>ക്ലാസ്</label><select id="teacherClass"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></div>
           </div>
-          <button class="btn btn-primary" onclick="generateFinReport()"><i class="fas fa-search"></i> സെർച്ച് ചെയ്യുക</button>
-          
-          <div id="finReportResult" class="hide mt-16" style="background:#fff;padding:15px;border-radius:10px;">
-             <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
-                 <h4 id="finRepTitle">റിപ്പോർട്ട്</h4>
-                 <button class="btn btn-outline btn-sm" onclick="printFinReport()"><i class="fas fa-print"></i> Print</button>
-             </div>
-             <div id="finRepContent"></div>
-          </div>
-        </div>
-
-        <div class="form-grid">
-            <div class="card">
-                <div class="card-title star-bullet">ഫീസ് / വരവ് ചേർക്കുക</div>
-                <div class="form-group"><label>ക്ലാസ്</label><select id="feeClassSelect" onchange="populateFeeStudentSelect()"></select></div>
-                <div class="form-group"><label>വിദ്യാർത്ഥി</label><select id="feeStudentSelect"></select></div>
-                <div class="form-group"><label>തുക (₹)</label><input type="number" id="feeAmount"></div>
-                <div class="form-group"><label>തിയ്യതി</label><input type="date" id="feeDate"></div>
-                <button class="btn btn-success" onclick="saveFee()">വരവ് രേഖപ്പെടുത്തുക</button>
-            </div>
-            <div class="card">
-                <div class="card-title star-bullet">പുതിയ ചിലവ് ചേർക്കുക</div>
-                <div class="form-group"><label>ആവശ്യം / കാരണം</label><input type="text" id="expReason"></div>
-                <div class="form-group"><label>തുക (₹)</label><input type="number" id="expAmount"></div>
-                <div class="form-group"><label>തിയ്യതി</label><input type="date" id="expDate"></div>
-                <button class="btn btn-danger" onclick="saveExpense()">ചിലവ് രേഖപ്പെടുത്തുക</button>
-            </div>
+          <button class="btn btn-success" id="btnAddTeacherBtn" onclick="addTeacher()">ചേർക്കുക</button>
+          <div id="teacherList" class="mt-16" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
         </div>
       </div>
-      
-      <div id="tabSettings" class="tab-content"><div class="page-head"><h2>സെറ്റിംഗ്സ്</h2></div><div class="card"><div class="card-title">പാസ്സ്‌വേർഡ് മാറ്റുക</div><div class="form-group"><label>പുതിയ പാസ്സ്‌വേർഡ്</label><input type="password" id="newPassInput"></div><button class="btn btn-success" onclick="changeOwnPassword()">സേവ് ചെയ്യുക</button></div></div>
-      <div id="tabTimetable" class="tab-content"><div class="page-head"><h2>ടൈംടേബിൾ</h2></div></div>
-      <div id="tabAttendance" class="tab-content"><div class="page-head"><h2>ഹാജർ</h2></div></div>
-      <div id="tabMarks" class="tab-content"><div class="page-head"><h2>മാർക്ക്</h2></div></div>
-      <div id="tabCoCurricular" class="tab-content"><div class="page-head"><h2>പാഠ്യേതരം</h2></div></div>
-      <div id="tabReport" class="tab-content"><div class="page-head"><h2>റിപ്പോർട്ട്</h2></div></div>
-      <div id="tabSubjects" class="tab-content"><div class="page-head"><h2>വിഷയങ്ങൾ</h2></div><div class="card" id="subjectList"></div></div>
-      <div id="tabTeachers" class="tab-content"><div class="page-head"><h2>ടീച്ചർമാർ</h2></div></div>
-      <div id="tabAdmins" class="tab-content"><div class="page-head"><h2>അഡ്മിൻ</h2></div></div>
+
+      <!-- ADMINS -->
+      <div id="tabAdmins" class="tab-content">
+        <div class="page-head"><h2>അഡ്മിൻ മാനേജ്മെന്റ്</h2></div>
+        <div class="card">
+          <div class="form-grid">
+            <div class="form-group"><label>യൂസർ ഐഡി</label><input id="adminUser"></div>
+            <div class="form-group"><label>പാസ്സ്‌വേർഡ്</label><input id="adminPass"></div>
+          </div>
+          <button class="btn btn-success" onclick="addAdmin()">അഡ്മിൻ ആക്കുക</button>
+          <div id="adminList" class="mt-16" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+      </div>
 
     </div>
   </div>
 </div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuUnGfrYsyIdClCp_Pi69XOiWK0dZQVBoE4yCFbdiRM5NEKQTrxKIeLNYBWRc5DsEOAw/exec'; // ഇവിടെ ഗൂഗിൾ ആപ്പ് സ്ക്രിപ്റ്റ് ലിങ്ക് നൽകുക
+// ============================================================
+// ഗൂഗിൾ ആപ്പ് സ്ക്രിപ്റ്റ് ലിങ്ക് ഇവിടെ നൽകുക 
+// ============================================================
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuUnGfrYsyIdClCp_Pi69XOiWK0dZQVBoE4yCFbdiRM5NEKQTrxKIeLNYBWRc5DsEOAw/exec'; 
 
+// ============================================================
+// DATA LAYER
+// ============================================================
 let data = {
-  schoolName: 'നൂറുൽ ഈമാൻ മദ്രസ', expiryDays: 330, acadStartMonth: 6,
+  schoolName: 'നൂറുൽ ഈമാൻ മദ്രസ', expiryDays: 330, acadStartMonth: 6, expiryAlertDays: 7,
   students: [], subjects: ['ഖുർആൻ', 'ഹിഫ്ള്', 'ഫിഖ്ഹ്', 'തഫ്സീർ', 'അഖീദ'],
-  marks: [], attendance: [], messages: [], teachers: [], admins: [], homework: [],
-  fees: [], expenses: [], contactAdmin: '', currentUser: null
+  activities: ['സാഹിത്യ സമാജം', 'പ്രസംഗം', 'പാട്ട്', 'സ്പോർട്സ്', 'കവിതാരചന', 'ക്വിസ്'],
+  marks: [], coCurricular: [], attendance: [], messages: [], teachers: [], admins: [], homework: [],
+  timetable: [], fees: [], expenses: [], contactAdmin: '', currentUser: null
 };
+
+let attendanceView = 'day';
 
 async function loadData() {
   const loader = document.getElementById('loaderOverlay');
   try {
-    const saved = localStorage.getItem('madrasaDataPremiumV10');
-    if (saved) { data = { ...data, ...JSON.parse(saved) }; if(!data.expenses) data.expenses = []; }
-    else { initDefaults(); }
+    const saved = localStorage.getItem('madrasaDataPremiumV11');
+    if (saved) { 
+        data = { ...data, ...JSON.parse(saved) }; 
+        if(!data.expenses) data.expenses = [];
+    } else { initDefaults(); }
   } catch(err) { initDefaults(); }
-  
+
   if(loader) loader.classList.add('hide-loader');
+  document.getElementById('loginSchoolName').textContent = data.schoolName || 'നൂറുൽ ഈമാൻ മദ്രസ';
 
   if (SCRIPT_URL && SCRIPT_URL !== 'YOUR_WEB_APP_URL_HERE') {
     fetch(SCRIPT_URL).then(res => res.json()).then(fetchedData => {
-      if (fetchedData && fetchedData.admins) { data = { ...data, ...fetchedData }; if(!data.expenses) data.expenses = []; saveData(); }
+      if (fetchedData && fetchedData.admins) { 
+          data = { ...data, ...fetchedData }; 
+          if(!data.expenses) data.expenses = [];
+          saveData(); 
+      }
     }).catch(e => console.warn(e));
   }
 }
 
 function initDefaults() {
   if (!data.admins.find(a => a.user === 'admin')) data.admins.push({ user: 'admin', pass: 'admin123', role: 'super' });
+  if (!data.admins.find(a => a.user === 'headmaster')) { data.admins.push({ user: 'headmaster', pass: 'head123', role: 'admin' }); data.contactAdmin = 'headmaster'; }
+  if (!data.teachers.find(t => t.user === 'teacher')) data.teachers.push({ user: 'teacher', pass: 'teacher123', class: 5 });
   saveData();
 }
 
 function saveData() {
-  localStorage.setItem('madrasaDataPremiumV10', JSON.stringify(data));
+  localStorage.setItem('madrasaDataPremiumV11', JSON.stringify(data));
   if (SCRIPT_URL && SCRIPT_URL !== 'YOUR_WEB_APP_URL_HERE') {
     fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'text/plain;charset=utf-8' } });
   }
 }
 
+function toast(msg, type) {
+  const host = document.getElementById('toastHost');
+  const el = document.createElement('div');
+  el.className = 'toast ' + (type||'');
+  el.innerHTML = `<span>${type==='error'?'⚠️':(type==='success'?'✅':'✦')}</span><span>${msg}</span>`;
+  host.appendChild(el);
+  setTimeout(() => { el.style.opacity='0'; setTimeout(()=>el.remove(), 250); }, 3000);
+}
+
+function getStudent(id) { return data.students.find(s => s.id == id); }
+function getNextId(arr) { return arr.length ? Math.max(...arr.map(x => x.id || 0)) + 1 : 1; }
+function getStudentExpiryDays(student) { return student.expiryDays || data.expiryDays; }
+function isAccountExpired(student) { if (!student.active) return true; return ((Date.now() - student.created)/(1000*60*60*24)) > getStudentExpiryDays(student); }
+function isActive(student) { return student.active && !isAccountExpired(student); }
+
+function getAcademicYear(dateObj) {
+  const sm = data.acadStartMonth || 6; 
+  const m = dateObj.getMonth() + 1;
+  const ys = (m >= sm) ? dateObj.getFullYear() : dateObj.getFullYear() - 1;
+  return `${ys}-${String((ys + 1) % 100).padStart(2, '0')}`;
+}
+function getAllAcademicYears() {
+  const set = new Set(); set.add(getAcademicYear(new Date()));
+  data.fees.forEach(f => set.add(getAcademicYear(new Date(f.date))));
+  return Array.from(set).sort().reverse();
+}
+
+function getVisibleStudents() {
+  const u = data.currentUser; if (!u) return [];
+  if (['super', 'admin'].includes(u.role)) return data.students; 
+  if (u.role === 'teacher') return data.students.filter(s => s.class == u.teacherClass);
+  if (u.role === 'student') { const s = getStudent(u.studentId); return s ? [s] : []; }
+  return [];
+}
+function getVisibleClasses() {
+  const u = data.currentUser;
+  if (['super', 'admin'].includes(u.role)) return ['all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+  if (u.role === 'teacher') return [String(u.teacherClass)];
+  return [];
+}
+function canManageStudent(studentId) {
+  const u = data.currentUser;
+  if (['super', 'admin'].includes(u.role)) return true;
+  if (u.role === 'teacher') { const s = getStudent(studentId); return s && s.class == u.teacherClass; }
+  return false;
+}
+function getTodayAttendance() { const t = new Date().toISOString().split('T')[0]; return data.attendance.filter(a => a.date === t); }
+function getStudentAttendance(studentId, date) { return data.attendance.find(a => a.studentId == studentId && a.date === date); }
+
 function handleLogin() {
-  const user = document.getElementById('loginUser').value.trim();
-  const pass = document.getElementById('loginPass').value.trim();
-  const admin = data.admins.find(a => a.user === user && a.pass === pass);
-  if (admin) { data.currentUser = { user, role: admin.role }; enterApp(); return; }
-  const teacher = data.teachers.find(t => t.user === user && t.pass === pass);
-  if (teacher) { data.currentUser = { user, role: 'teacher', teacherClass: teacher.class }; enterApp(); return; }
-  alert('തെറ്റായ യൂസർ/പാസ്സ്‌വേർഡ്');
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value.trim();
+  if (!u || !p) return toast('യൂസറും പാസ്സും നൽകുക', 'error');
+
+  const adm = data.admins.find(a => a.user === u && a.pass === p);
+  if (adm) { data.currentUser = { user:u, role:adm.role }; enterApp(); return; }
+
+  const tcr = data.teachers.find(t => t.user === u && t.pass === p);
+  if (tcr) { data.currentUser = { user:u, role:'teacher', teacherClass:tcr.class }; enterApp(); return; }
+
+  const stu = data.students.find(s => s.user === u && s.pass === p);
+  if (stu) {
+    if (!isActive(stu)) return toast('അക്കൗണ്ട് ആക്ടീവ് അല്ല', 'error');
+    data.currentUser = { user:u, role:'student', studentId:stu.id, class:stu.class }; enterApp(); return;
+  }
+  toast('തെറ്റായ യൂസർ/പാസ്സ്‌വേർഡ്', 'error');
 }
 
 function enterApp() {
   document.getElementById('loginScreen').classList.add('hide');
   document.getElementById('mainApp').classList.remove('hide');
-  populateSelects(); 
-  renderAll();
-  switchTab('dashboard');
+  
+  const u = data.currentUser;
+  const isSuper = u.role === 'super';
+  const isAdmin = u.role === 'admin';
+  const isTeacher = u.role === 'teacher';
+  const isStudent = u.role === 'student';
+  const isAdminOrSuper = isSuper || isAdmin;
+
+  document.getElementById('headerSchoolName').textContent = data.schoolName;
+  document.getElementById('topbarBrand').textContent = data.schoolName;
+  document.getElementById('schoolNameInput').value = data.schoolName;
+  document.getElementById('expiryDaysInput').value = data.expiryDays;
+  document.getElementById('acadStartInput').value = data.acadStartMonth;
+  document.getElementById('alertDaysInput').value = data.expiryAlertDays || 7;
+  document.getElementById('userName').textContent = u.user;
+  
+  document.getElementById('btnAddStudentTop').classList.toggle('hide', !isAdminOrSuper);
+  document.getElementById('thActions').classList.toggle('hide', !isAdminOrSuper);
+  document.getElementById('btnSaveMark').classList.toggle('hide', isStudent);
+  document.getElementById('btnAddActivity').classList.toggle('hide', !isAdminOrSuper);
+  document.getElementById('btnSaveCo').classList.toggle('hide', isStudent);
+  document.getElementById('btnAddSub').classList.toggle('hide', !isAdminOrSuper);
+  document.getElementById('teacherAddForm').classList.toggle('hide', !isAdminOrSuper);
+  document.getElementById('btnAddTeacherBtn').classList.toggle('hide', !isAdminOrSuper);
+  document.getElementById('adminSettingsSection').classList.toggle('hide', !isAdminOrSuper);
+
+  if (isSuper) { document.getElementById('userRole').textContent = '🛡️ സൂപ്പർ അഡ്മിൻ'; document.getElementById('adminsTab').classList.remove('hide'); }
+  else if (isAdmin) { document.getElementById('userRole').textContent = '👑 സദർ മുഅല്ലിം (Admin)'; document.getElementById('adminsTab').classList.add('hide'); }
+  else if (isTeacher) { document.getElementById('userRole').textContent = `👨‍🏫 ക്ലാസ് ${u.teacherClass} ടീച്ചർ`; document.getElementById('adminsTab').classList.add('hide'); }
+  else { document.getElementById('userRole').textContent = '🎓 വിദ്യാർത്ഥി'; document.getElementById('adminsTab').classList.add('hide'); }
+
+  document.getElementById('hwAdminSection').classList.toggle('hide', isStudent);
+  document.getElementById('reportStudentSelect').classList.toggle('hide', isStudent);
+
+  const allowedForStudent = ['dashboard', 'report', 'messages', 'homework', 'timetable', 'settings'];
+  document.querySelectorAll('#tabBar button').forEach(btn => {
+    const tab = btn.dataset.tab;
+    if (isStudent && !allowedForStudent.includes(tab)) btn.style.display = 'none';
+    else if (isTeacher && (tab === 'admins' || tab === 'teachers' || tab === 'finance')) btn.style.display = 'none';
+    else if (isAdmin && tab === 'admins') btn.style.display = 'none';
+    else btn.style.display = 'flex';
+  });
+
+  document.getElementById('feeDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('expDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('attendanceDate').value = new Date().toISOString().split('T')[0];
+  
+  populateSelects(); updateClassFilters(); populateMessageRecipients(); populateReportSelectors(); renderAll(); switchTab('dashboard'); toggleSidebar(false);
 }
 
-function getVisibleStudents() { return data.students; } // Simplified for brevity
-function getVisibleClasses() { return ['all', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']; }
+function updateClassFilters() {
+  const classes = getVisibleClasses();
+  ['classFilter', 'attendanceClass', 'timetableClass', 'feeClassSelect'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.innerHTML = classes.map(c => `<option value="${c}">${c==='all'?'എല്ലാ ക്ലാസ്':c}</option>`).join('');
+  });
+  const hwCls = document.getElementById('hwClassSelect');
+  if(hwCls) hwCls.innerHTML = classes.filter(c=>c!=='all').map(c => `<option value="${c}">${c}</option>`).join('');
+  const monCls = document.getElementById('attendanceMonthClass');
+  if(monCls && data.currentUser.role === 'teacher') monCls.innerHTML = `<option value="${data.currentUser.teacherClass}">${data.currentUser.teacherClass}</option>`;
+  else if(monCls) monCls.innerHTML = classes.filter(c=>c!=='all').map(c => `<option value="${c}">${c}</option>`).join('');
+}
 
-function populateSelects() {
-    // 1. Homework Subject Fix
-    const hwSel = document.getElementById('hwSubjectSelect');
-    if(hwSel) {
-        hwSel.innerHTML = data.subjects.map(s => `<option value="${s}">${s}</option>`).join('');
-    }
-    
-    // 2. Class Filters
-    const classes = getVisibleClasses();
-    ['classFilter', 'hwClassSelect', 'feeClassSelect'].forEach(id => {
-        const el = document.getElementById(id);
-        if(el) el.innerHTML = classes.map(c => `<option value="${c}">${c==='all'?'എല്ലാ ക്ലാസ്':c}</option>`).join('');
+function logout() { data.currentUser = null; document.getElementById('mainApp').classList.add('hide'); document.getElementById('loginScreen').classList.remove('hide'); document.getElementById('loginPass').value = ''; }
+function toggleSidebar(open) { document.getElementById('sidebar').classList.toggle('open', open); document.getElementById('sidebarOverlay').classList.toggle('show', open); }
+
+// SETTINGS
+function changeOwnPassword() {
+  const curr = document.getElementById('currentPassInput').value, newP = document.getElementById('newPassInput').value.trim(), confP = document.getElementById('confirmPassInput').value.trim();
+  if(!curr || !newP || !confP) return toast('എല്ലാ ഫീൽഡും നൽകുക', 'error');
+  if(newP !== confP) return toast('പാസ്സ്‌വേർഡുകൾ ചേരുന്നില്ല', 'error');
+  const u = data.currentUser; let obj = null;
+  if(u.role==='student') obj=data.students.find(s=>s.id===u.studentId); else if(u.role==='teacher') obj=data.teachers.find(t=>t.user===u.user); else obj=data.admins.find(a=>a.user===u.user);
+  if(!obj || obj.pass!==curr) return toast('നിലവിലെ പാസ്സ്‌വേർഡ് തെറ്റാണ്', 'error');
+  obj.pass = newP; saveData(); document.getElementById('currentPassInput').value=''; document.getElementById('newPassInput').value=''; document.getElementById('confirmPassInput').value=''; toast('മാറ്റി', 'success');
+}
+function resetUserPassword(type, id) {
+  const u = data.currentUser;
+  if(type==='admin' && u.role!=='super') return toast('അനുമതിയില്ല', 'error');
+  if((type==='student'||type==='teacher') && !['super','admin'].includes(u.role)) return toast('അനുമതിയില്ല', 'error');
+  const np = prompt("പുതിയ പാസ്സ്‌വേർഡ് നൽകുക:"); if(!np||!np.trim()) return;
+  let target = null;
+  if(type==='student') target=data.students.find(s=>s.id===id); if(type==='teacher') target=data.teachers.find(t=>t.user===id); if(type==='admin') target=data.admins.find(a=>a.user===id);
+  if(target){ target.pass=np.trim(); saveData(); toast('റീസെറ്റ് ചെയ്തു', 'success'); }
+}
+function updateSchoolName() { data.schoolName = document.getElementById('schoolNameInput').value.trim(); saveData(); document.getElementById('headerSchoolName').textContent=data.schoolName; document.getElementById('topbarBrand').textContent=data.schoolName; toast('സേവ് ചെയ്തു','success'); }
+function updateExpiryDays() { const v = parseInt(document.getElementById('expiryDaysInput').value); if(v>0){data.expiryDays=v; saveData(); toast('സേവ് ചെയ്തു','success');} }
+function updateAcadStart() { data.acadStartMonth = parseInt(document.getElementById('acadStartInput').value); saveData(); populateReportSelectors(); renderReport(); toast('സേവ് ചെയ്തു','success'); }
+function updateAlertDays() { data.expiryAlertDays = parseInt(document.getElementById('alertDaysInput').value); saveData(); renderDashboardAlerts(); toast('സേവ് ചെയ്തു','success'); }
+
+// DASHBOARD
+function renderDashboardAlerts() {
+  const sec = document.getElementById('expiryAlertSection'), box = document.getElementById('expiryAlerts');
+  if(!sec||!box) return;
+  if(['super','admin','teacher'].includes(data.currentUser?.role)){
+    const ad = data.expiryAlertDays || 7; let alerts = [];
+    getVisibleStudents().forEach(s => {
+      if(!s.active) return; const rem = getStudentExpiryDays(s) - ((Date.now()-s.created)/(1000*60*60*24));
+      if(rem<=ad && rem>=-60) alerts.push({student:s, remaining:Math.ceil(rem)});
     });
+    if(alerts.length>0){
+      sec.classList.remove('hide');
+      box.innerHTML = alerts.map(a => `<div class="co-item"><div><strong>${a.student.name}</strong><br><span style="font-size:12px;">ബാക്കി: ${a.remaining} ദിവസം</span></div></div>`).join('');
+    } else sec.classList.add('hide');
+  } else sec.classList.add('hide');
+}
+function renderDashboard() {
+  const vis = getVisibleStudents(), act = vis.filter(s=>isActive(s)).length, tatt = getTodayAttendance().filter(a=>{const st=getStudent(a.studentId); return st&&vis.includes(st);}).filter(a=>a.present).length;
+  document.getElementById('totalStudents').textContent = vis.length; document.getElementById('activeStudents').textContent = act; document.getElementById('todayAttendance').textContent = tatt;
+  document.getElementById('teacherCount').textContent = ['super','admin'].includes(data.currentUser?.role) ? data.teachers.length : '🔒';
+  const rec = data.marks.slice(-5).reverse().filter(m => {const s=getStudent(m.studentId); return s&&vis.includes(s);});
+  document.getElementById('recentMarks').innerHTML = rec.length ? rec.map(m=>{const s=getStudent(m.studentId); return `<div>${s?s.name:'-'} — ${examLabel(m.exam)}: ${m.subject} = <strong>${m.mark}</strong></div>`;}).join('') : 'മാർക്ക് ലഭ്യമല്ല';
 }
 
-function showAddStudent() { document.getElementById('addStudentForm').classList.remove('hide'); }
-
+// STUDENTS
+function showAddStudent() { document.getElementById('addStudentForm').classList.remove('hide'); document.getElementById('sExpiry').value = data.expiryDays; }
 function addStudent() {
-  const f = document.getElementById('sFirst').value.trim();
-  const s = document.getElementById('sSecond').value.trim();
-  const l = document.getElementById('sLast').value.trim();
-  const h = document.getElementById('sHouse').value.trim();
-  const fullName = [f, s, l, h].filter(Boolean).join(' ');
-  const cls = document.getElementById('sClass').value;
-  const user = document.getElementById('sUser').value.trim();
-  const pass = document.getElementById('sPass').value.trim();
-  
-  if(!fullName || !cls || !user || !pass) return alert("വിവരങ്ങൾ പൂർണ്ണമാക്കുക");
-  
-  data.students.push({
-      id: Date.now(), firstName: f, secondName: s, lastName: l, houseName: h, name: fullName,
-      class: cls, user: user, pass: pass, active: true, created: Date.now(), expiryDays: 330
-  });
-  saveData(); renderStudents();
-  document.getElementById('addStudentForm').classList.add('hide');
+  const f=document.getElementById('sFirst').value.trim(), s=document.getElementById('sSecond').value.trim(), l=document.getElementById('sLast').value.trim(), h=document.getElementById('sHouse').value.trim(), ph=document.getElementById('sPhone').value.trim(), cls=document.getElementById('sClass').value, u=document.getElementById('sUser').value.trim(), p=document.getElementById('sPass').value.trim(), exp=parseInt(document.getElementById('sExpiry').value)||data.expiryDays;
+  const fullName = [f,s,l,h].filter(Boolean).join(' ');
+  if(!fullName||!cls||!u||!p) return toast('വിവരങ്ങൾ നൽകുക','error');
+  if(data.students.find(x=>x.user===u)) return toast('ഈ യൂസർ ഉണ്ട്','error');
+  data.students.push({id:getNextId(data.students), firstName:f, secondName:s, lastName:l, houseName:h, name:fullName, phone:ph, class:parseInt(cls), user:u, pass:p, active:true, created:Date.now(), expiryDays:exp});
+  saveData(); renderStudents(); document.getElementById('addStudentForm').classList.add('hide'); ['sFirst','sSecond','sLast','sHouse','sPhone','sClass','sUser','sPass'].forEach(id=>document.getElementById(id).value=''); toast('ചേർത്തു','success');
 }
-
 function renderStudents() {
-  const tbody = document.getElementById('studentTableBody');
-  const q = document.getElementById('studentSearch').value.toLowerCase();
+  const vis = getVisibleStudents(), cFilter = document.getElementById('classFilter').value, sFilter = document.getElementById('statusFilter').value, q = document.getElementById('studentSearch').value.trim().toLowerCase();
+  let list = vis;
+  if(cFilter!=='all') list = list.filter(s=>s.class==cFilter);
+  if(sFilter!=='all'){ if(sFilter==='active') list=list.filter(s=>isActive(s)); else if(sFilter==='inactive') list=list.filter(s=>!s.active); else if(sFilter==='expired') list=list.filter(s=>s.active&&isAccountExpired(s)); }
+  if(q) list = list.filter(s => s.name.toLowerCase().includes(q) || (s.houseName||'').toLowerCase().includes(q) || s.user.toLowerCase().includes(q));
+  const tb = document.getElementById('studentTableBody'), isAdmin = ['super','admin'].includes(data.currentUser?.role);
+  if(!list.length) return tb.innerHTML = `<tr><td colspan="${isAdmin?7:6}" class="text-center">വിദ്യാർത്ഥികളില്ല</td></tr>`;
+  tb.innerHTML = list.map(s => {
+    const act = isActive(s), exp = s.active&&isAccountExpired(s); let stTx='✅ Active', stCl='badge-success'; if(exp){stTx='⏰ Expired';stCl='badge-warning';} if(!s.active){stTx='❌ Inactive';stCl='badge-danger';}
+    return `<tr><td><strong>${s.name}</strong></td><td>${s.houseName||'-'}</td><td>${s.phone||'-'}</td><td>${s.class}</td><td>${s.user}</td><td><span class="badge ${stCl}">${stTx}</span></td>${isAdmin?`<td><button class="btn ${act?'btn-warning':'btn-success'} btn-sm" onclick="toggleStudent(${s.id})">${act?'Ban':'Unban'}</button> <button class="btn btn-primary btn-sm" onclick="editStudent(${s.id})">Edit</button> <button class="btn btn-secondary btn-sm" onclick="resetUserPassword('student',${s.id})">Key</button> <button class="btn btn-danger btn-sm" onclick="deleteStudent(${s.id})">Del</button></td>`:''}</tr>`;
+  }).join('');
+}
+function toggleStudent(id){const s=getStudent(id); if(s){s.active=!s.active; if(s.active)s.created=Date.now(); saveData(); renderStudents();}}
+function deleteStudent(id){if(confirm('ഡിലീറ്റ് ചെയ്യണോ?')){data.students=data.students.filter(s=>s.id!==id); saveData(); renderStudents();}}
+function editStudent(id){const s=getStudent(id);if(s){const n=prompt('പേര്:',s.name);if(n){s.name=n;saveData();renderStudents();}}}
+
+// HOMEWORK
+function addHomework() {
+  const cls=document.getElementById('hwClassSelect').value, sub=document.getElementById('hwSubjectSelect').value, desc=document.getElementById('hwDesc').value.trim(), link=document.getElementById('hwLink').value.trim();
+  if(!cls||cls==='all') return toast('ക്ലാസ് തിരഞ്ഞെടുക്കുക','error'); if(!desc&&!link) return toast('വിവരണം നൽകുക','error');
+  data.homework.push({id:Date.now(), class:cls, subject:sub, desc:desc, link:link, date:new Date().toISOString(), by:data.currentUser.user});
+  saveData(); document.getElementById('hwDesc').value=''; document.getElementById('hwLink').value=''; renderHomework(); toast('നൽകി','success');
+}
+function deleteHomework(id){if(confirm('ഡിലീറ്റ് ചെയ്യണോ?')){data.homework=data.homework.filter(h=>h.id!==id); saveData(); renderHomework();}}
+function renderHomework() {
+  const con = document.getElementById('hwListContainer'), u = data.currentUser;
+  let list = data.homework||[]; if(u.role==='student') list=list.filter(h=>h.class==u.class); else if(u.role==='teacher') list=list.filter(h=>h.class==u.teacherClass);
+  con.innerHTML = list.length ? list.slice().reverse().map(h=>`<div class="hw-item"><div class="hw-header"><span>Class ${h.class} • ${new Date(h.date).toLocaleDateString('ml-IN')}</span><span>By: ${h.by}</span></div><div class="hw-subject">${h.subject}</div><div class="hw-desc">${h.desc}</div>${h.link?`<a href="${h.link}" target="_blank" style="color:blue;">Link</a>`:''}${u.role!=='student'?`<br><button class="btn btn-danger btn-sm mt-16" onclick="deleteHomework(${h.id})">Delete</button>`:''}</div>`).join('') : '<p>ഹോം വർക്കുകൾ ലഭ്യമല്ല</p>';
+}
+
+// TIMETABLE
+function renderTimetable() {
+  const cSel = document.getElementById('timetableClass'); if(!cSel) return; let cls = cSel.value;
+  if(cls==='all' && data.currentUser.role!=='student') cls='1'; if(data.currentUser.role==='student') cls=data.currentUser.class;
+  const isEd = ['super','admin'].includes(data.currentUser.role) || (data.currentUser.role==='teacher' && data.currentUser.teacherClass==cls);
+  document.getElementById('timetableEditor').classList.toggle('hide', !isEd); document.getElementById('timetableViewer').classList.toggle('hide', isEd);
+  const tt = data.timetable.find(t=>t.class==cls) || {days:{'തിങ്കൾ':['','','',''],'ചൊവ്വ':['','','',''],'ബുധൻ':['','','',''],'വ്യാഴം':['','','',''],'വെള്ളി':['','','','']}};
+  const d = ['തിങ്കൾ','ചൊവ്വ','ബുധൻ','വ്യാഴം','വെള്ളി'];
+  if(isEd) document.getElementById('timetableBody').innerHTML = d.map(x=>`<tr><td><strong>${x}</strong></td><td><input id="tt_${x}_0" value="${tt.days[x]?tt.days[x][0]:''}"></td><td><input id="tt_${x}_1" value="${tt.days[x]?tt.days[x][1]:''}"></td><td><input id="tt_${x}_2" value="${tt.days[x]?tt.days[x][2]:''}"></td><td><input id="tt_${x}_3" value="${tt.days[x]?tt.days[x][3]:''}"></td></tr>`).join('');
+  else document.getElementById('timetableReadBody').innerHTML = d.map(x=>`<tr><td><strong>${x}</strong></td><td>${tt.days[x]?tt.days[x][0]||'-':'-'}</td><td>${tt.days[x]?tt.days[x][1]||'-':'-'}</td><td>${tt.days[x]?tt.days[x][2]||'-':'-'}</td><td>${tt.days[x]?tt.days[x][3]||'-':'-'}</td></tr>`).join('');
+}
+function saveTimetable() {
+  const cls = document.getElementById('timetableClass').value; if(!cls||cls==='all') return toast('ക്ലാസ് തിരഞ്ഞെടുക്കുക','error');
+  const d = ['തിങ്കൾ','ചൊവ്വ','ബുധൻ','വ്യാഴം','വെള്ളി'], nd = {};
+  d.forEach(x=>nd[x]=[document.getElementById(`tt_${x}_0`).value,document.getElementById(`tt_${x}_1`).value,document.getElementById(`tt_${x}_2`).value,document.getElementById(`tt_${x}_3`).value]);
+  let ex = data.timetable.find(t=>t.class==cls); if(ex) ex.days=nd; else data.timetable.push({class:cls, days:nd}); saveData(); toast('സേവ് ചെയ്തു','success');
+}
+
+// ATTENDANCE
+function setAttendanceView(v) { attendanceView = v; document.getElementById('attSegDay').classList.toggle('active',v==='day'); document.getElementById('attSegMonth').classList.toggle('active',v==='month'); document.getElementById('attDayControls').classList.toggle('hide',v!=='day'); document.getElementById('attMonthControls').classList.toggle('hide',v!=='month'); document.getElementById('attDaySection').classList.toggle('hide',v!=='day'); document.getElementById('attMonthSection').classList.toggle('hide',v!=='month'); if(v==='month') renderAttendanceMatrix(); }
+function renderAttendance() {
+  const vis = getVisibleStudents(), d = document.getElementById('attendanceDate').value||new Date().toISOString().split('T')[0], cls = document.getElementById('attendanceClass').value;
+  let st = vis; if(cls!=='all') st=st.filter(s=>s.class==cls);
+  document.getElementById('attSummary').innerHTML = `📌 <strong>${st.length}</strong> പേരിൽ <strong>${st.filter(s=>{const a=getStudentAttendance(s.id,d);return a&&a.present;}).length}</strong> ഹാജർ`;
+  const tb = document.getElementById('attendanceTableBody'), isEd = ['super','admin','teacher'].includes(data.currentUser?.role);
+  tb.innerHTML = st.map(s=>{ const a=getStudentAttendance(s.id,d), p=a?a.present:false; return `<tr><td><strong>${s.name}</strong></td><td>${s.class}</td><td><span class="badge ${p?'badge-success':'badge-danger'}">${p?'✅':'❌'}</span></td><td>${isEd&&canManageStudent(s.id)?`<button class="btn ${p?'btn-warning':'btn-success'} btn-sm" onclick="toggleAttendance(${s.id},'${d}')">Mark</button>`:'-'}</td></tr>`; }).join('');
+}
+function toggleAttendance(id, d) { if(!canManageStudent(id)) return; const ex=data.attendance.find(a=>a.studentId==id&&a.date===d); if(ex) ex.present=!ex.present; else data.attendance.push({studentId:id,date:d,present:true}); saveData(); renderAttendance(); renderDashboard(); }
+function renderAttendanceMatrix() {
+  const w = document.getElementById('attMatrixWrap'), mIn = document.getElementById('attendanceMonth');
+  if(!mIn.value){const now=new Date();mIn.value=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;}
+  const [yr,mo] = mIn.value.split('-').map(Number), cls = document.getElementById('attendanceMonthClass').value, vis = getVisibleStudents().filter(s=>s.class==cls), nD = new Date(yr,mo,0).getDate(), isEd = ['super','admin','teacher'].includes(data.currentUser?.role);
+  if(!vis.length) return w.innerHTML='<p>വിദ്യാർത്ഥികളില്ല</p>';
+  let h = `<tr><th class="name-col">പേര്</th>`; for(let d=1;d<=nD;d++) h+=`<th>${d}</th>`; h+=`<th>%</th></tr>`;
+  let b = '';
+  vis.forEach(s=>{
+    let r=`<tr><td class="name-col">${s.name}</td>`, pC=0, mC=0;
+    for(let d=1;d<=nD;d++){ const iso=`${yr}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`, rec=data.attendance.find(a=>a.studentId==s.id&&a.date===iso); let cl='n', lb='·'; if(rec){mC++; if(rec.present){pC++;cl='p';lb='P';}else{cl='a';lb='A';}} r+=`<td><button class="att-cell ${cl}" ${isEd&&canManageStudent(s.id)?`onclick="cycleAttendanceCell(${s.id},'${iso}')"`:'disabled'}>${lb}</button></td>`; }
+    r+=`<td>${mC?Math.round((pC/mC)*100)+'%':'-'}</td></tr>`; b+=r;
+  }); w.innerHTML = `<table><thead>${h}</thead><tbody>${b}</tbody></table>`;
+}
+function cycleAttendanceCell(id, iso) { if(!canManageStudent(id)) return; const ex=data.attendance.find(a=>a.studentId==id&&a.date===iso); if(!ex) data.attendance.push({studentId:id,date:iso,present:true}); else if(ex.present) ex.present=false; else data.attendance=data.attendance.filter(a=>!(a.studentId==id&&a.date===iso)); saveData(); renderAttendanceMatrix(); }
+
+// MARKS
+function saveMark() {
+  const sid = parseInt(document.getElementById('markStudentSelect').value), ex = document.getElementById('examType').value, sub = document.getElementById('markSubject').value, mk = parseFloat(document.getElementById('markValue').value);
+  if(!sid||!sub||isNaN(mk)) return toast('വിവരങ്ങൾ നൽകുക','error'); if(!canManageStudent(sid)) return toast('അനുമതിയില്ല','error');
+  data.marks.push({studentId:sid, exam:ex, subject:sub, mark:mk, year:getAcademicYear(new Date())}); saveData(); document.getElementById('markValue').value=''; renderMarkList(); toast('സേവ് ചെയ്തു','success');
+}
+function renderMarkList() { const sEl=document.getElementById('markStudentSelect'); if(!sEl)return; const sid=parseInt(sEl.value), mk=data.marks.filter(m=>m.studentId==sid); document.getElementById('markList').innerHTML=mk.length?mk.map(m=>`<div>${examLabel(m.exam)} - ${m.subject}: <strong>${m.mark}</strong></div>`).join(''):'ലഭ്യമല്ല'; }
+function examLabel(c) { return {class:'ക്ലാസ് ടെസ്റ്റ്',half:'ഹാഫ് ഇയർ',mid:'മിഡ് ടൈം',annual:'കൊല്ലപ്പരീക്ഷ'}[c]||c; }
+
+// CO-CURRICULAR
+function saveCoCurricular() {
+  const sid=parseInt(document.getElementById('coStudentSelect').value), act=document.getElementById('coActivitySelect').value, mk=document.getElementById('coMark').value.trim();
+  if(!sid||!act||!mk) return toast('വിവരങ്ങൾ നൽകുക','error'); if(!canManageStudent(sid)) return;
+  data.coCurricular.push({studentId:sid, activity:act, mark:mk, year:getAcademicYear(new Date())}); saveData(); document.getElementById('coMark').value=''; renderCoCurricular(); toast('സേവ് ചെയ്തു','success');
+}
+function removeCoCurricular(id, act){ if(confirm('ഡിലീറ്റ് ചെയ്യണോ?')){data.coCurricular=data.coCurricular.filter(c=>!(c.studentId==id&&c.activity===act));saveData();renderCoCurricular();} }
+function renderCoCurricular() { const v=getVisibleStudents(), ls=data.coCurricular.filter(c=>{const s=getStudent(c.studentId);return s&&v.includes(s);}); document.getElementById('coList').innerHTML=ls.length?ls.map(c=>{const s=getStudent(c.studentId);return `<div class="co-item"><div>${s?s.name:'-'} - ${c.activity}</div><div>${c.mark} ${canManageStudent(c.studentId)?`<button onclick="removeCoCurricular(${c.studentId},'${c.activity}')">X</button>`:''}</div></div>`;}).join(''):'ലഭ്യമല്ല'; }
+
+// SUBJECTS & ACTIVITIES
+function addSubject() { const v=document.getElementById('newSubject').value.trim(); if(v&&!data.subjects.includes(v)){data.subjects.push(v);saveData();document.getElementById('newSubject').value='';renderSubjects();populateSelects();} }
+function removeSubject(i) { if(confirm('ഡിലീറ്റ് ചെയ്യണോ?')){data.subjects.splice(i,1);saveData();renderSubjects();populateSelects();} }
+function renderSubjects() { document.getElementById('subjectList').innerHTML=data.subjects.map((s,i)=>`<div class="chip">${s} <button onclick="removeSubject(${i})">X</button></div>`).join(''); }
+function addActivity() { const v=document.getElementById('newActivity').value.trim(); if(v&&!data.activities.includes(v)){data.activities.push(v);saveData();document.getElementById('newActivity').value='';renderActivities();populateSelects();} }
+function removeActivity(i) { if(confirm('ഡിലീറ്റ് ചെയ്യണോ?')){data.activities.splice(i,1);saveData();renderActivities();populateSelects();} }
+function renderActivities() { document.getElementById('activityList').innerHTML=data.activities.map((a,i)=>`<div class="chip">${a} <button onclick="removeActivity(${i})">X</button></div>`).join(''); }
+
+// SELECT POPULATION
+function populateSelects() {
+  const hwSel = document.getElementById('hwSubjectSelect'), mkSel = document.getElementById('markSubject'), subHtml = data.subjects.map(s=>`<option value="${s}">${s}</option>`).join('');
+  if(hwSel) hwSel.innerHTML = subHtml; if(mkSel) mkSel.innerHTML = subHtml;
   
-  let list = data.students.filter(s => {
-      // 3. Search Facility including House Name
-      const matchName = s.name.toLowerCase().includes(q);
-      const matchHouse = (s.houseName || '').toLowerCase().includes(q);
-      const matchUser = s.user.toLowerCase().includes(q);
-      return matchName || matchHouse || matchUser;
-  });
-
-  tbody.innerHTML = list.map(s => `<tr>
-    <td><strong>${s.name}</strong></td>
-    <td>${s.houseName || '-'}</td>
-    <td>${s.phone || '-'}</td>
-    <td>${s.class}</td>
-    <td>${s.user}</td>
-    <td>${s.active ? '✅ Active' : '❌ Inactive'}</td>
-    <td><button class="btn btn-danger btn-sm" onclick="data.students=data.students.filter(x=>x.id!==${s.id});saveData();renderStudents();">Delete</button></td>
-  </tr>`).join('');
+  const coAct = document.getElementById('coActivitySelect'); if(coAct) coAct.innerHTML = data.activities.map(a=>`<option value="${a}">${a}</option>`).join('');
+  
+  const vis = getVisibleStudents(), stHtml = vis.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  const mkSt = document.getElementById('markStudentSelect'), coSt = document.getElementById('coStudentSelect');
+  if(mkSt) mkSt.innerHTML = stHtml; if(coSt) coSt.innerHTML = stHtml;
+  
+  updateClassFilters(); populateFeeStudentSelect(); renderMarkList(); renderCoCurricular();
 }
 
-// 4. Admin Message Broadcast to specific classes
-function populateMessageRecipients() {
-    const sel = document.getElementById('msgRecipient');
-    if(!sel) return;
-    sel.innerHTML = '';
-    const u = data.currentUser;
-    if(['super','admin'].includes(u.role)) {
-         sel.innerHTML += `<option value="all_students">മദ്രസയിലെ എല്ലാ വിദ്യാർത്ഥികൾക്കും</option>`;
-         // Adding all specific classes
-         getVisibleClasses().filter(c=>c!=='all').forEach(c => {
-             sel.innerHTML += `<option value="class_${c}">ക്ലാസ് ${c} ലെ എല്ലാ വിദ്യാർത്ഥികൾക്കും</option>`;
-         });
-         data.students.forEach(s => sel.innerHTML += `<option value="student_${s.id}">${s.name} (Class ${s.class})</option>`);
-    } else if (u.role === 'teacher') {
-         sel.innerHTML += `<option value="class_${u.teacherClass}">എന്റെ ക്ലാസ്സിലെ എല്ലാവർക്കും</option>`;
-    }
-}
-
-// 5. Finance Report Filter
+// FINANCE
 function toggleFinReportInputs() {
-    const rType = document.getElementById('finReportType').value;
-    document.getElementById('finAcadDiv').classList.toggle('hide', rType !== 'acad');
-    document.getElementById('finCalDiv').classList.toggle('hide', rType !== 'cal');
-    document.getElementById('finCustomStartDiv').classList.toggle('hide', rType !== 'custom');
-    document.getElementById('finCustomEndDiv').classList.toggle('hide', rType !== 'custom');
-    
-    if(rType === 'acad') {
-        document.getElementById('finAcadYear').innerHTML = getAllAcademicYears().map(y=>`<option value="${y}">${y}</option>`).join('');
-    }
+    const rt = document.getElementById('finReportType').value;
+    document.getElementById('finAcadDiv').classList.toggle('hide', rt!=='acad'); document.getElementById('finCalDiv').classList.toggle('hide', rt!=='cal'); document.getElementById('finCustomStartDiv').classList.toggle('hide', rt!=='custom'); document.getElementById('finCustomEndDiv').classList.toggle('hide', rt!=='custom');
+    if(rt==='acad') document.getElementById('finAcadYear').innerHTML = getAllAcademicYears().map(y=>`<option value="${y}">${y}</option>`).join('');
 }
-
-function getAcademicYear(dateObj) {
-  const startMonth = data.acadStartMonth || 6; 
-  const m = dateObj.getMonth() + 1;
-  const y = dateObj.getFullYear();
-  const yearStart = (m >= startMonth) ? y : y - 1;
-  return `${yearStart}-${String((yearStart + 1) % 100).padStart(2, '0')}`;
+function populateFeeStudentSelect() { const c = document.getElementById('feeClassSelect').value, s = document.getElementById('feeStudentSelect'); let lst=data.students; if(c!=='all')lst=lst.filter(x=>x.class==c); s.innerHTML=lst.map(x=>`<option value="${x.id}">${x.name}</option>`).join(''); }
+function saveFee() { const sid=document.getElementById('feeStudentSelect').value, am=document.getElementById('feeAmount').value, d=document.getElementById('feeDate').value; if(!sid||!am||!d)return toast('വിവരങ്ങൾ നൽകുക','error'); data.fees.push({id:Date.now(),studentId:sid,amount:am,date:d,by:data.currentUser.user}); const s=getStudent(sid); if(s){s.active=true;s.created=Date.now();} saveData(); document.getElementById('feeAmount').value=''; renderFinance(); toast('രേഖപ്പെടുത്തി','success'); }
+function saveExpense() { const r=document.getElementById('expReason').value, am=document.getElementById('expAmount').value, d=document.getElementById('expDate').value; if(!r||!am||!d)return toast('വിവരങ്ങൾ നൽകുക','error'); data.expenses.push({id:Date.now(),reason:r,amount:am,date:d,by:data.currentUser.user}); saveData(); document.getElementById('expReason').value=''; document.getElementById('expAmount').value=''; renderFinance(); toast('രേഖപ്പെടുത്തി','success'); }
+function renderFinance() {
+  const totI=data.fees.reduce((s,f)=>s+Number(f.amount),0), totE=(data.expenses||[]).reduce((s,e)=>s+Number(e.amount),0); document.getElementById('totIncome').innerText='₹'+totI; document.getElementById('totExpense').innerText='₹'+totE; document.getElementById('totBalance').innerText='₹'+(totI-totE);
+  const fB = document.getElementById('feeTableBody'); if(fB) fB.innerHTML = `<tr><th>തിയ്യതി</th><th>പേര്</th><th>ക്ലാസ്</th><th>തുക</th><th>രസീത്</th></tr>` + data.fees.slice().reverse().map(f=>{const s=getStudent(f.studentId);return `<tr><td>${f.date}</td><td>${s?s.name:''}</td><td>${s?s.class:''}</td><td>₹${f.amount}</td><td><button onclick="printReceipt(${f.id})">Print</button></td></tr>`;}).join('');
+  const eB = document.getElementById('expenseTableBody'); if(eB) eB.innerHTML = `<tr><th>തിയ്യതി</th><th>ആവശ്യം</th><th>തുക</th><th>By</th></tr>` + (data.expenses||[]).slice().reverse().map(e=>`<tr><td>${e.date}</td><td>${e.reason}</td><td>₹${e.amount}</td><td>${e.by}</td></tr>`).join('');
 }
-
-function getAllAcademicYears() {
-  const set = new Set();
-  set.add(getAcademicYear(new Date()));
-  data.fees.forEach(f => set.add(getAcademicYear(new Date(f.date))));
-  return Array.from(set).sort().reverse();
+function printReceipt(id) {
+  const f=data.fees.find(x=>x.id==id); if(!f)return; const s=getStudent(f.studentId);
+  document.getElementById('printReceiptArea').innerHTML = `<div class="receipt-box"><h1>${data.schoolName}</h1><br><h3>ഫീസ് രസീത്</h3><br><p>നമ്പർ: ${f.id}</p><p>തിയ്യതി: ${f.date}</p><p>പേര്: ${s.name}</p><div class="amount">₹${f.amount}</div><p>സദർ മുഅല്ലിം</p></div>`; window.print();
 }
-
 function generateFinReport() {
-    const rType = document.getElementById('finReportType').value;
-    let start, end, yearLab, calY;
-    let title = "ഫിനാൻസ് റിപ്പോർട്ട്";
-    
-    if (rType === 'acad') { yearLab = document.getElementById('finAcadYear').value; title += ` (${yearLab})`; }
-    else if (rType === 'cal') { calY = document.getElementById('finCalYear').value; title += ` (${calY})`; }
-    else {
-        start = document.getElementById('finFromDate').value;
-        end = document.getElementById('finToDate').value;
-        if(!start || !end) return alert('തിയ്യതികൾ നൽകുക');
-        title += ` (${start} മുതൽ ${end} വരെ)`;
-    }
+    const rt = document.getElementById('finReportType').value; let st, en, yl, cy, t="റിപ്പോർട്ട്";
+    if(rt==='acad'){yl=document.getElementById('finAcadYear').value;t+=` (${yl})`;}else if(rt==='cal'){cy=document.getElementById('finCalYear').value;t+=` (${cy})`;}else{st=document.getElementById('finFromDate').value;en=document.getElementById('finToDate').value;if(!st||!en)return;t+=` (${st} to ${en})`;}
+    const md = (ds) => { if(!ds)return false; let d=new Date(ds); if(rt==='acad')return getAcademicYear(d)===yl; if(rt==='cal')return d.getFullYear()==cy; if(rt==='custom')return d>=new Date(st)&&d<=new Date(en); return true; };
+    let fl = data.fees.filter(f=>md(f.date)), el = (data.expenses||[]).filter(e=>md(e.date)), inc=fl.reduce((s,x)=>s+Number(x.amount),0), exp=el.reduce((s,x)=>s+Number(x.amount),0);
+    document.getElementById('finRepTitle').innerText=t; document.getElementById('finReportResult').classList.remove('hide');
+    document.getElementById('finRepContent').innerHTML = `വരവ്: ₹${inc} | ചിലവ്: ₹${exp} | ബാക്കി: ₹${inc-exp}`;
+}
+function printFinReport() { document.getElementById('printReceiptArea').innerHTML = `<div style="padding:40px;background:#fff;">${document.getElementById('finReportResult').innerHTML}</div>`; window.print(); }
 
-    const matchDate = (dStr) => {
-        if(!dStr) return false;
-        let d = new Date(dStr);
-        if(rType === 'acad') return getAcademicYear(d) === yearLab;
-        if(rType === 'cal') return d.getFullYear() == calY;
-        if(rType === 'custom') return d >= new Date(start) && d <= new Date(end);
-        return true;
-    };
-
-    let fList = data.fees.filter(f => matchDate(f.date));
-    let eList = data.expenses.filter(e => matchDate(e.date));
-
-    let inc = fList.reduce((s,x)=>s+Number(x.amount),0);
-    let exp = eList.reduce((s,x)=>s+Number(x.amount),0);
-    let bal = inc - exp;
-
-    document.getElementById('finRepTitle').innerText = title;
-    document.getElementById('finReportResult').classList.remove('hide');
-    document.getElementById('finRepContent').innerHTML = `
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr; gap:10px; text-align:center; margin-bottom:20px;">
-            <div style="padding:15px;background:var(--success-bg);border-radius:10px;"><strong>വരവ്:</strong> ₹${inc}</div>
-            <div style="padding:15px;background:var(--danger-bg);border-radius:10px;"><strong>ചിലവ്:</strong> ₹${exp}</div>
-            <div style="padding:15px;background:var(--info-bg);border-radius:10px;"><strong>ബാക്കി:</strong> ₹${bal}</div>
-        </div>
-    `;
+// REPORT TAB
+function populateReportSelectors() { document.getElementById('reportYearSelect').innerHTML=getAllAcademicYears().map(y=>`<option value="${y}">${y}</option>`).join(''); document.getElementById('reportStudentSelect').innerHTML=getVisibleStudents().map(s=>`<option value="${s.id}">${s.name}</option>`).join(''); }
+function renderReport() {
+  const y = document.getElementById('reportYearSelect').value||getAcademicYear(new Date()), sid = data.currentUser.role==='student'?data.currentUser.studentId:document.getElementById('reportStudentSelect').value;
+  const st = getStudent(sid); document.getElementById('reportStudentName').textContent=st?st.name:'-'; document.getElementById('reportStudentMeta').textContent=st?`ക്ലാസ് ${st.class} | ${y}`:'-'; if(!st) return;
+  
+  let tm=0, tp=0; const mo=[1,2,3,4,5,6,7,8,9,10,11,12].map(x=>{
+      const sy=parseInt(y.split('-')[0]), sm=data.acadStartMonth||6, mt=(sm-1+x)%12, yt=sy+Math.floor((sm-1+x)/12);
+      const rc = data.attendance.filter(a=>{if(a.studentId!=st.id)return false;let d=new Date(a.date);return d.getFullYear()===yt&&(d.getMonth()+1)===(mt+1);});
+      const pr=rc.filter(r=>r.present).length; tm+=rc.length; tp+=pr; return {l:mt+1, pct:rc.length?Math.round((pr/rc.length)*100):0};
+  });
+  document.getElementById('reportAttPct').textContent = tm?Math.round((tp/tm)*100)+'%':'-'; document.getElementById('rTotalDays').textContent=tm; document.getElementById('rPresentDays').textContent=tp;
+  document.getElementById('reportMonthBars').innerHTML = mo.map(m=>`<div class="bar-row"><div style="width:30px;">${m.l}</div><div class="bar-track"><div class="bar-fill" style="width:${m.pct}%"></div></div><div>${m.pct}%</div></div>`).join('');
+  
+  const cl = data.coCurricular.filter(c=>c.studentId==st.id && c.year===y); document.getElementById('reportCoList').innerHTML = cl.length?cl.map(c=>`<div>${c.activity}: ${c.mark}</div>`).join(''):'ലഭ്യമല്ല';
+  const ml = data.marks.filter(m=>m.studentId==st.id && m.year===y), su = Array.from(new Set(ml.map(m=>m.subject)));
+  document.getElementById('reportMarksBody').innerHTML = su.length ? su.map(s=>{ const c=ml.find(m=>m.subject===s&&m.exam==='class'), h=ml.find(m=>m.subject===s&&m.exam==='half'), md=ml.find(m=>m.subject===s&&m.exam==='mid'), a=ml.find(m=>m.subject===s&&m.exam==='annual'); return `<tr><td>${s}</td><td>${c?c.mark:'-'}</td><td>${h?h.mark:'-'}</td><td>${md?md.mark:'-'}</td><td>${a?a.mark:'-'}</td></tr>`; }).join('') : '<tr><td colspan="5">ലഭ്യമല്ല</td></tr>';
 }
 
-function printFinReport() {
-    const content = document.getElementById('finReportResult').innerHTML;
-    const printArea = document.getElementById('printReceiptArea');
-    printArea.innerHTML = `<div style="padding:20px;width:100%;max-width:800px;margin:0 auto;">${content}</div>`;
-    window.print();
+// MESSAGES
+function populateMessageRecipients() {
+  const sel=document.getElementById('msgRecipient'), u=data.currentUser; if(!sel)return; sel.innerHTML='';
+  if(['super','admin'].includes(u.role)){
+    sel.innerHTML += `<option value="all_students">എല്ലാ വിദ്യാർത്ഥികൾക്കും</option>`;
+    getVisibleClasses().filter(c=>c!=='all').forEach(c=>sel.innerHTML+=`<option value="class_${c}">ക്ലാസ് ${c} ലെ എല്ലാവർക്കും</option>`);
+    data.students.forEach(s=>sel.innerHTML+=`<option value="student_${s.id}">${s.name}</option>`);
+  } else if(u.role==='teacher'){
+    sel.innerHTML += `<option value="class_${u.teacherClass}">ക്ലാസ്സിലെ എല്ലാവർക്കും</option>`;
+    data.students.filter(s=>s.class==u.teacherClass).forEach(s=>sel.innerHTML+=`<option value="student_${s.id}">${s.name}</option>`);
+  }
+}
+function sendMessage() {
+  const t=document.getElementById('msgRecipient').value, c=document.getElementById('msgContent').value.trim(), u=data.currentUser;
+  if(!t||!c)return toast('വിവരങ്ങൾ നൽകുക','error');
+  data.messages.push({id:Date.now(), from:u.user, fromName:u.user, fromRole:u.role, fromClass:u.class||u.teacherClass||'', fromId:u.user, to:t, content:c, time:Date.now()});
+  saveData(); document.getElementById('msgContent').value=''; renderMessages(); toast('അയച്ചു','success');
+}
+function renderMessages() {
+  const u=data.currentUser;
+  let ms=data.messages.filter(m=>m.from===u.user||m.to===u.user||m.to==='all_students'||m.to===`class_${u.class||u.teacherClass}`||m.to===`student_${u.studentId}`);
+  document.getElementById('messageBox').innerHTML = ms.length ? ms.slice().reverse().map(m=>`<div class="msg-item"><div class="msg-header"><span>${m.fromName} &rarr; ${m.to}</span><span>${new Date(m.time).toLocaleString('ml-IN')}</span></div><div class="msg-content">${m.content}</div></div>`).join('') : 'ലഭ്യമല്ല';
 }
 
-function renderAll() {
-    renderStudents();
-    populateSelects();
-    toggleFinReportInputs();
-}
+// TEACHERS & ADMINS
+function addTeacher() { const u=document.getElementById('teacherUser').value, p=document.getElementById('teacherPass').value, c=document.getElementById('teacherClass').value; if(u&&p){data.teachers.push({user:u,pass:p,class:c});saveData();renderTeachers();toast('ചേർത്തു','success');} }
+function removeTeacher(i) { if(confirm('ഡിലീറ്റ് ചെയ്യണോ?')){data.teachers.splice(i,1);saveData();renderTeachers();} }
+function renderTeachers() { document.getElementById('teacherList').innerHTML = data.teachers.map((t,i)=>`<div class="chip">${t.user} (Cls ${t.class}) <button onclick="removeTeacher(${i})">X</button></div>`).join(''); }
+function addAdmin() { const u=document.getElementById('adminUser').value, p=document.getElementById('adminPass').value; if(u&&p){data.admins.push({user:u,pass:p,role:'admin'});saveData();renderAdmins();toast('ചേർത്തു','success');} }
+function removeAdmin(i) { if(data.admins[i].user==='admin')return; if(confirm('ഡിലീറ്റ് ചെയ്യണോ?')){data.admins.splice(i,1);saveData();renderAdmins();} }
+function renderAdmins() { document.getElementById('adminList').innerHTML = data.admins.map((a,i)=>`<div class="chip">${a.user} ${a.role==='super'?'⭐':''} ${a.user!=='admin'?`<button onclick="removeAdmin(${i})">X</button>`:''}</div>`).join(''); }
 
-function switchTab(tab) {
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  const idMap = { 'co-curricular': 'tabCoCurricular', 'finance': 'tabFinance' };
-  const targetId = idMap[tab] || ('tab' + tab.charAt(0).toUpperCase() + tab.slice(1));
-  const target = document.getElementById(targetId);
-  if (target) target.classList.add('active');
-  if(tab === 'homework') populateSelects();
-  if(tab === 'messages') populateMessageRecipients();
-}
+// CORE
+function renderAll() { renderDashboardAlerts(); renderDashboard(); renderStudents(); renderTimetable(); renderAttendance(); renderAttendanceMatrix(); renderSubjects(); renderActivities(); renderCoCurricular(); renderMarkList(); renderHomework(); renderFinance(); renderReport(); renderMessages(); renderTeachers(); renderAdmins(); }
+function switchTab(t) { document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active')); document.querySelectorAll('#tabBar button').forEach(e=>e.classList.remove('active')); const target=document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1))||document.getElementById('tab'+t.split('-').map(x=>x.charAt(0).toUpperCase()+x.slice(1)).join('')); if(target)target.classList.add('active'); const btn=document.querySelector(`button[data-tab="${t}"]`); if(btn)btn.classList.add('active'); if(t==='homework')populateSelects(); if(t==='messages')populateMessageRecipients(); toggleSidebar(false); }
 
 loadData();
 </script>
