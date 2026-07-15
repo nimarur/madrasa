@@ -148,6 +148,7 @@ tbody tr:hover{background:var(--paper);}
 .btn-success{background:var(--success);color:#fff;}
 .btn-danger{background:var(--danger);color:#fff;}
 .btn-warning{background:var(--warn);color:#fff;}
+.btn-secondary{background:var(--ink-faint);color:#fff;}
 .btn-outline{background:transparent;border:1.5px solid var(--emerald-600);color:var(--emerald-700);}
 .btn-outline:hover{background:var(--emerald-600);color:#fff;}
 .btn-sm{padding:5px 12px;font-size:12px;}
@@ -163,10 +164,10 @@ tbody tr:hover{background:var(--paper);}
 .form-group-inline input, .form-group-inline select {flex: 1;}
 
 .msg-container{max-height:400px;overflow-y:auto;border:1px solid var(--line);border-radius:var(--radius);padding:14px;}
-.msg-item{padding:11px 4px;border-bottom:1px solid var(--sand);}
+.msg-item{padding:14px;border-bottom:1px solid var(--sand); display:flex; flex-direction:column; gap:8px;}
 .msg-item:last-child{border-bottom:none;}
-.msg-item .msg-header{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-faint);margin-bottom:3px;font-family:var(--font-num);}
-.msg-item .msg-content{font-size:13.5px;color:var(--ink);}
+.msg-item .msg-header{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-faint);font-family:var(--font-num);}
+.msg-item .msg-content{font-size:14px;color:var(--ink); background:var(--paper); padding:10px; border-radius:8px;}
 .msg-from{font-weight:700; color:var(--emerald-800);}
 .msg-to{font-style:italic; color:var(--ink-soft);}
 
@@ -234,14 +235,24 @@ tbody tr:hover{background:var(--paper);}
 @media print{
   body > *:not(#printReceiptArea) { display: none !important; }
   #printReceiptArea { 
-      display: block !important; 
+      display: flex !important; 
+      justify-content: center;
       position: absolute; left: 0; top: 0; width: 100%; 
       background: white; padding: 40px; font-family: sans-serif;
   }
-  .receipt-box { border: 2px solid #000; padding: 30px; border-radius: 10px; max-width: 600px; margin: 0 auto; text-align: center; }
-  .receipt-box h1 { margin-bottom: 5px; font-size: 24px; }
-  .receipt-box p { margin: 8px 0; font-size: 16px; }
-  .receipt-box .amount { font-size: 28px; font-weight: bold; margin: 20px 0; border-top: 1px dashed #ccc; border-bottom: 1px dashed #ccc; padding: 10px 0;}
+  .receipt-box { 
+      border: 3px solid #111; padding: 40px; border-radius: 12px; 
+      width: 100%; max-width: 650px; text-align: center; position:relative;
+  }
+  .receipt-box::before {
+      content: ''; position:absolute; top:8px; left:8px; right:8px; bottom:8px;
+      border: 1px dashed #666; border-radius: 6px; pointer-events: none;
+  }
+  .receipt-box h1 { margin-bottom: 5px; font-size: 26px; color:#111; letter-spacing:1px;}
+  .receipt-box .receipt-title { display:inline-block; background:#111; color:#fff; padding:6px 16px; border-radius:20px; font-size:14px; font-weight:bold; margin-bottom:20px; }
+  .receipt-details { text-align: left; display:grid; grid-template-columns:1fr 1fr; gap:10px; margin: 20px 0; font-size:15px; }
+  .receipt-box .amount { font-size: 32px; font-weight: bold; margin: 30px 0; padding: 15px 0; border-top: 2px solid #111; border-bottom: 2px solid #111; }
+  .receipt-sig-area { display:flex; justify-content:space-between; margin-top:50px; font-size:14px; text-align:center;}
 }
 
 /* MOBILE RESPONSIVE TWEAKS */
@@ -352,11 +363,23 @@ tbody tr:hover{background:var(--paper);}
 
       <div id="tabSettings" class="tab-content">
         <div class="page-head">
-          <div><h2>സെറ്റിംഗ്സ്</h2><div class="desc">മദ്രസയുടെ അടിസ്ഥാന വിവരങ്ങൾ ക്രമീകരിക്കുക</div></div>
+          <div><h2>സെറ്റിംഗ്സ്</h2><div class="desc">അക്കൗണ്ട് സുരക്ഷയും മദ്രസ വിവരങ്ങളും</div></div>
           <button class="btn btn-outline btn-sm" onclick="renderAll()"><i class="fas fa-sync"></i> ഡാറ്റ പുതുക്കുക</button>
         </div>
-        <div class="card">
-          <div class="form-grid">
+
+        <div class="card" id="passwordChangeSection">
+            <div class="card-title star-bullet">പാസ്സ്‌വേർഡ് മാറ്റുക</div>
+            <div class="form-grid-3">
+                <div class="form-group"><label>നിലവിലെ പാസ്സ്‌വേർഡ്</label><input type="password" id="currentPassInput" placeholder="പഴയ പാസ്സ്‌വേർഡ്"></div>
+                <div class="form-group"><label>പുതിയ പാസ്സ്‌വേർഡ്</label><input type="password" id="newPassInput" placeholder="പുതിയ പാസ്സ്‌വേർഡ്"></div>
+                <div class="form-group"><label>പുതിയ പാസ്സ്‌വേർഡ് (ഒന്നുകൂടി)</label><input type="password" id="confirmPassInput" placeholder="ആവർത്തിക്കുക"></div>
+            </div>
+            <button class="btn btn-success" onclick="changeOwnPassword()"><i class="fas fa-key"></i> പാസ്സ്‌വേർഡ് സേവ് ചെയ്യുക</button>
+        </div>
+
+        <div class="card" id="adminSettingsSection">
+          <div class="card-title star-bullet" style="color:var(--danger);"><i class="fas fa-tools"></i> മദ്രസ അഡ്മിനിസ്ട്രേഷൻ</div>
+          <div class="form-grid mt-16">
             <div class="form-group">
               <label><i class="fas fa-school"></i> മദ്രസ പേര്</label>
               <div class="form-group-inline">
@@ -790,7 +813,7 @@ let data = {
   activities: ['സാഹിത്യ സമാജം', 'പ്രസംഗം', 'പാട്ട്', 'സ്പോർട്സ്', 'കവിതാരചന', 'ക്വിസ്'],
   marks: [], coCurricular: [], attendance: [], messages: [], teachers: [], admins: [], homework: [],
   timetable: [], fees: [],
-  contactAdmin: '', // NEW: മെസ്സേജ് സ്വീകരിക്കുന്ന അഡ്മിനെ തിരിച്ചറിയാൻ
+  contactAdmin: '', 
   currentUser: null
 };
 
@@ -799,7 +822,6 @@ let attendanceView = 'day';
 async function loadData() {
   const loader = document.getElementById('loaderOverlay');
   
-  // Fast loading from local storage
   try {
     const saved = localStorage.getItem('madrasaDataPremiumV9');
     if (saved) { 
@@ -811,11 +833,9 @@ async function loadData() {
     initDefaults();
   }
 
-  // Hide loader immediately for speed
   if(loader) loader.classList.add('hide-loader');
   document.getElementById('loginSchoolName').textContent = data.schoolName || 'നൂറുൽ ഈമാൻ മദ്രസ';
 
-  // Background fetch
   if (SCRIPT_URL && SCRIPT_URL !== 'YOUR_WEB_APP_URL_HERE') {
     fetch(SCRIPT_URL).then(res => res.json()).then(fetchedData => {
       if (fetchedData && fetchedData.admins && fetchedData.admins.length > 0) {
@@ -986,6 +1006,9 @@ function enterApp() {
   document.getElementById('teacherAddForm').classList.toggle('hide', !isAdminOrSuper);
   document.getElementById('btnAddTeacherBtn').classList.toggle('hide', !isAdminOrSuper);
 
+  // Settings visibility logic
+  document.getElementById('adminSettingsSection').classList.toggle('hide', !isAdminOrSuper);
+
   if (isSuper) {
     document.getElementById('userRole').textContent = '🛡️ സൂപ്പർ അഡ്മിൻ';
     document.getElementById('adminsTab').classList.remove('hide');
@@ -1004,11 +1027,11 @@ function enterApp() {
   document.getElementById('reportStudentSelect').classList.toggle('hide', isStudent);
 
   // Tab Menu Visbility
-  const allowedForStudent = ['dashboard', 'report', 'messages', 'homework', 'timetable'];
+  const allowedForStudent = ['dashboard', 'report', 'messages', 'homework', 'timetable', 'settings'];
   document.querySelectorAll('#tabBar button').forEach(btn => {
     const tab = btn.dataset.tab;
     if (isStudent && !allowedForStudent.includes(tab)) btn.style.display = 'none';
-    else if (isTeacher && (tab === 'admins' || tab === 'settings' || tab === 'teachers' || tab === 'fees')) btn.style.display = 'none';
+    else if (isTeacher && (tab === 'admins' || tab === 'teachers' || tab === 'fees')) btn.style.display = 'none';
     else if (isAdminRole && tab === 'admins') btn.style.display = 'none';
     else btn.style.display = 'flex';
   });
@@ -1065,7 +1088,53 @@ function toggleSidebar(open) {
   document.getElementById('sidebarOverlay').classList.toggle('show', open);
 }
 
-// SETTINGS
+// SETTINGS (Password & Config)
+function changeOwnPassword() {
+    const currPass = document.getElementById('currentPassInput').value;
+    const newPass = document.getElementById('newPassInput').value.trim();
+    const confPass = document.getElementById('confirmPassInput').value.trim();
+
+    if (!currPass || !newPass || !confPass) return toast('എല്ലാ ഫീൽഡും നൽകുക', 'error');
+    if (newPass !== confPass) return toast('പുതിയ പാസ്സ്‌വേർഡുകൾ തമ്മിൽ ചേരുന്നില്ല', 'error');
+
+    let userObj = null;
+    const u = data.currentUser;
+    if (u.role === 'student') userObj = data.students.find(s => s.id === u.studentId);
+    else if (u.role === 'teacher') userObj = data.teachers.find(t => t.user === u.user);
+    else userObj = data.admins.find(a => a.user === u.user);
+
+    if (!userObj || userObj.pass !== currPass) return toast('നിലവിലെ പാസ്സ്‌വേർഡ് തെറ്റാണ്', 'error');
+
+    userObj.pass = newPass;
+    saveData();
+    document.getElementById('currentPassInput').value = '';
+    document.getElementById('newPassInput').value = '';
+    document.getElementById('confirmPassInput').value = '';
+    toast('പാസ്സ്‌വേർഡ് വിജയകരമായി മാറ്റി', 'success');
+}
+
+function resetUserPassword(type, identifier) {
+    // Only Admin or Super Admin can reset Student/Teacher passwords.
+    // Only Super Admin can reset Admin passwords.
+    const u = data.currentUser;
+    if(type === 'admin' && u.role !== 'super') return toast('അനുമതിയില്ല', 'error');
+    if((type === 'student' || type === 'teacher') && !['super', 'admin'].includes(u.role)) return toast('അനുമതിയില്ല', 'error');
+
+    const newPass = prompt("പുതിയ പാസ്സ്‌വേർഡ് നൽകുക:");
+    if(!newPass || !newPass.trim()) return;
+
+    let target = null;
+    if(type === 'student') target = data.students.find(s => s.id === identifier);
+    if(type === 'teacher') target = data.teachers.find(t => t.user === identifier);
+    if(type === 'admin') target = data.admins.find(a => a.user === identifier);
+
+    if(target) {
+        target.pass = newPass.trim();
+        saveData();
+        toast('പാസ്സ്‌വേർഡ് റീസെറ്റ് ചെയ്തു', 'success');
+    }
+}
+
 function updateSchoolName() {
   const name = document.getElementById('schoolNameInput').value.trim() || 'മദ്രസ';
   data.schoolName = name; saveData();
@@ -1343,6 +1412,7 @@ function renderStudents() {
       <td>
           <button class="btn ${active ? 'btn-warning' : 'btn-success'} btn-sm" onclick="toggleStudent(${s.id})">${active ? '<i class="fas fa-ban"></i>' : '<i class="fas fa-check"></i>'}</button>
           <button class="btn btn-primary btn-sm" onclick="editStudent(${s.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn btn-secondary btn-sm" onclick="resetUserPassword('student', ${s.id})" title="പാസ്സ്‌വേർഡ് റീസെറ്റ്"><i class="fas fa-key"></i></button>
           <button class="btn btn-danger btn-sm" onclick="deleteStudent(${s.id})"><i class="fas fa-trash"></i></button>
       </td>` : ''}`;
     tbody.appendChild(tr);
@@ -1495,7 +1565,6 @@ function populateMessageRecipients() {
     const u = data.currentUser;
     if(!u) return;
     
-    // Super Admin can message other admins
     if (u.role === 'super') {
         data.admins.forEach(a => {
             if (a.user !== u.user) {
@@ -1503,24 +1572,26 @@ function populateMessageRecipients() {
             }
         });
     } 
-    // Teachers and Students only see the designated "Contact Admin"
     else if (u.role === 'teacher' || u.role === 'student') {
         const contactA = data.admins.find(a => a.user === data.contactAdmin && a.role !== 'super') || data.admins.find(a => a.role !== 'super');
         if (contactA) {
             sel.innerHTML += `<option value="admin_${contactA.user}">ഹെഡ്മാസ്റ്റർ (അഡ്മിൻ)</option>`;
         }
     }
-    // Headmaster ('admin') does not see any option to message other admins or super admin
 
     if (u.role === 'student') {
         const t = data.teachers.find(t => t.class == u.class);
         if(t) sel.innerHTML += `<option value="teacher_${t.user}">ക്ലാസ് ടീച്ചർ: ${t.user}</option>`;
     } else if (u.role === 'teacher') {
+        sel.innerHTML += `<option value="class_all">എല്ലാ വിദ്യാർത്ഥികൾക്കും (Class ${u.teacherClass})</option>`;
         data.students.filter(s => s.class == u.teacherClass).forEach(s => {
             sel.innerHTML += `<option value="student_${s.id}">വിദ്യാർത്ഥി: ${s.name}</option>`;
         });
-        sel.innerHTML += `<option value="class_all">എല്ലാ വിദ്യാർത്ഥികൾക്കും (Class ${u.teacherClass})</option>`;
     } else if (['super','admin'].includes(u.role)) {
+         sel.innerHTML += `<option value="all_students">മദ്രസയിലെ എല്ലാ വിദ്യാർത്ഥികൾക്കും</option>`;
+         data.students.forEach(s => {
+            sel.innerHTML += `<option value="student_${s.id}">വിദ്യാർത്ഥി: ${s.name} (Class ${s.class})</option>`;
+         });
          data.teachers.forEach(t => sel.innerHTML += `<option value="teacher_${t.user}">ടീച്ചർ: ${t.user} (Class ${t.class})</option>`);
     }
 }
@@ -1534,13 +1605,18 @@ function sendMessage() {
   let fromName = data.currentUser.user;
   let fromRole = data.currentUser.role;
   let fromClass = '';
+  let fromId = '';
   
   if (fromRole === 'student') {
       const s = getStudent(data.currentUser.studentId);
       fromName = s.name;
       fromClass = s.class;
+      fromId = 'student_' + data.currentUser.studentId;
   } else if (fromRole === 'teacher') {
       fromClass = data.currentUser.teacherClass;
+      fromId = 'teacher_' + data.currentUser.user;
+  } else {
+      fromId = 'admin_' + data.currentUser.user;
   }
 
   data.messages.push({ 
@@ -1549,11 +1625,28 @@ function sendMessage() {
       fromName,
       fromRole,
       fromClass,
+      fromId,
       to, 
       content, 
       time: Date.now() 
   });
   saveData(); document.getElementById('msgContent').value = ''; renderMessages(); toast('അയച്ചു', 'success');
+}
+
+function prepareReply(replyToId) {
+    switchTab('messages');
+    const sel = document.getElementById('msgRecipient');
+    // Ensure the option exists, if not maybe they are replying to a generic message.
+    let exists = false;
+    for(let i=0; i<sel.options.length; i++) {
+        if(sel.options[i].value === replyToId) { exists = true; break; }
+    }
+    if(exists) {
+        sel.value = replyToId;
+        document.getElementById('msgContent').focus();
+    } else {
+        toast('മറുപടി അയക്കാൻ സാധ്യമല്ല', 'error');
+    }
 }
 
 function renderMessages() {
@@ -1564,32 +1657,30 @@ function renderMessages() {
   if (user.role === 'super') {
       msgs = data.messages;
   } else if (user.role === 'admin') {
-      // Admin only sees messages strictly to or from them. They don't see Super Admin or other Admin's messages.
       msgs = data.messages.filter(m => 
-          m.from === user.user || m.to === `admin_${user.user}`
+          m.from === user.user || m.to === `admin_${user.user}` || m.to === 'all_students'
       );
   } else if (user.role === 'teacher') {
       msgs = data.messages.filter(m => 
           m.from === user.user || 
           m.to === `teacher_${user.user}` || 
-          m.to === 'class_all'
+          m.to === 'class_all' ||
+          m.to === 'all_students'
       );
   } else if (user.role === 'student') {
       msgs = data.messages.filter(m => 
           m.from === user.user || 
           m.to === `student_${user.studentId}` || 
-          (m.to === 'class_all' && m.fromClass == user.class)
+          (m.to === 'class_all' && m.fromClass == user.class) ||
+          m.to === 'all_students'
       );
   }
 
   box.innerHTML = msgs.slice().reverse().map(m => {
       let toLabel = m.to;
       if(m.to.startsWith('admin_')) {
-          if (user.role === 'teacher' || user.role === 'student') {
-              toLabel = "ഹെഡ്മാസ്റ്റർ";
-          } else {
-              toLabel = `അഡ്മിൻ (${m.to.replace('admin_', '')})`;
-          }
+          if (user.role === 'teacher' || user.role === 'student') toLabel = "ഹെഡ്മാസ്റ്റർ";
+          else toLabel = `അഡ്മിൻ (${m.to.replace('admin_', '')})`;
       }
       else if(m.to.startsWith('teacher_')) toLabel = `ടീച്ചർ (${m.to.replace('teacher_', '')})`;
       else if(m.to.startsWith('student_')) {
@@ -1598,21 +1689,27 @@ function renderMessages() {
           toLabel = s ? `വിദ്യാർത്ഥി (${s.name})` : m.to;
       }
       else if(m.to === 'class_all') toLabel = `മുഴുവൻ ക്ലാസ്സിനും (Class ${m.fromClass})`;
+      else if(m.to === 'all_students') toLabel = `മദ്രസയിലെ എല്ലാ വിദ്യാർത്ഥികൾക്കും`;
 
       let fromLabel = m.fromName;
       if(m.fromRole === 'student') fromLabel = `${m.fromName} (Class ${m.fromClass})`;
       if(m.fromRole === 'teacher') fromLabel = `${m.fromName} (Teacher Class ${m.fromClass})`;
       
-      // Mask Super admin & Admins names for privacy to end users
       if(m.fromRole === 'super' && user.role !== 'super') fromLabel = "മാനേജ്മെന്റ്";
       if(m.fromRole === 'admin' && (user.role === 'teacher' || user.role === 'student')) fromLabel = "ഹെഡ്മാസ്റ്റർ";
+
+      // Allow reply if message is not FROM self, and not a generic broadcast
+      let canReply = m.from !== user.user && m.fromId && m.to !== 'all_students' && m.to !== 'class_all';
 
       return `<div class="msg-item">
         <div class="msg-header">
             <span><span class="msg-from">${fromLabel}</span> → <span class="msg-to">${toLabel}</span></span>
             <span>${new Date(m.time).toLocaleString('ml-IN')}</span>
         </div>
-        <div class="msg-content">${m.content}</div>
+        <div class="msg-content">
+            ${m.content}
+            ${canReply ? `<div style="margin-top:10px;"><button class="btn btn-outline btn-sm" onclick="prepareReply('${m.fromId}')"><i class="fas fa-reply"></i> മറുപടി</button></div>` : ''}
+        </div>
       </div>`;
   }).join('') || '<p class="text-muted">സന്ദേശങ്ങൾ ഇല്ല</p>';
 }
@@ -1628,7 +1725,12 @@ function renderTeachers() {
   const isEditable = ['super', 'admin'].includes(data.currentUser?.role);
   if (!isEditable) { container.innerHTML = '<p class="text-muted"><i class="fas fa-lock"></i> സൂപ്പർ അഡ്മിൻ അല്ലെങ്കിൽ ഹെഡ് മാസ്റ്റർക്ക് മാത്രം പ്രാപ്യം</p>'; return; }
   container.innerHTML = data.teachers.map((t, i) =>
-    `<div class="chip"><i class="fas fa-chalkboard-teacher" style="color:var(--gold-600);"></i> ${t.user} (ക്ലാസ് ${t.class}) ${data.currentUser?.role === 'super' || data.currentUser?.role === 'admin' ? `<button class="btn btn-danger btn-sm" onclick="removeTeacher(${i})"><i class="fas fa-times"></i></button>` : ''}</div>`
+    `<div class="chip">
+        <i class="fas fa-chalkboard-teacher" style="color:var(--gold-600);"></i> ${t.user} (ക്ലാസ് ${t.class}) 
+        <div style="margin-left:8px;">
+            ${data.currentUser?.role === 'super' || data.currentUser?.role === 'admin' ? `<button class="btn btn-secondary btn-sm" onclick="resetUserPassword('teacher', '${t.user}')" title="പാസ്സ്‌വേർഡ് റീസെറ്റ്"><i class="fas fa-key"></i></button> <button class="btn btn-danger btn-sm" onclick="removeTeacher(${i})"><i class="fas fa-times"></i></button>` : ''}
+        </div>
+    </div>`
   ).join('');
 }
 
@@ -1640,9 +1742,12 @@ function renderAdmins() {
     let isSuper = a.role === 'super';
     let isContact = data.contactAdmin === a.user;
     let radioBtn = !isSuper ? `<input type="radio" name="contactAdmin" onchange="setContactAdmin('${a.user}')" ${isContact ? 'checked' : ''} style="margin-left:8px;cursor:pointer;" title="മെസ്സേജ് സ്വീകരിക്കാൻ ഈ അഡ്മിനെ തിരഞ്ഞെടുക്കുക">` : '';
-    return `<div class="chip" style="min-width: 250px; justify-content: space-between;">
+    return `<div class="chip" style="min-width: 280px; justify-content: space-between;">
       <span><i class="fas fa-user-shield"></i> ${a.user} ${isSuper ? '⭐' : radioBtn}</span>
-      ${a.user !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="removeAdmin(${i})"><i class="fas fa-times"></i></button>` : ''}
+      <div>
+         <button class="btn btn-secondary btn-sm" onclick="resetUserPassword('admin', '${a.user}')" title="പാസ്സ്‌വേർഡ് റീസെറ്റ്"><i class="fas fa-key"></i></button>
+         ${a.user !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="removeAdmin(${i})"><i class="fas fa-times"></i></button>` : ''}
+      </div>
     </div>`;
   }).join('');
 }
@@ -1723,15 +1828,25 @@ function printReceipt(feeId) {
     printArea.innerHTML = `
         <div class="receipt-box">
             <h1>${data.schoolName}</h1>
-            <h3>ഫീസ് രസീത്</h3>
-            <div style="text-align:left; max-width:300px; margin: 20px auto;">
+            <div class="receipt-title">ഫീസ് രസീത്</div>
+            <div class="receipt-details">
                 <p><strong>രസീത് നമ്പർ:</strong> ${f.id}</p>
                 <p><strong>തിയ്യതി:</strong> ${new Date(f.date).toLocaleDateString('ml-IN')}</p>
                 <p><strong>വിദ്യാർത്ഥി:</strong> ${s.name}</p>
                 <p><strong>ക്ലാസ്:</strong> ${s.class}</p>
             </div>
             <div class="amount">തുക: ₹${f.amount}</div>
-            <p style="font-size:12px; margin-top:30px; color:#666;">ലഭിച്ചത്: ${f.by}</p>
+            
+            <div class="receipt-sig-area">
+                <div style="text-align:left;">
+                    <p style="color:#666;">രേഖപ്പെടുത്തിയത്:<br>${f.by}</p>
+                </div>
+                <div style="text-align:center;">
+                    <p>കിട്ടിബോധിച്ചു</p>
+                    <br><br>
+                    <p><strong>സദർ മുഅല്ലിം</strong></p>
+                </div>
+            </div>
         </div>
     `;
     window.print();
@@ -1900,7 +2015,6 @@ function addAdmin() {
   if (data.admins.find(a => a.user === user) || data.teachers.find(t => t.user === user) || data.students.find(s => s.user === user)) return toast('യൂസർ ഉപയോഗത്തിലാണ്', 'error');
   data.admins.push({ user, pass, role: 'admin' });
   
-  // If this is the first non-super admin, make them default contact
   if(!data.contactAdmin) data.contactAdmin = user;
 
   saveData(); document.getElementById('adminUser').value = ''; document.getElementById('adminPass').value = '';
@@ -1910,7 +2024,6 @@ function removeAdmin(i) {
   if (data.admins[i].user === 'admin') return toast('നീക്കം ചെയ്യാനാവില്ല', 'error');
   if (!confirm('നീക്കം ചെയ്യണോ?')) return;
   
-  // If we delete the contact admin, reset it
   if(data.contactAdmin === data.admins[i].user) {
       data.contactAdmin = '';
   }
