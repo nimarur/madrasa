@@ -338,7 +338,7 @@ tbody tr:hover{background:var(--paper);}
       <button data-tab="marks" onclick="switchTab('marks')"><i class="fas fa-graduation-cap"></i> മാർക്ക്</button>
       <button data-tab="co-curricular" onclick="switchTab('co-curricular')"><i class="fas fa-palette"></i> പാഠ്യേതരം</button>
       <button data-tab="report" onclick="switchTab('report')"><i class="fas fa-file-invoice"></i> റിപ്പോർട്ട്</button>
-      <button data-tab="fees" onclick="switchTab('fees')" id="feesTab"><i class="fas fa-wallet"></i> ഫീസ്</button>
+      <button data-tab="finance" onclick="switchTab('finance')" id="financeTab"><i class="fas fa-wallet"></i> വരവ് / ചിലവ്</button>
       <button data-tab="subjects" onclick="switchTab('subjects')"><i class="fas fa-book"></i> വിഷയങ്ങൾ</button>
       <button data-tab="messages" onclick="switchTab('messages')"><i class="fas fa-envelope"></i> സന്ദേശങ്ങൾ</button>
       <button data-tab="teachers" onclick="switchTab('teachers')" id="teachersTab"><i class="fas fa-chalkboard-teacher"></i> ടീച്ചർമാർ</button>
@@ -494,7 +494,7 @@ tbody tr:hover{background:var(--paper);}
               <select id="hwClassSelect"></select>
             </div>
             <div class="form-group">
-              <label>വിഷയം</label>
+              <label>വിഷയം (ഡ്രോപ്പ്ഡൗൺ)</label>
               <select id="hwSubjectSelect"></select>
             </div>
             <div class="form-group" style="grid-column: 1 / -1;">
@@ -556,40 +556,56 @@ tbody tr:hover{background:var(--paper);}
         </div>
       </div>
 
-      <div id="tabFees" class="tab-content">
+      <div id="tabFinance" class="tab-content">
         <div class="page-head">
-          <div><h2>ഫീസ് / സബ്സ്ക്രിപ്ഷൻ</h2><div class="desc">കുട്ടികളിൽ നിന്നും വാങ്ങിയ ഫീസ് വിവരങ്ങൾ അടയാളപ്പെടുത്തുക</div></div>
+          <div><h2>വരവ് / ചിലവ് (അക്കൗണ്ട്സ്)</h2><div class="desc">ഫീസ് വരവും മദ്രസയുടെ ചിലവുകളും പരിശോധിക്കുക</div></div>
         </div>
-        <div class="card">
-          <div class="form-grid">
-            <div class="form-group">
-                <label>ക്ലാസ്</label>
-                <select id="feeClassSelect" onchange="populateFeeStudentSelect()"></select>
-            </div>
-            <div class="form-group">
-                <label>വിദ്യാർത്ഥി</label>
-                <select id="feeStudentSelect"></select>
-            </div>
-            <div class="form-group">
-                <label>തുക (₹)</label>
-                <input type="number" id="feeAmount" placeholder="തുക നൽകുക">
-            </div>
-            <div class="form-group">
-                <label>തിയ്യതി</label>
-                <input type="date" id="feeDate">
-            </div>
-          </div>
-          <button class="btn btn-success" onclick="saveFee()"><i class="fas fa-save"></i> ഫീസ് സേവ് ചെയ്യുക</button>
+        
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-label">മൊത്തം വരവ് (Income)</div><div class="stat-value" id="totIncome" style="color:var(--success);">₹0</div></div>
+          <div class="stat-card"><div class="stat-label">മൊത്തം ചിലവ് (Expense)</div><div class="stat-value" id="totExpense" style="color:var(--danger);">₹0</div></div>
+          <div class="stat-card"><div class="stat-label">ബാക്കി ഫണ്ട് (Balance)</div><div class="stat-value" id="totBalance">₹0</div></div>
         </div>
 
-        <div class="card">
-          <div class="card-title star-bullet">അടുത്തകാലത്തെ ഫീസ് വിവരങ്ങൾ</div>
-          <div class="table-responsive">
-            <table>
-              <thead><tr><th>തിയ്യതി</th><th>പേര്</th><th>ക്ലാസ്</th><th>തുക</th><th>രസീത്</th></tr></thead>
-              <tbody id="feeTableBody"></tbody>
-            </table>
-          </div>
+        <div class="form-grid">
+            <div class="card">
+                <div class="card-title star-bullet">ഫീസ് / വരവ് ചേർക്കുക</div>
+                <div class="form-group"><label>ക്ലാസ്</label><select id="feeClassSelect" onchange="populateFeeStudentSelect()"></select></div>
+                <div class="form-group"><label>വിദ്യാർത്ഥി</label><select id="feeStudentSelect"></select></div>
+                <div class="form-group"><label>തുക (₹)</label><input type="number" id="feeAmount" placeholder="തുക നൽകുക"></div>
+                <div class="form-group"><label>തിയ്യതി</label><input type="date" id="feeDate"></div>
+                <button class="btn btn-success" onclick="saveFee()"><i class="fas fa-plus"></i> വരവ് രേഖപ്പെടുത്തുക</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title star-bullet">പുതിയ ചിലവ് ചേർക്കുക</div>
+                <div class="form-group"><label>ചിലവാക്കിയ ആവശ്യം / കാരണം</label><input type="text" id="expReason" placeholder="ഉദാ: ചോക്ക് വാങ്ങിയത്, കറന്റ് ബിൽ"></div>
+                <div class="form-group"><label>തുക (₹)</label><input type="number" id="expAmount" placeholder="തുക നൽകുക"></div>
+                <div class="form-group"><label>തിയ്യതി</label><input type="date" id="expDate"></div>
+                <button class="btn btn-danger" onclick="saveExpense()"><i class="fas fa-minus"></i> ചിലവ് രേഖപ്പെടുത്തുക</button>
+            </div>
+        </div>
+
+        <div class="form-grid">
+            <div class="card">
+              <div class="card-title star-bullet">അടുത്തകാലത്തെ ഫീസ് വിവരങ്ങൾ</div>
+              <div class="table-responsive" style="max-height: 400px; overflow-y:auto;">
+                <table>
+                  <thead><tr><th>തിയ്യതി</th><th>പേര്</th><th>ക്ലാസ്</th><th>തുക</th><th>രസീത്</th></tr></thead>
+                  <tbody id="feeTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-title star-bullet">അടുത്തകാലത്തെ ചിലവുകൾ</div>
+              <div class="table-responsive" style="max-height: 400px; overflow-y:auto;">
+                <table>
+                  <thead><tr><th>തിയ്യതി</th><th>ആവശ്യം</th><th>തുക</th><th>രേഖപ്പെടുത്തിയത്</th></tr></thead>
+                  <tbody id="expenseTableBody"></tbody>
+                </table>
+              </div>
+            </div>
         </div>
       </div>
 
@@ -801,7 +817,7 @@ tbody tr:hover{background:var(--paper);}
 // ============================================================
 // ഗൂഗിൾ ആപ്പ് സ്ക്രിപ്റ്റ് ലിങ്ക് ഇവിടെ നൽകുക 
 // ============================================================
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuUnGfrYsyIdClCp_Pi69XOiWK0dZQVBoE4yCFbdiRM5NEKQTrxKIeLNYBWRc5DsEOAw/exec'; 
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuUnGfrYsyIdClCp_Pi69XOiWK0dZQVBoE4yCFbdiRM5NEKQTrxKIeLNYBWRc5DsEOAw/exec'; // ഇവിടെ നിങ്ങളുടെ പുതിയ SCRIPT URL നൽകുക
 
 // ============================================================
 // DATA LAYER
@@ -812,7 +828,7 @@ let data = {
   students: [], subjects: ['ഖുർആൻ', 'ഹിഫ്ള്', 'ഫിഖ്ഹ്', 'തഫ്സീർ', 'അഖീദ'],
   activities: ['സാഹിത്യ സമാജം', 'പ്രസംഗം', 'പാട്ട്', 'സ്പോർട്സ്', 'കവിതാരചന', 'ക്വിസ്'],
   marks: [], coCurricular: [], attendance: [], messages: [], teachers: [], admins: [], homework: [],
-  timetable: [], fees: [],
+  timetable: [], fees: [], expenses: [],
   contactAdmin: '', 
   currentUser: null
 };
@@ -826,6 +842,7 @@ async function loadData() {
     const saved = localStorage.getItem('madrasaDataPremiumV9');
     if (saved) { 
         data = { ...data, ...JSON.parse(saved) }; 
+        if(!data.expenses) data.expenses = [];
     } else { 
         initDefaults(); 
     }
@@ -840,6 +857,7 @@ async function loadData() {
     fetch(SCRIPT_URL).then(res => res.json()).then(fetchedData => {
       if (fetchedData && fetchedData.admins && fetchedData.admins.length > 0) {
         data = { ...data, ...fetchedData };
+        if(!data.expenses) data.expenses = [];
         saveData();
       }
     }).catch(e => console.warn('Background sync failed', e));
@@ -858,7 +876,6 @@ function initDefaults() {
     const now = Date.now();
     const exp = data.expiryDays;
     data.students.push({ id: 1, name: 'അഹമ്മദ്', phone: '9876543210', class: 5, user: 'ahm', pass: '123', active: true, created: now, expiryDays: exp });
-    data.students.push({ id: 2, name: 'ഫാത്തിമ', phone: '', class: 8, user: 'fat', pass: '123', active: true, created: now, expiryDays: exp });
   }
   saveData();
 }
@@ -995,7 +1012,6 @@ function enterApp() {
   document.getElementById('userName').textContent = user.user;
   document.getElementById('userAvatar').textContent = user.user.charAt(0).toUpperCase();
 
-  // Role Badges & Form Controls Visbility
   document.getElementById('btnAddStudentTop').classList.toggle('hide', !isAdminOrSuper);
   document.getElementById('thActions').classList.toggle('hide', !isAdminOrSuper);
 
@@ -1006,7 +1022,6 @@ function enterApp() {
   document.getElementById('teacherAddForm').classList.toggle('hide', !isAdminOrSuper);
   document.getElementById('btnAddTeacherBtn').classList.toggle('hide', !isAdminOrSuper);
 
-  // Settings visibility logic
   document.getElementById('adminSettingsSection').classList.toggle('hide', !isAdminOrSuper);
 
   if (isSuper) {
@@ -1026,12 +1041,11 @@ function enterApp() {
   document.getElementById('hwAdminSection').classList.toggle('hide', isStudent);
   document.getElementById('reportStudentSelect').classList.toggle('hide', isStudent);
 
-  // Tab Menu Visbility
   const allowedForStudent = ['dashboard', 'report', 'messages', 'homework', 'timetable', 'settings'];
   document.querySelectorAll('#tabBar button').forEach(btn => {
     const tab = btn.dataset.tab;
     if (isStudent && !allowedForStudent.includes(tab)) btn.style.display = 'none';
-    else if (isTeacher && (tab === 'admins' || tab === 'teachers' || tab === 'fees')) btn.style.display = 'none';
+    else if (isTeacher && (tab === 'admins' || tab === 'teachers' || tab === 'finance')) btn.style.display = 'none';
     else if (isAdminRole && tab === 'admins') btn.style.display = 'none';
     else btn.style.display = 'flex';
   });
@@ -1041,6 +1055,7 @@ function enterApp() {
   populateMessageRecipients();
   populateReportSelectors();
   document.getElementById('feeDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('expDate').value = new Date().toISOString().split('T')[0];
   renderAll();
   switchTab('dashboard');
   toggleSidebar(false);
@@ -1114,8 +1129,6 @@ function changeOwnPassword() {
 }
 
 function resetUserPassword(type, identifier) {
-    // Only Admin or Super Admin can reset Student/Teacher passwords.
-    // Only Super Admin can reset Admin passwords.
     const u = data.currentUser;
     if(type === 'admin' && u.role !== 'super') return toast('അനുമതിയില്ല', 'error');
     if((type === 'student' || type === 'teacher') && !['super', 'admin'].includes(u.role)) return toast('അനുമതിയില്ല', 'error');
@@ -1291,7 +1304,7 @@ function renderAll() {
   renderMessages();
   renderTeachers();
   renderAdmins();
-  renderFees();
+  renderFinance();
   populateSelects();
   renderReport();
 }
@@ -1636,7 +1649,6 @@ function sendMessage() {
 function prepareReply(replyToId) {
     switchTab('messages');
     const sel = document.getElementById('msgRecipient');
-    // Ensure the option exists, if not maybe they are replying to a generic message.
     let exists = false;
     for(let i=0; i<sel.options.length; i++) {
         if(sel.options[i].value === replyToId) { exists = true; break; }
@@ -1657,8 +1669,16 @@ function renderMessages() {
   if (user.role === 'super') {
       msgs = data.messages;
   } else if (user.role === 'admin') {
+      // Admin sees their own messages, messages to students, messages from students, etc.
       msgs = data.messages.filter(m => 
-          m.from === user.user || m.to === `admin_${user.user}` || m.to === 'all_students'
+          m.from === user.user || 
+          m.to === `admin_${user.user}` || 
+          m.to === 'all_students' ||
+          m.fromRole === 'student' || 
+          m.fromRole === 'teacher' || 
+          m.to.startsWith('teacher_') || 
+          m.to.startsWith('student_') || 
+          m.to === 'class_all'
       );
   } else if (user.role === 'teacher') {
       msgs = data.messages.filter(m => 
@@ -1698,7 +1718,6 @@ function renderMessages() {
       if(m.fromRole === 'super' && user.role !== 'super') fromLabel = "മാനേജ്മെന്റ്";
       if(m.fromRole === 'admin' && (user.role === 'teacher' || user.role === 'student')) fromLabel = "ഹെഡ്മാസ്റ്റർ";
 
-      // Allow reply if message is not FROM self, and not a generic broadcast
       let canReply = m.from !== user.user && m.fromId && m.to !== 'all_students' && m.to !== 'class_all';
 
       return `<div class="msg-item">
@@ -1752,7 +1771,65 @@ function renderAdmins() {
   }).join('');
 }
 
-// FEES
+// FINANCE (INCOME / EXPENSE)
+function renderFinance() {
+    // 1. Calculate Totals
+    const totalIncome = data.fees.reduce((sum, f) => sum + Number(f.amount), 0);
+    const totalExpense = (data.expenses || []).reduce((sum, e) => sum + Number(e.amount), 0);
+    const balance = totalIncome - totalExpense;
+
+    document.getElementById('totIncome').innerText = '₹' + totalIncome;
+    document.getElementById('totExpense').innerText = '₹' + totalExpense;
+    document.getElementById('totBalance').innerText = '₹' + balance;
+
+    // 2. Render Fee (Income) Table
+    const fTbody = document.getElementById('feeTableBody');
+    if(fTbody) {
+        if(!data.fees || data.fees.length === 0) {
+            fTbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted" style="padding:20px;">ഫീസ് വിവരങ്ങൾ ലഭ്യമല്ല</td></tr>`;
+        } else {
+            fTbody.innerHTML = data.fees.slice().reverse().map(f => {
+                const s = getStudent(f.studentId);
+                const name = s ? s.name : 'Unknown';
+                const cls = s ? s.class : '';
+                const phone = s ? s.phone : '';
+                const dateStr = new Date(f.date).toLocaleDateString('ml-IN');
+                const msg = encodeURIComponent(`മദ്രസ ഫീസ് രസീത്\nതിയ്യതി: ${dateStr}\nവിദ്യാർത്ഥി: ${name}\nക്ലാസ്: ${cls}\nതുക: ₹${f.amount}\n\nനൂറുൽ ഈമാൻ മദ്രസ`);
+                const waLink = phone ? `https://wa.me/91${phone}?text=${msg}` : `https://wa.me/?text=${msg}`;
+
+                return `<tr>
+                    <td>${dateStr}</td>
+                    <td class="mal"><strong>${name}</strong></td>
+                    <td>${cls}</td>
+                    <td style="color:var(--success);font-weight:bold;">₹${f.amount}</td>
+                    <td>
+                        <a href="${waLink}" target="_blank" class="btn btn-success btn-sm"><i class="fab fa-whatsapp"></i></a>
+                        <button class="btn btn-outline btn-sm" onclick="printReceipt(${f.id})"><i class="fas fa-print"></i></button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+    }
+
+    // 3. Render Expense Table
+    const eTbody = document.getElementById('expenseTableBody');
+    if(eTbody) {
+        if(!data.expenses || data.expenses.length === 0) {
+            eTbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted" style="padding:20px;">ചിലവുകൾ ഒന്നും രേഖപ്പെടുത്തിയിട്ടില്ല</td></tr>`;
+        } else {
+            eTbody.innerHTML = data.expenses.slice().reverse().map(e => {
+                const dateStr = new Date(e.date).toLocaleDateString('ml-IN');
+                return `<tr>
+                    <td>${dateStr}</td>
+                    <td class="mal"><strong>${e.reason}</strong></td>
+                    <td style="color:var(--danger);font-weight:bold;">₹${e.amount}</td>
+                    <td>${e.by}</td>
+                </tr>`;
+            }).join('');
+        }
+    }
+}
+
 function populateFeeStudentSelect() {
     const cls = document.getElementById('feeClassSelect').value;
     const sel = document.getElementById('feeStudentSelect');
@@ -1775,48 +1852,38 @@ function saveFee() {
         by: data.currentUser.user
     });
     
-    // Also extend subscription
     const student = getStudent(sid);
     if(student) {
         student.active = true;
-        student.created = Date.now(); // reset date for new expiry period
+        student.created = Date.now();
     }
 
     saveData();
     document.getElementById('feeAmount').value = '';
-    renderFees(); renderDashboardAlerts();
-    toast('ഫീസ് രേഖപ്പെടുത്തി ഒപ്പം സബ്സ്ക്രിപ്ഷൻ പുതുക്കി', 'success');
+    renderFinance(); renderDashboardAlerts();
+    toast('ഫീസ് (വരവ്) രേഖപ്പെടുത്തി ഒപ്പം സബ്സ്ക്രിപ്ഷൻ പുതുക്കി', 'success');
 }
 
-function renderFees() {
-    const tbody = document.getElementById('feeTableBody');
-    if(!tbody) return;
-    if(!data.fees || data.fees.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted" style="padding:20px;">ഫീസ് വിവരങ്ങൾ ലഭ്യമല്ല</td></tr>`;
-        return;
-    }
+function saveExpense() {
+    const reason = document.getElementById('expReason').value.trim();
+    const amount = document.getElementById('expAmount').value;
+    const date = document.getElementById('expDate').value;
 
-    tbody.innerHTML = data.fees.slice().reverse().map(f => {
-        const s = getStudent(f.studentId);
-        const name = s ? s.name : 'Unknown';
-        const cls = s ? s.class : '';
-        const phone = s ? s.phone : '';
-        
-        const dateStr = new Date(f.date).toLocaleDateString('ml-IN');
-        const msg = encodeURIComponent(`മദ്രസ ഫീസ് രസീത്\nതിയ്യതി: ${dateStr}\nവിദ്യാർത്ഥി: ${name}\nക്ലാസ്: ${cls}\nതുക: ₹${f.amount}\n\nനൂറുൽ ഈമാൻ മദ്രസ`);
-        const waLink = phone ? `https://wa.me/91${phone}?text=${msg}` : `https://wa.me/?text=${msg}`;
+    if(!reason || !amount || !date) return toast('വിവരങ്ങൾ പൂർണ്ണമാക്കുക', 'error');
 
-        return `<tr>
-            <td>${dateStr}</td>
-            <td class="mal"><strong>${name}</strong></td>
-            <td>${cls}</td>
-            <td><strong>₹${f.amount}</strong></td>
-            <td>
-                <a href="${waLink}" target="_blank" class="btn btn-success btn-sm"><i class="fab fa-whatsapp"></i> വാട്സ്ആപ്പ്</a>
-                <button class="btn btn-outline btn-sm" onclick="printReceipt(${f.id})"><i class="fas fa-print"></i> PDF/Print</button>
-            </td>
-        </tr>`;
-    }).join('');
+    data.expenses.push({
+        id: Date.now(),
+        reason: reason,
+        amount: parseFloat(amount),
+        date: date,
+        by: data.currentUser.user
+    });
+
+    saveData();
+    document.getElementById('expReason').value = '';
+    document.getElementById('expAmount').value = '';
+    renderFinance();
+    toast('ചിലവ് രേഖപ്പെടുത്തി', 'success');
 }
 
 function printReceipt(feeId) {
@@ -2122,7 +2189,7 @@ function renderReport() {
 
 function switchTab(tab) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  const idMap = { 'co-curricular': 'tabCoCurricular', 'homework': 'tabHomework', 'settings': 'tabSettings', 'fees': 'tabFees', 'timetable': 'tabTimetable' };
+  const idMap = { 'co-curricular': 'tabCoCurricular', 'homework': 'tabHomework', 'settings': 'tabSettings', 'finance': 'tabFinance', 'timetable': 'tabTimetable' };
   const targetId = idMap[tab] || ('tab' + tab.charAt(0).toUpperCase() + tab.slice(1));
   const target = document.getElementById(targetId);
   if (target) target.classList.add('active');
@@ -2134,7 +2201,7 @@ function switchTab(tab) {
   if (tab === 'students') renderStudents();
   if (tab === 'timetable') renderTimetable();
   if (tab === 'attendance') { renderAttendance(); renderAttendanceMatrix(); }
-  if (tab === 'fees') { updateClassFilters(); populateFeeStudentSelect(); renderFees(); }
+  if (tab === 'finance') { updateClassFilters(); populateFeeStudentSelect(); renderFinance(); }
   if (tab === 'marks') { populateSelects(); renderMarkList(); }
   if (tab === 'co-curricular') { populateSelects(); renderCoCurricular(); }
   if (tab === 'subjects') renderSubjects();
