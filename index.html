@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 /* ============================================================
-   TOKENS
+   TOKENS & STYLES
    ============================================================ */
 :root{
   --ivory:#FBF7EE; --paper:#F4EEDF; --sand:#EDE4CD; --line:#E1D5B0;
@@ -205,8 +205,8 @@ tbody tr:hover{background:var(--paper);}
 .matrix-wrap td.name-col,.matrix-wrap th.name-col{position:sticky;left:0;background:var(--paper);z-index:2;font-family:var(--font-body);font-weight:600;text-align:left;min-width:130px;}
 
 /* Timetable Layout fix */
-#timetableBody input { width: 100%; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 6px; font-size: 13.5px; font-family: inherit; }
-#timetableBody input:focus { border-color: var(--gold-600); outline: none; }
+#timetableBody select { width: 100%; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 6px; font-size: 13.5px; font-family: inherit; background:#fff;}
+#timetableBody select:focus { border-color: var(--gold-600); outline: none; }
 
 /* Homework */
 .hw-item { background:var(--paper); padding:16px; border-radius:var(--radius); border:1px solid var(--line); margin-bottom:12px; }
@@ -528,12 +528,17 @@ tbody tr:hover{background:var(--paper);}
           <div id="addStudentForm" class="hide" style="margin-bottom:16px;padding:20px;background:var(--paper);border-radius:var(--radius);border:1px solid var(--line);">
             <div class="form-grid-3">
               <div class="form-group"><label>First Name (ആദ്യ പേര്)</label><input id="sFirst" placeholder="ആദ്യ പേര്"></div>
-              <div class="form-group"><label>Second Name</label><input id="sSecond" placeholder="രണ്ടാമത്തെ പേര്"></div>
               <div class="form-group"><label>Last Name</label><input id="sLast" placeholder="അവസാന പേര്"></div>
               <div class="form-group"><label>House Name (വീട്ടുപേര്)</label><input id="sHouse" placeholder="വീട്ടുപേര്"></div>
-              <div class="form-group"><label>വാട്സ്ആപ്പ് നമ്പർ</label><input id="sPhone" type="tel" placeholder="ഉദാ: 9876543210"></div>
+              
+              <div class="form-group"><label>പിതാവിന്റെ പേര്</label><input id="sFather" placeholder="പിതാവിന്റെ പേര്"></div>
+              <div class="form-group"><label>മാതാവിന്റെ പേര്</label><input id="sMother" placeholder="മാതാവിന്റെ പേര്"></div>
+              <div class="form-group"><label>കോൺടാക്ട് നമ്പർ</label><input id="sContact" type="tel" placeholder="വിളിക്കാൻ നമ്പർ"></div>
+              
+              <div class="form-group"><label>വാട്സ്ആപ്പ് നമ്പർ</label><input id="sWhatsapp" type="tel" placeholder="വാട്സ്ആപ്പ് നമ്പർ"></div>
               <div class="form-group"><label>ക്ലാസ് (1-12)</label><input type="number" id="sClass" min="1" max="12" placeholder="ക്ലാസ്"></div>
-              <div class="form-group"><label>യൂസർ ഐഡി (ലോഗിൻ ചെയ്യാൻ)</label><input id="sUser" placeholder="യൂസർ ഐഡി"></div>
+              <div class="form-group"><label>ലോഗിൻ യൂസർ ഐഡി</label><input id="sUser" placeholder="യൂസർ ഐഡി"></div>
+              
               <div class="form-group"><label>പാസ്സ്‌വേർഡ്</label><input id="sPass" placeholder="പാസ്സ്‌വേർഡ്"></div>
               <div class="form-group"><label>അക്കൗണ്ട് എക്സ്പയറി (ദിവസം)</label><input type="number" id="sExpiry" placeholder="എക്സ്പയറി ദിവസം" value="330"></div>
             </div>
@@ -556,7 +561,7 @@ tbody tr:hover{background:var(--paper);}
 
           <div class="table-responsive">
             <table>
-              <thead><tr><th>#</th><th>പേര് (പൂർണ്ണരൂപം)</th><th>വീട്ടുപേര്</th><th>നമ്പർ</th><th>ക്ലാസ്</th><th>യൂസർ</th><th>സ്റ്റാറ്റസ്</th><th id="thActions">പ്രവർത്തനം</th></tr></thead>
+              <thead><tr><th>#</th><th>പേര് (പൂർണ്ണരൂപം)</th><th>വീട്ടുപേര്</th><th>വാട്സ്ആപ്പ്</th><th>ക്ലാസ്</th><th>യൂസർ</th><th>സ്റ്റാറ്റസ്</th><th id="thActions">പ്രവർത്തനം</th></tr></thead>
               <tbody id="studentTableBody"></tbody>
             </table>
           </div>
@@ -687,7 +692,7 @@ tbody tr:hover{background:var(--paper);}
         <div class="card">
           <div class="form-grid">
             <div>
-              <div class="form-group"><label>വിദ്യാർത്ഥി</label><select id="markStudentSelect" onchange="renderMarkList()"></select></div>
+              <div class="form-group"><label>വിദ്യാർത്ഥി</label><select id="markStudentSelect"></select></div>
               <div class="form-group"><label>പരീക്ഷ</label>
                 <select id="examType">
                   <option value="class">ക്ലാസ് ടെസ്റ്റ്</option><option value="half">ഹാഫ് ഇയർ</option>
@@ -778,8 +783,15 @@ tbody tr:hover{background:var(--paper);}
 
       <div id="tabSubjects" class="tab-content">
         <div class="page-head">
-          <div><h2>വിഷയങ്ങൾ</h2><div class="desc">പഠന വിഷയങ്ങൾ കൈകാര്യം ചെയ്യുക</div></div>
-          <div style="display:flex;gap:8px;">
+          <div><h2>വിഷയങ്ങൾ</h2><div class="desc">പഠന വിഷയങ്ങൾ ക്ലാസ് അടിസ്ഥാനത്തിൽ നൽകുക</div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <select id="newSubClass" class="pill" style="max-width:120px;">
+                <option value="all">എല്ലാ ക്ലാസ്സും</option>
+                <option value="1">ക്ലാസ് 1</option><option value="2">ക്ലാസ് 2</option><option value="3">ക്ലാസ് 3</option>
+                <option value="4">ക്ലാസ് 4</option><option value="5">ക്ലാസ് 5</option><option value="6">ക്ലാസ് 6</option>
+                <option value="7">ക്ലാസ് 7</option><option value="8">ക്ലാസ് 8</option><option value="9">ക്ലാസ് 9</option>
+                <option value="10">ക്ലാസ് 10</option><option value="11">ക്ലാസ് 11</option><option value="12">ക്ലാസ് 12</option>
+            </select>
             <input id="newSubject" class="pill" placeholder="പുതിയ വിഷയം">
             <button class="btn btn-success" id="btnAddSub" onclick="addSubject()"><i class="fas fa-plus"></i> ചേർക്കുക</button>
           </div>
@@ -858,7 +870,8 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuUnGfrYsyIdClCp_Pi
 let data = {
   schoolName: 'നൂറുൽ ഈമാൻ മദ്രസ',
   expiryDays: 330, acadStartMonth: 6, expiryAlertDays: 7,
-  students: [], subjects: ['ഖുർആൻ', 'ഹിഫ്ള്', 'ഫിഖ്ഹ്', 'തഫ്സീർ', 'അഖീദ'],
+  students: [], 
+  subjects: [], 
   activities: ['സാഹിത്യ സമാജം', 'പ്രസംഗം', 'പാട്ട്', 'സ്പോർട്സ്', 'കവിതാരചന', 'ക്വിസ്'],
   marks: [], coCurricular: [], attendance: [], messages: [], teachers: [], admins: [], homework: [],
   timetable: [], fees: [], expenses: [],
@@ -872,10 +885,15 @@ async function loadData() {
   const loader = document.getElementById('loaderOverlay');
   
   try {
-    const saved = localStorage.getItem('madrasaDataPremiumV12');
+    const saved = localStorage.getItem('madrasaDataPremiumV13');
     if (saved) { 
         data = { ...data, ...JSON.parse(saved) }; 
         if(!data.expenses) data.expenses = [];
+        
+        // Migrate old flat array subjects to new class-based object format if needed
+        if(data.subjects && data.subjects.length > 0 && typeof data.subjects[0] === 'string') {
+            data.subjects = data.subjects.map(s => ({ class: 'all', name: s }));
+        }
     } else { 
         initDefaults(); 
     }
@@ -891,6 +909,9 @@ async function loadData() {
       if (fetchedData && fetchedData.admins && fetchedData.admins.length > 0) {
         data = { ...data, ...fetchedData };
         if(!data.expenses) data.expenses = [];
+        if(data.subjects && data.subjects.length > 0 && typeof data.subjects[0] === 'string') {
+            data.subjects = data.subjects.map(s => ({ class: 'all', name: s }));
+        }
         saveData();
       }
     }).catch(e => console.warn('Background sync failed', e));
@@ -904,11 +925,17 @@ function initDefaults() {
       data.contactAdmin = 'headmaster';
   }
   if (!data.teachers.find(t => t.user === 'teacher')) data.teachers.push({ user: 'teacher', pass: 'teacher123', class: 5 });
+  if (data.subjects.length === 0) {
+      data.subjects = [
+          {class: 'all', name: 'ഖുർആൻ'}, {class: 'all', name: 'ഹിഫ്ള്'}, 
+          {class: 'all', name: 'ഫിഖ്ഹ്'}, {class: 'all', name: 'തഫ്സീർ'}
+      ];
+  }
   saveData();
 }
 
 function saveData() {
-  localStorage.setItem('madrasaDataPremiumV12', JSON.stringify(data));
+  localStorage.setItem('madrasaDataPremiumV13', JSON.stringify(data));
   if (SCRIPT_URL && SCRIPT_URL !== 'YOUR_WEB_APP_URL_HERE') {
     fetch(SCRIPT_URL, {
       method: 'POST',
@@ -1083,6 +1110,17 @@ function enterApp() {
     else if (btn.style.display !== 'none') btn.style.display = 'flex';
   });
 
+  // Attach event listeners for dynamic subject population
+  document.getElementById('hwClassSelect').addEventListener('change', function() {
+      populateSubjectSelectsForClass(this.value, 'hwSubjectSelect');
+  });
+  
+  document.getElementById('markStudentSelect').addEventListener('change', function() {
+      let st = getStudent(this.value);
+      if(st) populateSubjectSelectsForClass(st.class, 'markSubject');
+      renderMarkList();
+  });
+
   updateClassFilters();
   populateSelects();
   populateMessageRecipients();
@@ -1116,6 +1154,8 @@ function updateClassFilters() {
   const hwClsSelect = document.getElementById('hwClassSelect');
   if (hwClsSelect) {
       hwClsSelect.innerHTML = classes.filter(c => c !== 'all').map(c => `<option value="${c}">${c}</option>`).join('');
+      // Trigger initial subject load
+      populateSubjectSelectsForClass(hwClsSelect.value, 'hwSubjectSelect');
   }
 
   const monthClassSel = document.getElementById('attendanceMonthClass');
@@ -1164,8 +1204,6 @@ function changeOwnPassword() {
 }
 
 function resetUserPassword(type, identifier) {
-    // Only Admin or Super Admin can reset Student/Teacher passwords.
-    // Only Super Admin can reset Admin passwords.
     const u = data.currentUser;
     if(type === 'admin' && u.role !== 'super') return toast('അനുമതിയില്ല', 'error');
     if((type === 'student' || type === 'teacher') && !['super', 'admin'].includes(u.role)) return toast('അനുമതിയില്ല', 'error');
@@ -1279,17 +1317,30 @@ function renderTimetable() {
 
   const tt = data.timetable.find(t => t.class == cls) || { days: { 'തിങ്കൾ': ['','','',''], 'ചൊവ്വ': ['','','',''], 'ബുധൻ': ['','','',''], 'വ്യാഴം': ['','','',''], 'വെള്ളി': ['','','',''] } };
   const days = ['തിങ്കൾ', 'ചൊവ്വ', 'ബുധൻ', 'വ്യാഴം', 'വെള്ളി'];
+  
+  // Dynamic Subjects for the dropdown
+  let subOptions = `<option value="">-</option>` + data.subjects.filter(s => s.class == cls || s.class === 'all').map(s => `<option value="${s.name}">${s.name}</option>`).join('');
 
   if (isEditable) {
     document.getElementById('timetableBody').innerHTML = days.map(d => `
       <tr>
         <td><strong>${d}</strong></td>
-        <td><input type="text" id="tt_${d}_0" value="${tt.days[d] ? (tt.days[d][0]||'') : ''}" placeholder="വിഷയം"></td>
-        <td><input type="text" id="tt_${d}_1" value="${tt.days[d] ? (tt.days[d][1]||'') : ''}" placeholder="വിഷയം"></td>
-        <td><input type="text" id="tt_${d}_2" value="${tt.days[d] ? (tt.days[d][2]||'') : ''}" placeholder="വിഷയം"></td>
-        <td><input type="text" id="tt_${d}_3" value="${tt.days[d] ? (tt.days[d][3]||'') : ''}" placeholder="വിഷയം"></td>
+        <td><select id="tt_${d}_0">${subOptions}</select></td>
+        <td><select id="tt_${d}_1">${subOptions}</select></td>
+        <td><select id="tt_${d}_2">${subOptions}</select></td>
+        <td><select id="tt_${d}_3">${subOptions}</select></td>
       </tr>
     `).join('');
+    
+    // Set existing values
+    days.forEach(d => {
+        if(tt.days[d]) {
+            if(document.getElementById(`tt_${d}_0`)) document.getElementById(`tt_${d}_0`).value = tt.days[d][0] || '';
+            if(document.getElementById(`tt_${d}_1`)) document.getElementById(`tt_${d}_1`).value = tt.days[d][1] || '';
+            if(document.getElementById(`tt_${d}_2`)) document.getElementById(`tt_${d}_2`).value = tt.days[d][2] || '';
+            if(document.getElementById(`tt_${d}_3`)) document.getElementById(`tt_${d}_3`).value = tt.days[d][3] || '';
+        }
+    });
   } else {
     document.getElementById('timetableReadBody').innerHTML = days.map(d => `
       <tr>
@@ -1576,9 +1627,9 @@ function renderSubjects() {
   const container = document.getElementById('subjectList');
   const isEditable = ['super', 'admin'].includes(data.currentUser?.role);
   container.innerHTML = data.subjects.map((sub, i) =>
-    `<div class="chip"><i class="fas fa-book" style="color:var(--gold-600);"></i> ${sub} ${isEditable ? `<button class="btn btn-danger btn-sm" onclick="removeSubject(${i})"><i class="fas fa-times"></i></button>` : ''}</div>`
+    `<div class="chip"><i class="fas fa-book" style="color:var(--gold-600);"></i> [Cls ${sub.class}] ${sub.name} ${isEditable ? `<button class="btn btn-danger btn-sm" onclick="removeSubject(${i})"><i class="fas fa-times"></i></button>` : ''}</div>`
   ).join('');
-  populateSubjectSelect();
+  populateSelects();
 }
 
 function renderActivities() {
@@ -1894,10 +1945,11 @@ function saveFee() {
         by: data.currentUser.user
     });
     
+    // Also extend subscription
     const student = getStudent(sid);
     if(student) {
         student.active = true;
-        student.created = Date.now();
+        student.created = Date.now(); // reset date for new expiry period
     }
 
     saveData();
@@ -2021,9 +2073,15 @@ function printReceipt(feeId) {
     window.print();
 }
 
+function populateSubjectSelectsForClass(cls, targetId) {
+    const sel = document.getElementById(targetId);
+    if(!sel) return;
+    let subs = data.subjects.filter(s => s.class == cls || s.class === 'all');
+    sel.innerHTML = subs.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
+}
+
 function populateSelects() {
   populateStudentSelect();
-  populateSubjectSelect();
   populateActivitySelect();
   renderMarkList();
   renderCoCurricular();
@@ -2034,16 +2092,12 @@ function populateStudentSelect() {
   const options = visible.map(s => `<option value="${s.id}">${s.name} (ക്ലാസ് ${s.class})</option>`).join('');
   const sel = document.getElementById('markStudentSelect');
   const coSel = document.getElementById('coStudentSelect');
-  if (sel) sel.innerHTML = options;
+  if (sel) {
+      sel.innerHTML = options;
+      // Also populate marks subjects for the first student initially
+      if(visible.length > 0) populateSubjectSelectsForClass(visible[0].class, 'markSubject');
+  }
   if (coSel) coSel.innerHTML = options;
-}
-
-function populateSubjectSelect() { 
-  const sel = document.getElementById('markSubject'); 
-  const hwSel = document.getElementById('hwSubjectSelect');
-  const opts = data.subjects.map(s => `<option value="${s}">${s}</option>`).join('');
-  if (sel) sel.innerHTML = opts; 
-  if (hwSel) hwSel.innerHTML = opts;
 }
 
 function populateActivitySelect() { 
@@ -2067,25 +2121,35 @@ function addStudent() {
   if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');
   
   const f = document.getElementById('sFirst').value.trim();
-  const s = document.getElementById('sSecond').value.trim();
   const l = document.getElementById('sLast').value.trim();
   const h = document.getElementById('sHouse').value.trim();
-  const fullName = [f, s, l, h].filter(Boolean).join(' ');
-  const phone = document.getElementById('sPhone').value.trim();
+  const father = document.getElementById('sFather').value.trim();
+  const mother = document.getElementById('sMother').value.trim();
+  
+  const fullName = [f, l, h].filter(Boolean).join(' ');
+  const contactPhone = document.getElementById('sContact').value.trim();
+  const whatsapp = document.getElementById('sWhatsapp').value.trim();
+  
   const cls = parseInt(document.getElementById('sClass').value);
   const user = document.getElementById('sUser').value.trim();
   const pass = document.getElementById('sPass').value.trim();
   const expiryDays = parseInt(document.getElementById('sExpiry').value) || data.expiryDays;
 
-  if (!fullName || !cls || !user || !pass) return toast('വിവരങ്ങൾ പൂർണ്ണമാക്കുക', 'error');
-  if (data.students.find(x => x.user === user)) return toast('ഈ യൂസർ ഉണ്ട്', 'error');
+  if (!fullName || !cls || !user || !pass) return toast('പ്രധാന വിവരങ്ങൾ പൂർണ്ണമാക്കുക', 'error');
+  if (data.students.find(x => x.user === user)) return toast('ഈ യൂസർ ഐഡി നിലവിലുണ്ട്', 'error');
 
   data.students.push({
-      id: getNextId(data.students), firstName: f, secondName: s, lastName: l, houseName: h, name: fullName,
-      phone, class: cls, user, pass, active: true, created: Date.now(), expiryDays
+      id: getNextId(data.students), firstName: f, lastName: l, houseName: h, name: fullName,
+      fatherName: father, motherName: mother, contactPhone: contactPhone, whatsapp: whatsapp, 
+      phone: whatsapp, // for backwards compatibility
+      class: cls, user, pass, active: true, created: Date.now(), expiryDays
   });
+  
   saveData();
-  ['sFirst','sSecond','sLast','sHouse','sPhone','sClass','sUser','sPass'].forEach(id => document.getElementById(id).value = '');
+  
+  ['sFirst','sLast','sHouse','sFather','sMother','sContact','sWhatsapp','sClass','sUser','sPass'].forEach(id => {
+      if(document.getElementById(id)) document.getElementById(id).value = '';
+  });
   document.getElementById('addStudentForm').classList.add('hide');
   toast('വിദ്യാർത്ഥിയെ ചേർത്തു', 'success'); renderAll();
 }
@@ -2096,8 +2160,8 @@ function editStudent(id) {
   if (!s) return;
   const newName = prompt('പേര് മാറ്റുക:', s.name);
   if (newName && newName.trim()) s.name = newName.trim();
-  const newPhone = prompt('വാട്സ്ആപ്പ് നമ്പർ:', s.phone || '');
-  if (newPhone !== null) s.phone = newPhone.trim();
+  const newWhatsapp = prompt('വാട്സ്ആപ്പ് നമ്പർ:', s.whatsapp || s.phone || '');
+  if (newWhatsapp !== null) { s.whatsapp = newWhatsapp.trim(); s.phone = newWhatsapp.trim(); }
   const newExpiry = prompt('എക്സ്പയറി ദിവസം:', s.expiryDays || data.expiryDays);
   if (newExpiry && parseInt(newExpiry) > 0) s.expiryDays = parseInt(newExpiry);
   saveData(); renderAll();
@@ -2158,8 +2222,18 @@ function removeCoCurricular(studentId, activity) {
 
 function addSubject() {
   const val = document.getElementById('newSubject').value.trim();
-  if (!val || data.subjects.includes(val)) return toast('ഇതിനകം ഉണ്ട്', 'error');
-  data.subjects.push(val); saveData(); document.getElementById('newSubject').value = ''; renderSubjects();
+  const cls = document.getElementById('newSubClass').value;
+  if (!val) return toast('വിഷയത്തിന്റെ പേര് നൽകുക', 'error');
+  
+  // Check if subject with same name and class exists
+  if(data.subjects.some(s => s.name === val && s.class === cls)) {
+      return toast('ഈ ക്ലാസ്സിൽ ഈ വിഷയം ഉണ്ട്', 'error');
+  }
+  
+  data.subjects.push({ class: cls, name: val }); 
+  saveData(); 
+  document.getElementById('newSubject').value = ''; 
+  renderSubjects();
 }
 function removeSubject(i) { if (!confirm('നീക്കം ചെയ്യണോ?')) return; data.subjects.splice(i, 1); saveData(); renderSubjects(); }
 
@@ -2298,7 +2372,7 @@ function renderReport() {
 
 function switchTab(tab) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  const idMap = { 'co-curricular': 'tabCoCurricular', 'homework': 'tabHomework', 'settings': 'tabSettings', 'finance': 'tabFinance', 'timetable': 'tabTimetable' };
+  const idMap = { 'co-curricular': 'tabCoCurricular', 'homework': 'tabHomework', 'settings': 'tabSettings', 'fees': 'tabFees', 'finance': 'tabFinance', 'timetable': 'tabTimetable' };
   const targetId = idMap[tab] || ('tab' + tab.charAt(0).toUpperCase() + tab.slice(1));
   const target = document.getElementById(targetId);
   if (target) target.classList.add('active');
@@ -2326,7 +2400,6 @@ function switchTab(tab) {
 
 // INIT
 loadData();
-document.getElementById('attendanceDate').value = new Date().toISOString().split('T')[0];
 </script>
 
 </body>
