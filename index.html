@@ -277,12 +277,19 @@ tbody tr:hover{background:var(--paper);}
   .card { padding: 16px; }  
   .report-head { flex-direction: column; align-items: flex-start; }  
   .report-head > div:last-child { text-align: left; margin-top: 10px; }  
+  .co-item { flex-direction: column; align-items: stretch; }  
+  .co-item > a, .co-item > button { width: 100%; text-align: center; }  
+  .page-head .btn, .page-head button { flex: 1 1 auto; justify-content: center; }  
 }  
 @media (max-width:480px){  
   .stats-grid { grid-template-columns: 1fr; }  
   .page-head h2 { font-size: 18px; }  
   .btn { padding: 8px 14px; font-size: 12px; }  
   .form-group-inline { flex-direction: column; }  
+  .form-group-inline input, .form-group-inline select, .form-group-inline textarea { width: 100%; }  
+  thead th, tbody td { padding: 8px 8px; }  
+  .card-title { font-size: 14.5px; }  
+  .login-brand-panel .arch { width: 60px !important; height: 60px !important; font-size: 26px !important; }  
 }  
 </style>  
 </head>  
@@ -299,7 +306,7 @@ tbody tr:hover{background:var(--paper);}
   
 <div id="loginScreen" class="login-shell">  
   <div class="login-brand-panel motif-dark">  
-    <div class="arch">📖</div>  
+    <div class="arch" id="loginArch">📖</div>  
     <h1 id="loginSchoolName">നൂറുൽ ഈമാൻ മദ്രസ</h1>  
     <div class="divider"></div>  
     <p class="tagline">അറിവിന്റെ വെളിച്ചം പകരുന്ന ഒരിടം — വിദ്യാർത്ഥികളുടെയും അധ്യാപകരുടെയും ദൈനംദിന പുരോഗതി ഒരൊറ്റയിടത്ത്.</p>  
@@ -321,6 +328,7 @@ tbody tr:hover{background:var(--paper);}
         <button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> ലോഗിൻ ചെയ്യുക</button>  
       </form>  
     </div>  
+    <div style="text-align:center;font-size:11.5px;color:var(--ink-faint);margin-top:26px;">© Designed and developed by M.A.Muneer</div>  
   </div>  
 </div>  
   
@@ -328,7 +336,7 @@ tbody tr:hover{background:var(--paper);}
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>  
   <aside class="sidebar" id="sidebar">  
     <div class="brand-row">  
-      <div class="arch">📖</div>  
+      <div class="arch" id="sidebarArch">📖</div>  
       <div>  
         <div class="name" id="headerSchoolName">നൂറുൽ ഈമാൻ </div>  
         <div class="sub">മാനേജ്മെന്റ് സിസ്റ്റം</div>  
@@ -419,6 +427,29 @@ tbody tr:hover{background:var(--paper);}
                 <button class="btn btn-primary" onclick="updateAlertDays()">സേവ്</button>  
               </div>  
             </div>  
+            <div class="form-group">  
+              <label><i class="fas fa-image"></i> മദ്രസ ലോഗോ</label>  
+              <div class="form-group-inline">  
+                <input type="file" id="schoolLogoInput" accept="image/*">  
+                <button class="btn btn-primary" onclick="uploadSchoolLogo()"><i class="fas fa-upload"></i> അപ്‌ലോഡ്</button>  
+                <button class="btn btn-outline" onclick="removeSchoolLogo()"><i class="fas fa-trash"></i></button>  
+              </div>  
+              <div id="logoPreview" style="margin-top:10px;"></div>  
+            </div>  
+            <div class="form-group">  
+              <label><i class="fas fa-id-badge"></i> രജിസ്ട്രേഷൻ നമ്പർ</label>  
+              <div class="form-group-inline">  
+                <input type="text" id="schoolRegNoInput" placeholder="ഉദാ: REG/2020/12345">  
+                <button class="btn btn-primary" onclick="updateSchoolRegNo()">സേവ്</button>  
+              </div>  
+            </div>  
+            <div class="form-group" style="grid-column:1 / -1;">  
+              <label><i class="fas fa-map-marker-alt"></i> അഡ്രസ്സ്</label>  
+              <div class="form-group-inline">  
+                <textarea id="schoolAddressInput" placeholder="മദ്രസയുടെ പൂർണ്ണ അഡ്രസ്സ്" rows="2" style="flex:1;"></textarea>  
+                <button class="btn btn-primary" onclick="updateSchoolAddress()">സേവ്</button>  
+              </div>  
+            </div>  
           </div>  
         </div>  
       </div>  
@@ -427,11 +458,55 @@ tbody tr:hover{background:var(--paper);}
         <div class="page-head">  
           <div><h2>ഡാഷ്ബോർഡ്</h2><div class="desc">ഇന്നത്തെ സ്ഥിതി ഒറ്റനോട്ടത്തിൽ</div></div>  
         </div>  
-        <div class="stats-grid">  
-          <div class="stat-card"><div class="stat-label"><i class="fas fa-users"></i> ആകെ വിദ്യാർത്ഥികൾ</div><div class="stat-value" id="totalStudents">0</div></div>  
-          <div class="stat-card"><div class="stat-label"><i class="fas fa-user-check"></i> ആക്ടീവ്</div><div class="stat-value" id="activeStudents">0</div></div>  
-          <div class="stat-card"><div class="stat-label"><i class="fas fa-calendar-check"></i> ഇന്നത്തെ ഹാജർ</div><div class="stat-value" id="todayAttendance">0</div></div>  
-          <div class="stat-card"><div class="stat-label"><i class="fas fa-chalkboard-teacher"></i> ടീച്ചർമാർ</div><div class="stat-value" id="teacherCount">0</div></div>  
+  
+        <!-- ADMIN / SUPER DASHBOARD -->  
+        <div id="adminDashboardSection" class="hide">  
+          <div class="card">  
+            <div class="card-title star-bullet">ഇന്നത്തെ വിദ്യാർത്ഥി ഹാജർ</div>  
+            <div class="form-group" style="max-width:220px;">  
+              <select id="dashAttClassFilter" onchange="renderDashboard()" class="pill"></select>  
+            </div>  
+            <div class="stats-grid" style="margin-top:12px;">  
+              <div class="stat-card"><div class="stat-label"><i class="fas fa-user-check"></i> ഹാജരായവർ</div><div class="stat-value" id="dashAttPresent">0</div></div>  
+              <div class="stat-card"><div class="stat-label"><i class="fas fa-user-times"></i> ഹാജരാകാത്തവർ</div><div class="stat-value" id="dashAttAbsent">0</div></div>  
+              <div class="stat-card"><div class="stat-label"><i class="fas fa-users"></i> ആകെ വിദ്യാർത്ഥികൾ</div><div class="stat-value" id="dashAttTotal">0</div></div>  
+            </div>  
+          </div>  
+  
+          <div class="card">  
+            <div class="card-title star-bullet">ടീച്ചർ ഹാജർ (ഇന്ന്)</div>  
+            <div class="stats-grid">  
+              <div class="stat-card"><div class="stat-label"><i class="fas fa-user-check"></i> ഡ്യൂട്ടിയിൽ</div><div class="stat-value" id="teachersOnDuty">0</div></div>  
+              <div class="stat-card"><div class="stat-label"><i class="fas fa-user-clock"></i> ലീവിൽ</div><div class="stat-value" id="teachersOnLeave">0</div></div>  
+              <div class="stat-card"><div class="stat-label"><i class="fas fa-question-circle"></i> അറിയിച്ചിട്ടില്ല</div><div class="stat-value" id="teachersUnreported">0</div></div>  
+            </div>  
+            <div id="teacherLeaveList" style="margin-top:12px;"></div>  
+          </div>  
+        </div>  
+  
+        <!-- TEACHER DASHBOARD -->  
+        <div id="teacherDashboardSection" class="hide">  
+          <div class="card">  
+            <div class="card-title star-bullet">ഇന്ന് നിങ്ങളുടെ സ്റ്റാറ്റസ്</div>  
+            <p class="text-muted" id="teacherAttStatusText" style="margin-bottom:12px;">ഇന്നത്തെ സ്റ്റാറ്റസ് അറിയിച്ചിട്ടില്ല</p>  
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">  
+              <button class="btn btn-success" onclick="markTeacherAttendance('present')"><i class="fas fa-check"></i> ഡ്യൂട്ടിയിൽ ഉണ്ട്</button>  
+              <button class="btn btn-warning" onclick="markTeacherAttendance('leave')"><i class="fas fa-calendar-minus"></i> ഇന്ന് ലീവാണ്</button>  
+            </div>  
+          </div>  
+          <div class="stats-grid">  
+            <div class="stat-card"><div class="stat-label"><i class="fas fa-users"></i> നിങ്ങളുടെ ക്ലാസിലെ വിദ്യാർത്ഥികൾ</div><div class="stat-value" id="teacherClassTotal">0</div></div>  
+            <div class="stat-card"><div class="stat-label"><i class="fas fa-user-check"></i> ഇന്ന് ഹാജർ</div><div class="stat-value" id="teacherClassPresent">0</div></div>  
+            <div class="stat-card"><div class="stat-label"><i class="fas fa-user-times"></i> ഇന്ന് ഹാജരില്ല</div><div class="stat-value" id="teacherClassAbsent">0</div></div>  
+          </div>  
+        </div>  
+  
+        <!-- STUDENT DASHBOARD -->  
+        <div id="studentDashboardSection" class="hide">  
+          <div class="card">  
+            <div class="card-title star-bullet">ഏറ്റവും പുതിയ മാർക്ക്</div>  
+            <div id="recentMarks" class="text-muted">മാർക്ക് ലഭ്യമല്ല</div>  
+          </div>  
         </div>  
   
         <div class="card hide" id="expiryAlertSection">  
@@ -444,15 +519,9 @@ tbody tr:hover{background:var(--paper);}
           <div id="feeReminders"></div>  
         </div>  
   
-        <div class="form-grid">  
-            <div class="card">  
-            <div class="card-title star-bullet">ഏറ്റവും പുതിയ മാർക്ക്</div>  
-            <div id="recentMarks" class="text-muted">മാർക്ക് ലഭ്യമല്ല</div>  
-            </div>  
-            <div class="card">  
-            <div class="card-title star-bullet">അറിയിപ്പുകൾ</div>  
-            <div id="messagePreview" class="msg-container"><div class="msg-item">സ്വാഗതം! മദ്രസ മാനേജ്മെന്റ് സിസ്റ്റത്തിലേക്ക്.</div></div>  
-            </div>  
+        <div class="card">  
+          <div class="card-title star-bullet">അറിയിപ്പുകൾ</div>  
+          <div id="messagePreview" class="msg-container"></div>  
         </div>  
       </div>  
   
@@ -529,14 +598,20 @@ tbody tr:hover{background:var(--paper);}
       <div id="tabStudents" class="tab-content">  
         <div class="page-head">  
           <div><h2>വിദ്യാർത്ഥികൾ</h2><div class="desc">രജിസ്ട്രേഷൻ, സ്റ്റാറ്റസ്, അക്കൗണ്ട് വിവരങ്ങൾ</div></div>  
-          <button class="btn btn-gold" id="btnAddStudentTop" onclick="showAddStudent()"><i class="fas fa-plus"></i> പുതിയ വിദ്യാർത്ഥി</button>  
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">  
+            <button class="btn btn-outline" onclick="printFilteredIDCards()"><i class="fas fa-id-card"></i> ID കാർഡുകൾ പ്രിന്റ്</button>  
+            <button class="btn btn-gold" id="btnAddStudentTop" onclick="showAddStudent()"><i class="fas fa-plus"></i> പുതിയ വിദ്യാർത്ഥി</button>  
+          </div>  
         </div>  
         <div class="card">  
+          <div class="stats-grid" id="studentStatBar" style="margin-bottom:16px;"></div>  
+  
           <div id="addStudentForm" class="hide" style="margin-bottom:16px;padding:20px;background:var(--paper);border-radius:var(--radius);border:1px solid var(--line);">  
             <div class="form-grid-3">  
               <div class="form-group"><label>ആദ്യ പേര് (First Name)</label><input id="sFirst" placeholder="ആദ്യ പേര്"></div>  
               <div class="form-group"><label>അവസാന പേര് (Last Name)</label><input id="sLast" placeholder="അവസാന പേര്"></div>  
               <div class="form-group"><label>വീട്ട് പേര് (House Name)</label><input id="sHouse" placeholder="വീട്ട് പേര്"></div>  
+              <div class="form-group"><label>രജിസ്ട്രേഷൻ നമ്പർ</label><input id="sRegNo" placeholder="ഉദാ: 2026/001"></div>  
               <div class="form-group"><label>മാതാവിന്റെ പേര്</label><input id="sMother" placeholder="മാതാവിന്റെ പേര്"></div>  
               <div class="form-group"><label>പിതാവിന്റെ പേര്</label><input id="sFather" placeholder="പിതാവിന്റെ പേര്"></div>  
               <div class="form-group"><label>കോൺടാക്ട് നമ്പർ</label><input id="sPhone" type="tel" placeholder="ഉദാ: 9876543210"></div>  
@@ -560,6 +635,7 @@ tbody tr:hover{background:var(--paper);}
               <option value="active">ആക്ടീവ്</option>  
               <option value="inactive">ഡിആക്ടീവ്</option>  
               <option value="expired">കാലാവധി കഴിഞ്ഞു</option>  
+              <option value="tc">TC നൽകിയവർ</option>  
             </select>  
           </div>  
   
@@ -918,12 +994,12 @@ function normalizeSubjects() {
 }
 
 let data = {  
-  schoolName: 'നൂറുൽ ഈമാൻ മദ്രസ',  
+  schoolName: 'നൂറുൽ ഈമാൻ മദ്രസ', schoolLogo: '', schoolRegNo: '', schoolAddress: '',  
   expiryDays: 330, acadStartMonth: 6, expiryAlertDays: 7,  
   students: [], subjects: defaultSubjectsByClass(),  
   activities: ['സാഹിത്യ സമാജം', 'പ്രസംഗം', 'പാട്ട്', 'സ്പോർട്സ്', 'കവിതാരചന', 'ക്വിസ്'],  
   marks: [], coCurricular: [], attendance: [], messages: [], teachers: [], admins: [], homework: [],  
-  timetable: [], fees: [], expenses: [], leaves: [], feeStructure: {},  
+  timetable: [], fees: [], expenses: [], leaves: [], feeStructure: {}, teacherAttendance: [],  
   contactAdmin: '',   
   currentUser: null  
 };  
@@ -940,6 +1016,7 @@ async function loadData() {
         if(!data.expenses) data.expenses = [];  
         if(!data.leaves) data.leaves = [];  
         if(!data.feeStructure) data.feeStructure = {};  
+        if(!data.teacherAttendance) data.teacherAttendance = [];  
         normalizeSubjects();  
     } else {   
         initDefaults();   
@@ -950,6 +1027,7 @@ async function loadData() {
   
   if(loader) loader.classList.add('hide-loader');  
   document.getElementById('loginSchoolName').textContent = data.schoolName || 'നൂറുൽ ഈമാൻ മദ്രസ';  
+  applyLogo();  
   
   if (SCRIPT_URL && SCRIPT_URL !== 'YOUR_WEB_APP_URL_HERE') {  
     fetch(SCRIPT_URL).then(res => res.json()).then(fetchedData => {  
@@ -958,6 +1036,7 @@ async function loadData() {
         if(!data.expenses) data.expenses = [];  
         if(!data.leaves) data.leaves = [];  
         if(!data.feeStructure) data.feeStructure = {};  
+        if(!data.teacherAttendance) data.teacherAttendance = [];  
         normalizeSubjects();  
         saveData();  
       }  
@@ -1105,6 +1184,10 @@ function enterApp() {
   document.getElementById('expiryDaysInput').value = data.expiryDays;  
   document.getElementById('acadStartInput').value = data.acadStartMonth;  
   document.getElementById('alertDaysInput').value = data.expiryAlertDays || 7;  
+  document.getElementById('schoolRegNoInput').value = data.schoolRegNo || '';  
+  document.getElementById('schoolAddressInput').value = data.schoolAddress || '';  
+  renderLogoPreview();  
+  applyLogo();  
   document.getElementById('userName').textContent = user.user;  
   document.getElementById('userAvatar').textContent = user.user.charAt(0).toUpperCase();  
   
@@ -1276,6 +1359,74 @@ function updateAlertDays() {
   const val = parseInt(document.getElementById('alertDaysInput').value);  
   if (val >= 0) { data.expiryAlertDays = val; saveData(); renderDashboardAlerts(); toast('സജ്ജീകരിച്ചു', 'success'); }  
   else toast('ശരിയായ നമ്പർ നൽകുക', 'error');  
+}  
+  
+function applyLogo() {  
+  const html = data.schoolLogo ? `<img src="${data.schoolLogo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">` : '📖';  
+  const a1 = document.getElementById('loginArch'); if (a1) a1.innerHTML = html;  
+  const a2 = document.getElementById('sidebarArch'); if (a2) a2.innerHTML = html;  
+}  
+  
+function renderLogoPreview() {  
+  const el = document.getElementById('logoPreview');  
+  if (!el) return;  
+  el.innerHTML = data.schoolLogo  
+    ? `<img src="${data.schoolLogo}" style="max-width:110px;max-height:110px;border-radius:10px;border:1px solid var(--line);">`  
+    : '<span class="text-muted" style="font-size:12px;">ലോഗോ ചേർത്തിട്ടില്ല</span>';  
+}  
+  
+function uploadSchoolLogo() {  
+  if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');  
+  const inp = document.getElementById('schoolLogoInput');  
+  const file = inp.files && inp.files[0];  
+  if (!file) return toast('ഒരു ഇമേജ് ഫയൽ തിരഞ്ഞെടുക്കുക', 'error');  
+  if (!file.type.startsWith('image/')) return toast('ഇമേജ് ഫയൽ മാത്രം അനുവദനീയം', 'error');  
+  
+  const reader = new FileReader();  
+  reader.onload = function(ev) {  
+    const img = new Image();  
+    img.onload = function() {  
+      const maxSize = 220;  
+      let w = img.width, h = img.height;  
+      if (w > h && w > maxSize) { h = Math.round(h * maxSize / w); w = maxSize; }  
+      else if (h >= w && h > maxSize) { w = Math.round(w * maxSize / h); h = maxSize; }  
+      const canvas = document.createElement('canvas');  
+      canvas.width = w; canvas.height = h;  
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);  
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.72);  
+      if (dataUrl.length > 45000) {  
+        toast('ലോഗോ ഫയലിന്റെ വലുപ്പം കൂടുതലാണ്, ചെറിയ ഇമേജ് ഉപയോഗിക്കുക', 'error');  
+        return;  
+      }  
+      data.schoolLogo = dataUrl;  
+      saveData();  
+      applyLogo();  
+      renderLogoPreview();  
+      inp.value = '';  
+      toast('ലോഗോ അപ്‌ലോഡ് ചെയ്തു', 'success');  
+    };  
+    img.src = ev.target.result;  
+  };  
+  reader.readAsDataURL(file);  
+}  
+  
+function removeSchoolLogo() {  
+  if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');  
+  data.schoolLogo = '';  
+  saveData(); applyLogo(); renderLogoPreview();  
+  toast('ലോഗോ നീക്കം ചെയ്തു', 'success');  
+}  
+  
+function updateSchoolRegNo() {  
+  if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');  
+  data.schoolRegNo = document.getElementById('schoolRegNoInput').value.trim();  
+  saveData(); toast('രജിസ്ട്രേഷൻ നമ്പർ സേവ് ചെയ്തു', 'success');  
+}  
+  
+function updateSchoolAddress() {  
+  if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');  
+  data.schoolAddress = document.getElementById('schoolAddressInput').value.trim();  
+  saveData(); toast('അഡ്രസ്സ് സേവ് ചെയ്തു', 'success');  
 }  
   
 // HOMEWORK  
@@ -1546,19 +1697,79 @@ function renderDashboardAlerts() {
 }  
   
 function renderDashboard() {  
+  const role = data.currentUser?.role;  
+  const isAdminOrSuper = ['super', 'admin'].includes(role);  
+  const isTeacher = role === 'teacher';  
+  const isStudent = role === 'student';  
+  
+  document.getElementById('adminDashboardSection').classList.toggle('hide', !isAdminOrSuper);  
+  document.getElementById('teacherDashboardSection').classList.toggle('hide', !isTeacher);  
+  document.getElementById('studentDashboardSection').classList.toggle('hide', !isStudent);  
+  
+  if (isAdminOrSuper) renderAdminDashboard();  
+  if (isTeacher) renderTeacherDashboard();  
+  if (isStudent) renderStudentDashboard();  
+  
+  renderMessagePreview();  
+}  
+  
+function renderAdminDashboard() {  
+  const clsSel = document.getElementById('dashAttClassFilter');  
+  if (clsSel && !clsSel.options.length) {  
+    clsSel.innerHTML = `<option value="all">എല്ലാ ക്ലാസും</option>` + ['1','2','3','4','5','6','7','8','9','10','11','12'].map(c => `<option value="${c}">ക്ലാസ് ${c}</option>`).join('');  
+  }  
+  const cls = clsSel ? clsSel.value : 'all';  
+  let students = data.students;  
+  if (cls !== 'all') students = students.filter(s => s.class == cls);  
+  students = students.filter(s => isActive(s));  
+  
+  const today = new Date().toISOString().split('T')[0];  
+  const present = students.filter(s => { const a = getStudentAttendance(s.id, today); return a && a.present; }).length;  
+  const total = students.length;  
+  
+  document.getElementById('dashAttPresent').textContent = present;  
+  document.getElementById('dashAttAbsent').textContent = total - present;  
+  document.getElementById('dashAttTotal').textContent = total;  
+  
+  const activeTeachers = data.teachers || [];  
+  let onDuty = 0, onLeave = 0, unreported = 0;  
+  const leaveNames = [];  
+  activeTeachers.forEach(t => {  
+    const rec = getTeacherAttendanceToday(t.user);  
+    if (!rec) { unreported++; }  
+    else if (rec.status === 'present') { onDuty++; }  
+    else if (rec.status === 'leave') { onLeave++; leaveNames.push(t.user + ' (ക്ലാസ് ' + t.class + ')'); }  
+  });  
+  document.getElementById('teachersOnDuty').textContent = onDuty;  
+  document.getElementById('teachersOnLeave').textContent = onLeave;  
+  document.getElementById('teachersUnreported').textContent = unreported;  
+  document.getElementById('teacherLeaveList').innerHTML = leaveNames.length  
+    ? `<p class="text-muted" style="font-size:12px;margin-bottom:6px;">ഇന്ന് ലീവിലുള്ളവർ:</p>` + leaveNames.map(n => `<span class="badge badge-warning" style="margin:2px 4px 2px 0;display:inline-block;">${n}</span>`).join('')  
+    : '';  
+}  
+  
+function renderTeacherDashboard() {  
+  const user = data.currentUser;  
+  if (!user) return;  
+  const rec = getTeacherAttendanceToday(user.user);  
+  const statusText = document.getElementById('teacherAttStatusText');  
+  if (statusText) {  
+    if (!rec) statusText.textContent = 'ഇന്നത്തെ സ്റ്റാറ്റസ് അറിയിച്ചിട്ടില്ല';  
+    else if (rec.status === 'present') statusText.innerHTML = '✅ ഇന്ന് നിങ്ങൾ ഡ്യൂട്ടിയിൽ ഉണ്ട് എന്ന് അറിയിച്ചു';  
+    else statusText.innerHTML = '🟠 ഇന്ന് നിങ്ങൾ ലീവാണ് എന്ന് അറിയിച്ചു';  
+  }  
+  
+  const classStudents = data.students.filter(s => s.class == user.teacherClass && isActive(s));  
+  const today = new Date().toISOString().split('T')[0];  
+  const present = classStudents.filter(s => { const a = getStudentAttendance(s.id, today); return a && a.present; }).length;  
+  
+  document.getElementById('teacherClassTotal').textContent = classStudents.length;  
+  document.getElementById('teacherClassPresent').textContent = present;  
+  document.getElementById('teacherClassAbsent').textContent = classStudents.length - present;  
+}  
+  
+function renderStudentDashboard() {  
   const visible = getVisibleStudents();  
-  const total = visible.length;  
-  const active = visible.filter(s => isActive(s)).length;  
-  const todayAtt = getTodayAttendance().filter(a => {  
-    const student = getStudent(a.studentId);  
-    return student && visible.includes(student);  
-  }).filter(a => a.present).length;  
-  
-  document.getElementById('totalStudents').textContent = total;  
-  document.getElementById('activeStudents').textContent = active;  
-  document.getElementById('todayAttendance').textContent = todayAtt;  
-  document.getElementById('teacherCount').textContent = (['super', 'admin'].includes(data.currentUser?.role)) ? data.teachers.length : '🔒';  
-  
   const recent = data.marks.slice(-5).reverse().filter(m => {  
     const student = getStudent(m.studentId);  
     return student && visible.includes(student);  
@@ -1574,6 +1785,34 @@ function renderDashboard() {
   }  
 }  
   
+function getTeacherAttendanceToday(teacherUser) {  
+  const today = new Date().toISOString().split('T')[0];  
+  return (data.teacherAttendance || []).find(t => t.teacherUser === teacherUser && t.date === today);  
+}  
+  
+function markTeacherAttendance(status) {  
+  if (data.currentUser?.role !== 'teacher') return toast('അനുമതിയില്ല', 'error');  
+  if (!data.teacherAttendance) data.teacherAttendance = [];  
+  const today = new Date().toISOString().split('T')[0];  
+  let rec = data.teacherAttendance.find(t => t.teacherUser === data.currentUser.user && t.date === today);  
+  if (!rec) { rec = { teacherUser: data.currentUser.user, date: today }; data.teacherAttendance.push(rec); }  
+  rec.status = status; rec.markedAt = Date.now();  
+  saveData();  
+  renderTeacherDashboard();  
+  toast(status === 'present' ? 'ഡ്യൂട്ടി രേഖപ്പെടുത്തി' : 'ലീവ് രേഖപ്പെടുത്തി', 'success');  
+}  
+  
+function renderMessagePreview() {  
+  const box = document.getElementById('messagePreview');  
+  if (!box || !data.currentUser) return;  
+  const msgs = getVisibleMessages().slice(-3).reverse();  
+  if (!msgs.length) { box.innerHTML = '<div class="msg-item">സ്വാഗതം! മദ്രസ മാനേജ്മെന്റ് സിസ്റ്റത്തിലേക്ക്.</div>'; return; }  
+  box.innerHTML = msgs.map(m => `<div class="msg-item">  
+      <div class="msg-header"><span class="msg-from">${m.fromName}</span><span>${new Date(m.time).toLocaleString('ml-IN')}</span></div>  
+      <div class="msg-content">${m.content}</div>  
+    </div>`).join('');  
+}  
+  
 function examLabel(code) {  
   return { class: 'ക്ലാസ് ടെസ്റ്റ്', half: 'ഹാഫ് ഇയർ', mid: 'മിഡ് ടൈം', annual: 'കൊല്ലപ്പരീക്ഷ' }[code] || code;  
 }  
@@ -1584,14 +1823,27 @@ function renderStudents() {
   const status = document.getElementById('statusFilter').value;  
   const q = (document.getElementById('studentSearch').value || '').trim().toLowerCase();  
   
+  const statBar = document.getElementById('studentStatBar');  
+  if (statBar) {  
+    const totalCount = visible.length;  
+    const activeCount = visible.filter(s => isActive(s)).length;  
+    statBar.innerHTML = `  
+      <div class="stat-card"><div class="stat-label"><i class="fas fa-users"></i> ആകെ വിദ്യാർത്ഥികൾ</div><div class="stat-value">${totalCount}</div></div>  
+      <div class="stat-card"><div class="stat-label"><i class="fas fa-user-check"></i> ആക്ടീവ്</div><div class="stat-value">${activeCount}</div></div>  
+    `;  
+  }  
+  
   let list = visible;  
   if (cls !== 'all') list = list.filter(s => s.class == cls);  
   if (status !== 'all') {  
     if (status === 'active') list = list.filter(s => isActive(s));  
     else if (status === 'inactive') list = list.filter(s => !s.active);  
     else if (status === 'expired') list = list.filter(s => s.active && isAccountExpired(s));  
+    else if (status === 'tc') list = list.filter(s => s.tcIssued);  
   }  
-  if (q) list = list.filter(s => s.name.toLowerCase().includes(q) || (s.houseName && s.houseName.toLowerCase().includes(q)) || s.user.toLowerCase().includes(q) || (s.phone && s.phone.includes(q)) || (s.fatherName && s.fatherName.toLowerCase().includes(q)) || (s.motherName && s.motherName.toLowerCase().includes(q)));  
+  if (q) list = list.filter(s => s.name.toLowerCase().includes(q) || (s.houseName && s.houseName.toLowerCase().includes(q)) || s.user.toLowerCase().includes(q) || (s.phone && s.phone.includes(q)) || (s.fatherName && s.fatherName.toLowerCase().includes(q)) || (s.motherName && s.motherName.toLowerCase().includes(q)) || (s.regNo && s.regNo.toLowerCase().includes(q)));  
+  
+  window.__lastStudentList = list;  
   
   const tbody = document.getElementById('studentTableBody');  
   tbody.innerHTML = '';  
@@ -1605,15 +1857,15 @@ function renderStudents() {
   list.forEach((s, idx) => {  
     const active = isActive(s);  
     const expired = s.active && isAccountExpired(s);  
-    const expiryDays = getStudentExpiryDays(s);  
     let statusText = '✅ ആക്ടീവ്', statusClass = 'badge-success';  
     if (expired) { statusText = '⏰ കാലാവധി കഴിഞ്ഞു'; statusClass = 'badge-warning'; }  
     if (!s.active) { statusText = '❌ ഡിആക്ടീവ്'; statusClass = 'badge-danger'; }  
+    if (s.tcIssued) { statusText = '📄 TC നൽകി'; statusClass = 'badge-warning'; }  
   
     const tr = document.createElement('tr');  
     tr.innerHTML = `  
       <td>${idx + 1}</td>  
-      <td class="mal"><strong>${s.name}</strong></td>  
+      <td class="mal"><strong>${s.name}</strong>${s.regNo ? `<br><span style="font-size:11px;color:var(--ink-faint);">Reg: ${s.regNo}</span>` : ''}</td>  
       <td class="mal">${s.houseName || '—'}</td>  
       <td class="mal" style="font-size:12px;">${[s.fatherName, s.motherName].filter(Boolean).join(' / ') || '—'}</td>  
       <td>${s.phone || '—'}</td>  
@@ -1624,6 +1876,9 @@ function renderStudents() {
       <td>  
           <button class="btn ${active ? 'btn-warning' : 'btn-success'} btn-sm" onclick="toggleStudent(${s.id})">${active ? '<i class="fas fa-ban"></i>' : '<i class="fas fa-check"></i>'}</button>  
           <button class="btn btn-primary btn-sm" onclick="editStudent(${s.id})"><i class="fas fa-edit"></i></button>  
+          <button class="btn btn-outline btn-sm" onclick="printIDCard(${s.id})" title="ID കാർഡ്"><i class="fas fa-id-card"></i></button>  
+          <button class="btn ${s.tcIssued ? 'btn-warning' : 'btn-secondary'} btn-sm" onclick="issueTC(${s.id})" title="TC രേഖപ്പെടുത്തുക"><i class="fas fa-file-export"></i></button>  
+          ${s.tcIssued ? `<button class="btn btn-outline btn-sm" onclick="printTC(${s.id})" title="TC പ്രിന്റ്"><i class="fas fa-print"></i></button>` : ''}  
           <button class="btn btn-secondary btn-sm" onclick="resetUserPassword('student', ${s.id})" title="പാസ്സ്‌വേർഡ് റീസെറ്റ്"><i class="fas fa-key"></i></button>  
           <button class="btn btn-danger btn-sm" onclick="deleteStudent(${s.id})"><i class="fas fa-trash"></i></button>  
       </td>` : ''}`;  
@@ -1870,9 +2125,9 @@ function prepareReply(replyToId) {
     }  
 }  
   
-function renderMessages() {  
-  const box = document.getElementById('messageBox');  
+function getVisibleMessages() {  
   const user = data.currentUser;  
+  if (!user) return [];  
   let msgs = [];  
   
   if (user.role === 'super') {  
@@ -1905,6 +2160,13 @@ function renderMessages() {
           m.to === 'all_students'  
       );  
   }  
+  return msgs;  
+}  
+  
+function renderMessages() {  
+  const box = document.getElementById('messageBox');  
+  const user = data.currentUser;  
+  const msgs = getVisibleMessages();  
   
   box.innerHTML = msgs.slice().reverse().map(m => {  
       let toLabel = m.to;  
@@ -2206,6 +2468,48 @@ function generateFinReport() {
     `;  
 }  
   
+function idCardHTML(s) {  
+  const logoHtml = data.schoolLogo  
+    ? `<img src="${data.schoolLogo}" style="width:50px;height:50px;object-fit:cover;border-radius:50%;border:2px solid #C9972F;">`  
+    : `<div style="width:50px;height:50px;border-radius:50%;background:#C9972F;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto;">📖</div>`;  
+  return `  
+    <div style="width:320px;border-radius:16px;overflow:hidden;border:1px solid #ccc;font-family:sans-serif;box-shadow:0 4px 10px rgba(0,0,0,.15);">  
+      <div style="background:linear-gradient(135deg,#0B3D2E,#155943);color:#F4E7C8;padding:14px;text-align:center;">  
+        ${logoHtml}  
+        <div style="font-weight:bold;font-size:13px;margin-top:6px;">${data.schoolName}</div>  
+        <div style="font-size:9.5px;opacity:.85;">വിദ്യാർത്ഥി തിരിച്ചറിയൽ കാർഡ്</div>  
+      </div>  
+      <div style="padding:14px;text-align:center;">  
+        <div style="width:56px;height:56px;border-radius:50%;background:#EDE4CD;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#95701E;"><i class="fas fa-user"></i></div>  
+        <div style="font-size:14px;font-weight:800;color:#0B3D2E;">${s.name}</div>  
+        <div style="font-size:11px;color:#7C8A81;margin-bottom:8px;">ക്ലാസ്: ${s.class}</div>  
+        <div style="text-align:left;font-size:11px;border-top:1px dashed #C9972F;padding-top:8px;">  
+          <div style="display:flex;justify-content:space-between;padding:2px 0;"><span style="color:#7C8A81;">ID</span><strong>${s.id}</strong></div>  
+          <div style="display:flex;justify-content:space-between;padding:2px 0;"><span style="color:#7C8A81;">വീട്ട് പേര്</span><strong>${s.houseName || '—'}</strong></div>  
+          <div style="display:flex;justify-content:space-between;padding:2px 0;"><span style="color:#7C8A81;">രക്ഷിതാവ്</span><strong>${s.fatherName || s.motherName || '—'}</strong></div>  
+          <div style="display:flex;justify-content:space-between;padding:2px 0;"><span style="color:#7C8A81;">ഫോൺ</span><strong>${s.phone || '—'}</strong></div>  
+        </div>  
+      </div>  
+      <div style="background:#F4EEDF;text-align:center;padding:5px;font-size:8.5px;color:#7C8A81;">${getAcademicYear(new Date())}</div>  
+    </div>`;  
+}  
+  
+function printIDCard(studentId) {  
+  const s = getStudent(studentId);  
+  if (!s) return;  
+  const printArea = document.getElementById('printReceiptArea');  
+  printArea.innerHTML = idCardHTML(s);  
+  window.print();  
+}  
+  
+function printFilteredIDCards() {  
+  const list = window.__lastStudentList || [];  
+  if (!list.length) return toast('കാർഡ് പ്രിന്റ് ചെയ്യാൻ വിദ്യാർത്ഥികളില്ല', 'error');  
+  const printArea = document.getElementById('printReceiptArea');  
+  printArea.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;">${list.map(s => idCardHTML(s)).join('')}</div>`;  
+  window.print();  
+}  
+  
 function printGradeCard() {  
   const sid = getReportStudentId();  
   const student = sid ? getStudent(sid) : null;  
@@ -2279,30 +2583,50 @@ function printReceipt(feeId) {
     const f = data.fees.find(x => x.id == feeId);  
     if(!f) return;  
     const s = getStudent(f.studentId);  
-      
+  
+    const logoHtml = data.schoolLogo  
+      ? `<img src="${data.schoolLogo}" style="width:64px;height:64px;object-fit:cover;border-radius:50%;border:2px solid #C9972F;">`  
+      : `<div style="width:64px;height:64px;border-radius:50%;background:#C9972F;display:flex;align-items:center;justify-content:center;font-size:28px;">📖</div>`;  
+  
     const printArea = document.getElementById('printReceiptArea');  
     printArea.innerHTML = `  
-        <div class="receipt-box">  
-            <h1>${data.schoolName}</h1>  
-            <div class="receipt-title">ഫീസ് രസീത്</div>  
-            <div class="receipt-details">  
-                <p><strong>രസീത് നമ്പർ:</strong> ${f.id}</p>  
-                <p><strong>തിയ്യതി:</strong> ${new Date(f.date).toLocaleDateString('ml-IN')}</p>  
-                <p><strong>വിദ്യാർത്ഥി:</strong> ${s.name}</p>  
-                <p><strong>ക്ലാസ്:</strong> ${s.class}</p>  
-            </div>  
-            <div class="amount">തുക: ₹${f.amount}</div>  
-              
-            <div class="receipt-sig-area">  
-                <div style="text-align:left;">  
-                    <p style="color:#666;">രേഖപ്പെടുത്തിയത്:<br>${f.by}</p>  
-                </div>  
-                <div style="text-align:center;">  
-                    <p>കിട്ടിബോധിച്ചു</p>  
-                    <br><br>  
-                    <p><strong>സദർ മുഅല്ലിം</strong></p>  
+        <div style="width:100%;max-width:720px;margin:0 auto;font-family:sans-serif;border:1px solid #ddd;border-radius:14px;overflow:hidden;">  
+            <div style="background:linear-gradient(135deg,#0B3D2E,#155943);color:#F4E7C8;padding:26px 32px;display:flex;align-items:center;gap:18px;">  
+                ${logoHtml}  
+                <div>  
+                    <h1 style="margin:0;font-size:22px;color:#fff;">${data.schoolName}</h1>  
+                    ${data.schoolRegNo ? `<div style="font-size:12px;color:#F4E7C8;margin-top:3px;">Reg No: ${data.schoolRegNo}</div>` : ''}  
+                    ${data.schoolAddress ? `<div style="font-size:12px;color:#F4E7C8;margin-top:3px;">${data.schoolAddress}</div>` : ''}  
                 </div>  
             </div>  
+  
+            <div style="padding:30px 32px;">  
+                <div style="text-align:center;margin-bottom:24px;">  
+                    <span style="display:inline-block;background:#C9972F;color:#fff;padding:6px 22px;border-radius:20px;font-size:13px;font-weight:bold;letter-spacing:1px;">ഫീസ് രസീത്</span>  
+                </div>  
+  
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:14px;margin-bottom:26px;">  
+                    <div><span style="color:#7C8A81;font-size:12px;">രസീത് നമ്പർ</span><br><strong>#${f.id}</strong></div>  
+                    <div style="text-align:right;"><span style="color:#7C8A81;font-size:12px;">തിയ്യതി</span><br><strong>${new Date(f.date).toLocaleDateString('ml-IN')}</strong></div>  
+                    <div><span style="color:#7C8A81;font-size:12px;">വിദ്യാർത്ഥി</span><br><strong>${s.name}</strong></div>  
+                    <div style="text-align:right;"><span style="color:#7C8A81;font-size:12px;">ക്ലാസ്</span><br><strong>${s.class}</strong></div>  
+                    ${f.forMonth ? `<div style="grid-column:1 / -1;"><span style="color:#7C8A81;font-size:12px;">ഏത് മാസത്തേക്ക്</span><br><strong>${f.forMonth}</strong></div>` : ''}  
+                </div>  
+  
+                <div style="background:#FBF7EE;border:1px dashed #C9972F;border-radius:10px;padding:20px;text-align:center;margin-bottom:36px;">  
+                    <div style="font-size:12px;color:#7C8A81;">ആകെ തുക</div>  
+                    <div style="font-size:34px;font-weight:800;color:#0B3D2E;">₹${f.amount}</div>  
+                </div>  
+  
+                <div style="display:flex;justify-content:flex-end;text-align:center;font-size:13px;">  
+                    <div>  
+                        <div style="margin-bottom:44px;">&nbsp;</div>  
+                        <div style="border-top:1px solid #333;padding-top:6px;min-width:150px;">സദർ മുഅല്ലിം</div>  
+                    </div>  
+                </div>  
+            </div>  
+  
+            <div style="background:#F4EEDF;text-align:center;padding:10px;font-size:11px;color:#7C8A81;">${data.schoolName} — ഈ രസീത് കമ്പ്യൂട്ടർ ജനറേറ്റഡ് ആണ്</div>  
         </div>  
     `;  
     window.print();  
@@ -2365,6 +2689,7 @@ function addStudent() {
   const f = document.getElementById('sFirst').value.trim();
   const l = document.getElementById('sLast').value.trim();
   const h = document.getElementById('sHouse').value.trim();
+  const regNo = document.getElementById('sRegNo').value.trim();
   const mother = document.getElementById('sMother').value.trim();
   const father = document.getElementById('sFather').value.trim();
   const fullName = [f, l, h].filter(Boolean).join(' ');
@@ -2379,12 +2704,13 @@ function addStudent() {
   if (data.students.find(x => x.user === user)) return toast('ഈ യൂസർ ഉണ്ട്', 'error');
 
   data.students.push({
-      id: getNextId(data.students), firstName: f, lastName: l, houseName: h,
+      id: getNextId(data.students), firstName: f, lastName: l, houseName: h, regNo,
       motherName: mother, fatherName: father, name: fullName,
-      phone, whatsapp: whatsapp || phone, class: cls, user, pass, active: true, created: Date.now(), expiryDays
+      phone, whatsapp: whatsapp || phone, class: cls, user, pass, active: true, created: Date.now(), expiryDays,
+      tcIssued: false, tcNumber: '', tcReason: '', tcDate: ''
   });
   saveData();
-  ['sFirst','sLast','sHouse','sMother','sFather','sPhone','sWhatsapp','sClass','sUser','sPass'].forEach(id => document.getElementById(id).value = '');
+  ['sFirst','sLast','sHouse','sRegNo','sMother','sFather','sPhone','sWhatsapp','sClass','sUser','sPass'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('addStudentForm').classList.add('hide');
   toast('വിദ്യാർത്ഥിയെ ചേർത്തു', 'success'); renderAll();
 }
@@ -2395,6 +2721,8 @@ function editStudent(id) {
   if (!s) return;
   const newName = prompt('പേര് മാറ്റുക:', s.name);
   if (newName && newName.trim()) s.name = newName.trim();
+  const newRegNo = prompt('രജിസ്ട്രേഷൻ നമ്പർ:', s.regNo || '');
+  if (newRegNo !== null) s.regNo = newRegNo.trim();
   const newMother = prompt('മാതാവിന്റെ പേര്:', s.motherName || '');
   if (newMother !== null) s.motherName = newMother.trim();
   const newFather = prompt('പിതാവിന്റെ പേര്:', s.fatherName || '');
@@ -2406,6 +2734,64 @@ function editStudent(id) {
   const newExpiry = prompt('എക്സ്പയറി ദിവസം:', s.expiryDays || data.expiryDays);
   if (newExpiry && parseInt(newExpiry) > 0) s.expiryDays = parseInt(newExpiry);
   saveData(); renderAll();
+}
+
+function issueTC(id) {
+  if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');
+  const s = getStudent(id);
+  if (!s) return;
+  if (s.tcIssued && !confirm('ഇതിനകം ഈ വിദ്യാർത്ഥിക്ക് TC നൽകിയിട്ടുണ്ട്. വിവരങ്ങൾ അപ്ഡേറ്റ് ചെയ്യണോ?')) return;
+
+  const tcNumber = prompt('TC നമ്പർ നൽകുക:', s.tcNumber || ('TC/' + new Date().getFullYear() + '/' + s.id));
+  if (tcNumber === null) return;
+  const tcReason = prompt('TC കാരണം (ഓപ്ഷണൽ):', s.tcReason || '');
+  if (tcReason === null) return;
+
+  s.tcIssued = true;
+  s.tcNumber = tcNumber.trim();
+  s.tcReason = tcReason.trim();
+  s.tcDate = new Date().toISOString().split('T')[0];
+  s.active = false;
+  saveData(); renderStudents();
+  toast('TC രേഖപ്പെടുത്തി', 'success');
+  if (confirm('TC സർട്ടിഫിക്കറ്റ് ഇപ്പോൾ പ്രിന്റ് ചെയ്യണോ?')) printTC(id);
+}
+
+function printTC(id) {
+  const s = getStudent(id);
+  if (!s || !s.tcIssued) return toast('ഈ വിദ്യാർത്ഥിക്ക് TC രേഖപ്പെടുത്തിയിട്ടില്ല', 'error');
+
+  const logoHtml = data.schoolLogo
+    ? `<img src="${data.schoolLogo}" style="width:60px;height:60px;object-fit:cover;border-radius:50%;border:2px solid #C9972F;">`
+    : `<div style="width:60px;height:60px;border-radius:50%;background:#C9972F;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto;">📖</div>`;
+
+  const printArea = document.getElementById('printReceiptArea');
+  printArea.innerHTML = `
+    <div style="width:100%;max-width:720px;margin:0 auto;font-family:sans-serif;border:2px solid #0B3D2E;border-radius:14px;padding:36px;">
+      <div style="text-align:center;border-bottom:2px solid #C9972F;padding-bottom:16px;margin-bottom:26px;">
+        ${logoHtml}
+        <h1 style="margin:10px 0 4px;font-size:22px;">${data.schoolName}</h1>
+        ${data.schoolRegNo ? `<div style="font-size:12px;color:#7C8A81;">Reg No: ${data.schoolRegNo}</div>` : ''}
+        ${data.schoolAddress ? `<div style="font-size:12px;color:#7C8A81;">${data.schoolAddress}</div>` : ''}
+        <div style="display:inline-block;margin-top:12px;background:#0B3D2E;color:#F4E7C8;padding:6px 20px;border-radius:20px;font-size:13px;font-weight:bold;letter-spacing:.5px;">ട്രാൻസ്ഫർ സർട്ടിഫിക്കറ്റ്</div>
+      </div>
+      <div style="font-size:14px;line-height:2.1;">
+        <p><strong>TC നമ്പർ:</strong> ${s.tcNumber}</p>
+        <p><strong>പേര്:</strong> ${s.name}</p>
+        <p><strong>രജിസ്ട്രേഷൻ നമ്പർ:</strong> ${s.regNo || '—'}</p>
+        <p><strong>വീട്ട് പേര്:</strong> ${s.houseName || '—'}</p>
+        <p><strong>രക്ഷിതാവ്:</strong> ${[s.fatherName, s.motherName].filter(Boolean).join(' / ') || '—'}</p>
+        <p><strong>ക്ലാസ്:</strong> ${s.class}</p>
+        <p><strong>TC തിയ്യതി:</strong> ${new Date(s.tcDate).toLocaleDateString('ml-IN')}</p>
+        ${s.tcReason ? `<p><strong>കാരണം:</strong> ${s.tcReason}</p>` : ''}
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:70px;font-size:13px;text-align:center;">
+        <div style="min-width:150px;border-top:1px solid #333;padding-top:6px;">ക്ലാസ് ടീച്ചർ</div>
+        <div style="min-width:150px;border-top:1px solid #333;padding-top:6px;">സദർ മുഅല്ലിം</div>
+      </div>
+    </div>
+  `;
+  window.print();
 }
 
   
