@@ -1210,12 +1210,12 @@ async function testConnection() {
 }  
   
 function initDefaults() {  
-  if (!data.admins.find(a => a.user === 'admin')) data.admins.push({ user: 'admin', pass: 'admin123', role: 'super' });  
-  if (!data.admins.find(a => a.user === 'headmaster')) {  
-      data.admins.push({ user: 'headmaster', pass: 'head123', role: 'admin' });  
+  if (!data.admins.find(a => a.user === 'admin')) data.admins.push({ user: 'admin', pass: '1319', role: 'super' });  
+  if (!data.admins.find(a => a.user === 'sadar')) {  
+      data.admins.push({ user: 'headmaster', pass: '1234', role: 'admin' });  
       data.contactAdmin = 'headmaster';  
   }  
-  if (!data.teachers.find(t => t.user === 'teacher')) data.teachers.push({ user: 'teacher', pass: 'teacher123', class: 5 });  
+  if (!data.teachers.find(t => t.user === 'teacher')) data.teachers.push({ user: 'usthad8', pass: '1234', class: 8 });  
   normalizeSubjects();  
   saveData();  
 }  
