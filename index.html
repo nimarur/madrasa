@@ -334,7 +334,7 @@ tbody tr:hover{background:var(--paper);}
         </div>  
         <button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> ലോഗിൻ ചെയ്യുക</button>  
       </form>  
-      <div style="text-align:center;font-size:11.5px;color:var(--ink-faint);margin-top:22px;">© 2026 AFKIGEMS IT SOLUTIONS</div>  
+      <div style="text-align:center;font-size:11.5px;color:var(--ink-faint);margin-top:22px;">© Designed and developed by M.A.Muneer</div>  
     </div>  
   </div>  
 </div>  
@@ -392,7 +392,11 @@ tbody tr:hover{background:var(--paper);}
         <div class="card" id="syncStatusSection">  
           <div class="card-title star-bullet"><i class="fas fa-cloud"></i> ക്ലൗഡ് സമന്വയം (Sync)</div>  
           <p id="syncStatusText" class="text-muted" style="margin-bottom:12px;">പരിശോധിക്കുന്നു...</p>  
-          <button class="btn btn-primary btn-sm" onclick="manualSync()"><i class="fas fa-cloud-upload-alt"></i> ഇപ്പോൾ സമന്വയിപ്പിക്കുക</button>  
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;">  
+            <button class="btn btn-primary btn-sm" onclick="manualSync()"><i class="fas fa-cloud-upload-alt"></i> ഇപ്പോൾ സമന്വയിപ്പിക്കുക</button>  
+            <button class="btn btn-outline btn-sm" onclick="testConnection()"><i class="fas fa-stethoscope"></i> കണക്ഷൻ ടെസ്റ്റ് ചെയ്യുക</button>  
+          </div>  
+          <p id="connectionTestResult" style="font-size:12.5px;"></p>  
         </div>  
   
         <div class="card" id="passwordChangeSection">  
@@ -481,6 +485,17 @@ tbody tr:hover{background:var(--paper);}
       <div id="tabDashboard" class="tab-content active">  
         <div class="page-head">  
           <div><h2>ഡാഷ്ബോർഡ്</h2><div class="desc">ഇന്നത്തെ സ്ഥിതി ഒറ്റനോട്ടത്തിൽ</div></div>  
+        </div>  
+  
+        <div class="card hide" id="noCloudWarningBanner" style="border:2px solid var(--danger);background:var(--danger-bg);">  
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">  
+            <i class="fas fa-triangle-exclamation" style="font-size:26px;color:var(--danger);"></i>  
+            <div style="flex:1;min-width:200px;">  
+              <div style="font-weight:800;color:var(--danger);margin-bottom:4px;">⚠️ ക്ലൗഡ് സമന്വയം സജ്ജീകരിച്ചിട്ടില്ല!</div>  
+              <div style="font-size:13px;color:var(--ink);">ഈ ഡാറ്റ ഈ ഉപകരണത്തിൽ / ഈ ബ്രൗസറിൽ മാത്രമേ ഉള്ളൂ — Google Sheets-ലേക്ക് സേവ് ആകുന്നില്ല. ബ്രൗസർ ഡാറ്റ മായ്ച്ചാൽ എല്ലാം നഷ്ടപ്പെടും. index.html-ലെ SCRIPT_URL ശരിയാക്കാൻ "സെറ്റിംഗ്സ്" പരിശോധിക്കുക.</div>  
+            </div>  
+            <button class="btn btn-outline btn-sm" onclick="switchTab('settings')">സെറ്റിംഗ്സിലേക്ക്</button>  
+          </div>  
         </div>  
   
         <!-- ADMIN / SUPER DASHBOARD -->  
@@ -1153,6 +1168,45 @@ function manualSync() {
   if (!navigator.onLine) return toast('ഓഫ്‌ലൈൻ ആണ്, ഓൺലൈൻ ആകുമ്പോൾ ഓട്ടോമാറ്റിക് ആയി സമന്വയിക്കും', 'error');  
   syncPush();  
   toast('സമന്വയിപ്പിക്കുന്നു...', 'success');  
+}  
+  
+async function testConnection() {  
+  const resultEl = document.getElementById('connectionTestResult');  
+  if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {  
+    if (resultEl) resultEl.innerHTML = '<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> SCRIPT_URL സെറ്റ് ചെയ്തിട്ടില്ല</span>';  
+    return;  
+  }  
+  if (resultEl) resultEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ടെസ്റ്റ് ചെയ്യുന്നു... (കുറച്ച് സെക്കന്റ് എടുക്കും)';  
+  
+  try {  
+    const testMarker = 'test_' + Date.now();  
+    const testPayload = { ...data, __connectionTest: testMarker };  
+    delete testPayload.currentUser;  
+  
+    const postRes = await fetch(SCRIPT_URL, {  
+      method: 'POST',  
+      body: JSON.stringify(testPayload),  
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }  
+    });  
+    const postResult = await postRes.json();  
+  
+    if (postResult && postResult.status === 'error') {  
+      if (resultEl) resultEl.innerHTML = `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> സേവ് പരാജയപ്പെട്ടു: ${postResult.message}</span>`;  
+      return;  
+    }  
+  
+    const verifyRes = await fetch(SCRIPT_URL);  
+    const verifyData = await verifyRes.json();  
+  
+    if (verifyData && verifyData.__connectionTest === testMarker) {  
+      if (resultEl) resultEl.innerHTML = '<span style="color:var(--success);"><i class="fas fa-check-circle"></i> ബന്ധം ശരിയായി പ്രവർത്തിക്കുന്നു! സേവും ലോഡും വിജയകരമായി ടെസ്റ്റ് ചെയ്തു.</span>';  
+      saveData(); // ടെസ്റ്റ് മാർക്കർ ഇല്ലാതെ യഥാർത്ഥ ഡാറ്റ വീണ്ടും സേവ് ചെയ്യുന്നു  
+    } else {  
+      if (resultEl) resultEl.innerHTML = '<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> സേവ് ചെയ്തെങ്കിലും തിരികെ വായിക്കുമ്പോൾ പൊരുത്തപ്പെടുന്നില്ല. Apps Script ൽ "Manage deployments → Edit → Version: New version → Deploy" ചെയ്തോ എന്ന് പരിശോധിക്കുക.</span>';  
+    }  
+  } catch (e) {  
+    if (resultEl) resultEl.innerHTML = `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> നെറ്റ്‌വർക്ക് / CORS പിഴവ്: ${e.message}. Apps Script ഡിപ്ലോയ്‌മെന്റിൽ "Who has access" = "Anyone" ആണോ എന്നും, ഡിപ്ലോയ്‌മെന്റ് പുതുക്കിയോ എന്നും പരിശോധിക്കുക.</span>`;  
+  }  
 }  
   
 function initDefaults() {  
@@ -1900,6 +1954,9 @@ function renderDashboard() {
   const isAdminOrSuper = ['super', 'admin'].includes(role);  
   const isTeacher = role === 'teacher';  
   const isStudent = role === 'student';  
+  
+  const banner = document.getElementById('noCloudWarningBanner');  
+  if (banner) banner.classList.toggle('hide', !(isAdminOrSuper && (!SCRIPT_URL || SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE')));  
   
   document.getElementById('adminDashboardSection').classList.toggle('hide', !isAdminOrSuper);  
   document.getElementById('teacherDashboardSection').classList.toggle('hide', !isTeacher);  
