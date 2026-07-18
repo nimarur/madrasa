@@ -5,6 +5,8 @@
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
 <title>നൂറുൽ ഈമാൻ | മദ്രസ മാനേജ്മെന്റ് സിസ്റ്റം</title>  
+<link rel="manifest" href="manifest.json">  
+<meta name="theme-color" content="#0B3D2E">  
 <link rel="preconnect" href="https://fonts.googleapis.com">  
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">  
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">  
@@ -87,6 +89,11 @@ button{font-family:inherit;}
   .login-shell{grid-template-columns:1fr;}  
   .login-brand-panel{padding:40px 24px;min-height:220px;}  
   .login-brand-panel h1{font-size:26px;}  
+  .login-form-panel{width:100%;display:flex;justify-content:center;align-items:center;padding:28px 18px;}  
+  .login-card{width:100%;max-width:360px;margin:0 auto;}  
+  .login-form{width:100%;}  
+  .login-form .form-group{width:100%;}  
+  .login-form .form-group input{width:100%;}  
 }  
   
 /* APP SHELL */  
@@ -327,8 +334,8 @@ tbody tr:hover{background:var(--paper);}
         </div>  
         <button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> ലോഗിൻ ചെയ്യുക</button>  
       </form>  
+      <div style="text-align:center;font-size:11.5px;color:var(--ink-faint);margin-top:22px;">© 2026 AFKIGEMS IT SOLUTIONS</div>  
     </div>  
-    <div style="text-align:center;font-size:11.5px;color:var(--ink-faint);margin-top:26px;">© Designed and developed by M.A.Muneer</div>  
   </div>  
 </div>  
   
@@ -349,6 +356,7 @@ tbody tr:hover{background:var(--paper);}
       <button data-tab="students" onclick="switchTab('students')"><i class="fas fa-users"></i> വിദ്യാർത്ഥികൾ</button>  
       <button data-tab="attendance" onclick="switchTab('attendance')"><i class="fas fa-clipboard-check"></i> ഹാജർ</button>  
       <button data-tab="leave" onclick="switchTab('leave')"><i class="fas fa-calendar-minus"></i> അവധി അപേക്ഷ</button>  
+      <button data-tab="about" onclick="switchTab('about')"><i class="fas fa-circle-info"></i> ഞങ്ങളെക്കുറിച്ച്</button>  
       <button data-tab="marks" onclick="switchTab('marks')"><i class="fas fa-graduation-cap"></i> മാർക്ക്</button>  
       <button data-tab="co-curricular" onclick="switchTab('co-curricular')"><i class="fas fa-palette"></i> പാഠ്യേതരം</button>  
       <button data-tab="report" onclick="switchTab('report')"><i class="fas fa-file-invoice"></i> റിപ്പോർട്ട്</button>  
@@ -379,6 +387,12 @@ tbody tr:hover{background:var(--paper);}
         <div class="page-head">  
           <div><h2>സെറ്റിംഗ്സ്</h2><div class="desc">അക്കൗണ്ട് സുരക്ഷയും മദ്രസ വിവരങ്ങളും</div></div>  
           <button class="btn btn-outline btn-sm" onclick="renderAll()"><i class="fas fa-sync"></i> ഡാറ്റ പുതുക്കുക</button>  
+        </div>  
+  
+        <div class="card" id="syncStatusSection">  
+          <div class="card-title star-bullet"><i class="fas fa-cloud"></i> ക്ലൗഡ് സമന്വയം (Sync)</div>  
+          <p id="syncStatusText" class="text-muted" style="margin-bottom:12px;">പരിശോധിക്കുന്നു...</p>  
+          <button class="btn btn-primary btn-sm" onclick="manualSync()"><i class="fas fa-cloud-upload-alt"></i> ഇപ്പോൾ സമന്വയിപ്പിക്കുക</button>  
         </div>  
   
         <div class="card" id="passwordChangeSection">  
@@ -450,6 +464,16 @@ tbody tr:hover{background:var(--paper);}
                 <button class="btn btn-primary" onclick="updateSchoolAddress()">സേവ്</button>  
               </div>  
             </div>  
+          </div>  
+        </div>  
+  
+        <div class="card hide" id="backupRestoreSection">  
+          <div class="card-title star-bullet"><i class="fas fa-database"></i> ഡാറ്റ ബാക്കപ്പ് / റീസ്റ്റോർ</div>  
+          <p class="text-muted" style="font-size:12px;margin-bottom:14px;">എല്ലാ ഡാറ്റയും (വിദ്യാർത്ഥികൾ, ടീച്ചർമാർ, മാർക്ക്, ഫീസ്, മറ്റെല്ലാം) ഒരു ഫയലായി ഡൗൺലോഡ് ചെയ്യാം, ആവശ്യമെങ്കിൽ പിന്നീട് ആ ഫയൽ ഉപയോഗിച്ച് പുനഃസ്ഥാപിക്കാം.</p>  
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">  
+            <button class="btn btn-success" onclick="exportBackup()"><i class="fas fa-download"></i> ബാക്കപ്പ് ഡൗൺലോഡ് ചെയ്യുക</button>  
+            <button class="btn btn-warning" onclick="triggerRestoreFile()"><i class="fas fa-upload"></i> ബാക്കപ്പിൽ നിന്ന് പുനഃസ്ഥാപിക്കുക</button>  
+            <input type="file" id="restoreFileInput" accept="application/json" class="hide" onchange="restoreBackup(this)">  
           </div>  
         </div>  
       </div>  
@@ -617,6 +641,7 @@ tbody tr:hover{background:var(--paper);}
               <div class="form-group"><label>കോൺടാക്ട് നമ്പർ</label><input id="sPhone" type="tel" placeholder="ഉദാ: 9876543210"></div>  
               <div class="form-group"><label>വാട്സ്ആപ്പ് നമ്പർ</label><input id="sWhatsapp" type="tel" placeholder="ഉദാ: 9876543210"></div>  
               <div class="form-group"><label>ക്ലാസ് (1-12)</label><input type="number" id="sClass" min="1" max="12" placeholder="ക്ലാസ്"></div>  
+              <div class="form-group"><label>ഡിവിഷൻ (ഓപ്ഷണൽ)</label><input id="sDivision" placeholder="ഉദാ: A, B"></div>  
               <div class="form-group"><label>യൂസർ ഐഡി (ലോഗിൻ ചെയ്യാൻ)</label><input id="sUser" placeholder="യൂസർ ഐഡി"></div>  
               <div class="form-group"><label>പാസ്സ്‌വേർഡ്</label><input id="sPass" placeholder="പാസ്സ്‌വേർഡ്"></div>  
               <div class="form-group"><label>അക്കൗണ്ട് എക്സ്പയറി (ദിവസം)</label><input type="number" id="sExpiry" placeholder="എക്സ്പയറി ദിവസം" value="330"></div>  
@@ -796,6 +821,29 @@ tbody tr:hover{background:var(--paper);}
         </div>  
       </div>  
   
+      <div id="tabAbout" class="tab-content">  
+        <div class="page-head">  
+          <div><h2>ഞങ്ങളെക്കുറിച്ച്</h2><div class="desc">About Us</div></div>  
+        </div>  
+        <div class="card">  
+          <p class="mal" style="line-height:1.9;font-size:14.5px;margin-bottom:16px;">ഇസ്ലാമിക വിജ്ഞാന പ്രസരണ രംഗത്ത് ആധുനിക സാങ്കേതികവിദ്യയുടെ സാധ്യതകൾ സമന്വയിപ്പിച്ചുകൊണ്ട് പ്രവർത്തിക്കുന്ന ഒരു സമഗ്ര ഡിജിറ്റൽ പ്ലാറ്റ്‌ഫോമാണ് ഞങ്ങളുടെ മദ്രസ മാനേജ്മെന്റ് സിസ്റ്റം. മദ്രസകളുടെ ദൈനംദിന പ്രവർത്തനങ്ങൾ കൂടുതൽ ലളിതവും കാര്യക്ഷമവുമാക്കുക എന്ന ലക്ഷ്യത്തോടെയാണ് ഈ സോഫ്റ്റ്‌വെയർ രൂപകൽപ്പന ചെയ്തിരിക്കുന്നത്.</p>  
+          <p class="mal" style="line-height:1.9;font-size:14.5px;margin-bottom:16px;">പരമ്പരാഗതമായ ഭരണനിർവഹണ രീതികളിൽ നിന്ന് മാറി, സമയലാഭവും സുതാര്യതയും ഉറപ്പുവരുത്തുന്ന ഡിജിറ്റൽ സംവിധാനത്തിലേക്ക് മദ്രസകളെ നയിക്കാൻ ഞങ്ങൾ പ്രതിജ്ഞാബദ്ധരാണ്. അധ്യാപകർ, വിദ്യാർത്ഥികൾ, രക്ഷിതാക്കൾ, മാനേജ്മെന്റ് കമ്മിറ്റി എന്നിവരെ ഒരുപോലെ കോർത്തിണക്കുന്ന ഒരു സുരക്ഷിത ശൃംഖലയാണ് ഈ സിസ്റ്റം സമ്മാനിക്കുന്നത്.</p>  
+  
+          <h3 style="font-size:15.5px;color:var(--emerald-900);margin-bottom:10px;">ഞങ്ങളുടെ പ്രധാന ലക്ഷ്യങ്ങൾ</h3>  
+          <div class="mal" style="font-size:14px;line-height:1.9;margin-bottom:18px;">  
+            <p><strong>ഡിജിറ്റൽവൽക്കരണം:</strong> മദ്രസ റെക്കോർഡുകളും അഡ്മിഷൻ നടപടികളും പൂർണ്ണമായും പേപ്പർരഹിതമാക്കുക.</p>  
+            <p><strong>സുതാര്യത:</strong> കുട്ടികളുടെ ഹാജർ, പഠന പുരോഗതി, ഫീസ് വിവരങ്ങൾ എന്നിവ രക്ഷിതാക്കളിലേക്ക് വേഗത്തിൽ എത്തിക്കുക.</p>  
+            <p><strong>ലളിതമായ ഭരണം:</strong> പരീക്ഷാ നടത്തിപ്പ്, ടൈംടേബിൾ ക്രമീകരണം, ജീവനക്കാരുടെ മാനേജ്മെന്റ് എന്നിവ എളുപ്പമാക്കുക.</p>  
+          </div>  
+          <p class="mal" style="line-height:1.9;font-size:14.5px;">സദാചാര മൂല്യങ്ങളിലധിഷ്ഠിതമായ ഇസ്ലാമിക വിദ്യാഭ്യാസം വരുംതലമുറയ്ക്ക് കൂടുതൽ വ്യവസ്ഥാപിതമായി പകർന്നുനൽകാൻ ഈ ഡിജിറ്റൽ സംവിധാനം സഹായിക്കുമെന്ന് ഞങ്ങൾ ഉറച്ചുവിശ്വസിക്കുന്നു.</p>  
+  
+          <div style="text-align:center;margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-faint);">  
+            <div>Version: 1.0.0</div>  
+            <div style="margin-top:4px;">© Designed and Developed by AFKIGEMS IT Solution</div>  
+          </div>  
+        </div>  
+      </div>  
+  
       <div id="tabMarks" class="tab-content">  
         <div class="page-head"><div><h2>മാർക്ക്</h2><div class="desc">പരീക്ഷാ മാർക്കുകൾ രേഖപ്പെടുത്തുക</div></div></div>  
         <div class="card">  
@@ -848,7 +896,7 @@ tbody tr:hover{background:var(--paper);}
           <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">  
             <select class="pill hide" id="reportStudentSelect" onchange="renderReport()"></select>  
             <select class="pill" id="reportYearSelect" onchange="renderReport()"></select>  
-            <button class="btn btn-outline no-print" onclick="printGradeCard()"><i class="fas fa-print"></i> ഗ്രേഡ് കാർഡ് പ്രിന്റ് / PDF</button>  
+            <button class="btn btn-outline no-print" onclick="printGradeCard()"><i class="fas fa-print"></i> പ്രോഗ്രസ് കാർഡ് പ്രിന്റ് / PDF</button>  
           </div>  
         </div>  
   
@@ -880,12 +928,30 @@ tbody tr:hover{background:var(--paper);}
         </div>  
   
         <div class="card">  
+          <div class="card-title star-bullet">മൊത്തം പ്രകടനം</div>  
+          <div class="stats-grid" style="grid-template-columns:1fr 1fr;">  
+            <div class="stat-card"><div class="stat-label">ശരാശരി മാർക്ക്*</div><div class="stat-value" id="rAvgPercent" style="font-size:24px;">—</div></div>  
+            <div class="stat-card"><div class="stat-label">ഗ്രേഡ്</div><div class="stat-value" id="rGrade" style="font-size:24px;">—</div></div>  
+          </div>  
+          <p class="text-muted" style="font-size:11px;margin-top:8px;">*100 മാർക്കിൽ ഉള്ള ശരാശരി ആയി കണക്കാക്കിയത്</p>  
+        </div>  
+  
+        <div class="card">  
           <div class="card-title star-bullet">മാർക്ക് വിവരങ്ങൾ</div>  
           <div class="table-responsive">  
             <table>  
               <thead><tr><th>വിഷയം</th><th>ക്ലാസ് ടെസ്റ്റ്</th><th>ഹാഫ് ഇയർ</th><th>മിഡ് ടൈം</th><th>കൊല്ലപ്പരീക്ഷ</th></tr></thead>  
               <tbody id="reportMarksBody"></tbody>  
             </table>  
+          </div>  
+        </div>  
+  
+        <div class="card" id="reportRemarkSection">  
+          <div class="card-title star-bullet">അധ്യാപകന്റെ അഭിപ്രായം</div>  
+          <div id="reportRemarkView" class="text-muted" style="margin-bottom:10px;">അഭിപ്രായം രേഖപ്പെടുത്തിയിട്ടില്ല</div>  
+          <div id="reportRemarkEdit" class="hide">  
+            <textarea id="reportRemarkInput" rows="2" placeholder="വിദ്യാർത്ഥിയെക്കുറിച്ചുള്ള അഭിപ്രായം എഴുതുക"></textarea>  
+            <button class="btn btn-success mt-16" onclick="saveReportRemark()"><i class="fas fa-save"></i> അഭിപ്രായം സേവ് ചെയ്യുക</button>  
           </div>  
         </div>  
       </div>  
@@ -967,7 +1033,7 @@ tbody tr:hover{background:var(--paper);}
 // ============================================================  
 // ഗൂഗിൾ ആപ്പ് സ്ക്രിപ്റ്റ് ലിങ്ക് ഇവിടെ നൽകുക   
 // ============================================================  
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzuUnGfrYsyIdClCp_Pi69XOiWK0dZQVBoE4yCFbdiRM5NEKQTrxKIeLNYBWRc5DsEOAw/exec'; // ഇവിടെ നിങ്ങളുടെ പുതിയ SCRIPT URL നൽകുക  
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwc2-wb6rbUdTOY2J77ZjA9s7SkItEImmcSXbYvfKP7aZu7p22E2GzqiKDLAsI_xi3qXA/exec'; // ഇവിടെ നിങ്ങളുടെ പുതിയ SCRIPT URL നൽകുക  
   
 // ============================================================  
 // DATA LAYER  
@@ -999,9 +1065,9 @@ let data = {
   students: [], subjects: defaultSubjectsByClass(),  
   activities: ['സാഹിത്യ സമാജം', 'പ്രസംഗം', 'പാട്ട്', 'സ്പോർട്സ്', 'കവിതാരചന', 'ക്വിസ്'],  
   marks: [], coCurricular: [], attendance: [], messages: [], teachers: [], admins: [], homework: [],  
-  timetable: [], fees: [], expenses: [], leaves: [], feeStructure: {}, teacherAttendance: [],  
+  timetable: [], fees: [], expenses: [], leaves: [], feeStructure: {}, teacherAttendance: [], remarks: [],  
   contactAdmin: '',   
-  currentUser: null  
+  currentUser: null, lastModified: 0, pendingSync: false  
 };  
   
 let attendanceView = 'day';  
@@ -1017,6 +1083,8 @@ async function loadData() {
         if(!data.leaves) data.leaves = [];  
         if(!data.feeStructure) data.feeStructure = {};  
         if(!data.teacherAttendance) data.teacherAttendance = [];  
+        if(!data.remarks) data.remarks = [];  
+        if(!data.lastModified) data.lastModified = 0;  
         normalizeSubjects();  
     } else {   
         initDefaults();   
@@ -1029,19 +1097,62 @@ async function loadData() {
   document.getElementById('loginSchoolName').textContent = data.schoolName || 'നൂറുൽ ഈമാൻ മദ്രസ';  
   applyLogo();  
   
-  if (SCRIPT_URL && SCRIPT_URL !== 'YOUR_WEB_APP_URL_HERE') {  
-    fetch(SCRIPT_URL).then(res => res.json()).then(fetchedData => {  
+  if (!navigator.onLine) {  
+    setSyncStatus('offline');  
+  } else if (SCRIPT_URL && SCRIPT_URL !== 'YOUR_WEB_APP_URL_HERE') {  
+    if (data.pendingSync) { syncPush(); }  
+    setSyncStatus('syncing');  
+    fetch(SCRIPT_URL).then(res => res.json()).then(fetchedData => {    
       if (fetchedData && fetchedData.admins && fetchedData.admins.length > 0) {  
-        data = { ...data, ...fetchedData };  
-        if(!data.expenses) data.expenses = [];  
-        if(!data.leaves) data.leaves = [];  
-        if(!data.feeStructure) data.feeStructure = {};  
-        if(!data.teacherAttendance) data.teacherAttendance = [];  
-        normalizeSubjects();  
-        saveData();  
+        const remoteTime = fetchedData.lastModified || 0;  
+        const localTime = data.lastModified || 0;  
+        // റിമോട്ട് ഡാറ്റ പുതിയതാണെങ്കിൽ മാത്രം ലോക്കൽ ഡാറ്റ മാറ്റിസ്ഥാപിക്കുക —  
+        // പഴയ റിമോട്ട് ഡാറ്റ ലോക്കൽ ഡാറ്റയെ തിരുത്തി എഴുതുന്നത് ഒഴിവാക്കാൻ  
+        if (remoteTime > localTime) {  
+          const currentUserBackup = data.currentUser;  
+          data = { ...data, ...fetchedData };  
+          data.currentUser = currentUserBackup;  
+          if(!data.expenses) data.expenses = [];  
+          if(!data.leaves) data.leaves = [];  
+          if(!data.feeStructure) data.feeStructure = {};  
+          if(!data.teacherAttendance) data.teacherAttendance = [];  
+          if(!data.remarks) data.remarks = [];  
+          normalizeSubjects();  
+          localStorage.setItem('madrasaDataPremiumV12', JSON.stringify(data));  
+          applyLogo();  
+          if (data.currentUser && typeof renderAll === 'function') renderAll();  
+        }  
       }  
-    }).catch(e => console.warn('Background sync failed', e));  
+      setSyncStatus('synced');  
+    }).catch(e => { console.warn('Background sync failed', e); setSyncStatus('error'); });  
+  } else {  
+    setSyncStatus('nourl');  
   }  
+}  
+  
+window.addEventListener('online', () => {  
+  setSyncStatus('syncing');  
+  if (data.pendingSync) { toast('ഇന്റർനെറ്റ് തിരിച്ചെത്തി, ഡാറ്റ സമന്വയിപ്പിക്കുന്നു...', 'success'); }  
+  syncPush();  
+});  
+window.addEventListener('offline', () => { setSyncStatus('offline'); });  
+  
+function setSyncStatus(status) {  
+  const el = document.getElementById('syncStatusText');  
+  if (!el) return;  
+  const now = new Date().toLocaleTimeString('ml-IN');  
+  if (status === 'syncing') el.innerHTML = '<i class="fas fa-sync fa-spin"></i> സമന്വയിപ്പിക്കുന്നു...';  
+  else if (status === 'synced') el.innerHTML = `<i class="fas fa-check-circle" style="color:var(--success);"></i> അവസാനം സമന്വയിപ്പിച്ചത്: ${now}`;  
+  else if (status === 'error') el.innerHTML = `<i class="fas fa-triangle-exclamation" style="color:var(--danger);"></i> സമന്വയം പരാജയപ്പെട്ടു — ഇന്റർനെറ്റ് കണക്ഷൻ പരിശോധിക്കുക (ഡാറ്റ ഈ ഉപകരണത്തിൽ സുരക്ഷിതമായി ഉണ്ട്)`;  
+  else if (status === 'nourl') el.innerHTML = `<i class="fas fa-circle-info"></i> ക്ലൗഡ് സമന്വയം സജ്ജീകരിച്ചിട്ടില്ല (ഈ ഉപകരണത്തിൽ മാത്രം ഡാറ്റ സൂക്ഷിക്കും)`;  
+  else if (status === 'offline') el.innerHTML = `<i class="fas fa-wifi" style="color:var(--warn);"></i> ഓഫ്‌ലൈൻ — മാറ്റങ്ങൾ ഈ ഉപകരണത്തിൽ സൂക്ഷിച്ചു, ഓൺലൈൻ ആകുമ്പോൾ ഓട്ടോമാറ്റിക് ആയി സമന്വയിക്കും`;  
+}  
+  
+function manualSync() {  
+  if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') return toast('SCRIPT_URL സജ്ജീകരിച്ചിട്ടില്ല', 'error');  
+  if (!navigator.onLine) return toast('ഓഫ്‌ലൈൻ ആണ്, ഓൺലൈൻ ആകുമ്പോൾ ഓട്ടോമാറ്റിക് ആയി സമന്വയിക്കും', 'error');  
+  syncPush();  
+  toast('സമന്വയിപ്പിക്കുന്നു...', 'success');  
 }  
   
 function initDefaults() {  
@@ -1056,14 +1167,101 @@ function initDefaults() {
 }  
   
 function saveData() {  
+  data.lastModified = Date.now();  
   localStorage.setItem('madrasaDataPremiumV12', JSON.stringify(data));  
-  if (SCRIPT_URL && SCRIPT_URL !== 'YOUR_WEB_APP_URL_HERE') {  
-    fetch(SCRIPT_URL, {  
-      method: 'POST',  
-      body: JSON.stringify(data),  
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' }  
-    }).catch(e => console.error("Save Error: ", e));  
+  syncPush();  
+}  
+  
+function syncPush() {  
+  if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') { setSyncStatus('nourl'); return; }  
+  if (!navigator.onLine) {  
+    data.pendingSync = true;  
+    localStorage.setItem('madrasaDataPremiumV12', JSON.stringify(data));  
+    setSyncStatus('offline');  
+    return;  
   }  
+  setSyncStatus('syncing');  
+  const payload = { ...data };  
+  delete payload.currentUser; // ലോഗിൻ സെഷൻ വിവരം സെർവറിലേക്ക് അയക്കേണ്ട ആവശ്യമില്ല  
+  fetch(SCRIPT_URL, {  
+    method: 'POST',  
+    body: JSON.stringify(payload),  
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },  
+    keepalive: true  
+  }).then(res => res.json()).then(result => {  
+    if (result && result.status === 'error') {  
+      console.error('Server save error:', result.message);  
+      data.pendingSync = true;  
+      localStorage.setItem('madrasaDataPremiumV12', JSON.stringify(data));  
+      setSyncStatus('error');  
+      toast('ക്ലൗഡിലേക്ക് സേവ് ചെയ്യുന്നതിൽ പിഴവ്: ' + (result.message || ''), 'error');  
+    } else {  
+      data.pendingSync = false;  
+      localStorage.setItem('madrasaDataPremiumV12', JSON.stringify(data));  
+      setSyncStatus('synced');  
+    }  
+  }).catch(e => {  
+    console.error("Save Error: ", e);  
+    data.pendingSync = true;  
+    localStorage.setItem('madrasaDataPremiumV12', JSON.stringify(data));  
+    setSyncStatus('offline');  
+  });  
+}  
+  
+function exportBackup() {  
+  if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');  
+  const payload = { ...data };  
+  delete payload.currentUser;  
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });  
+  const url = URL.createObjectURL(blob);  
+  const a = document.createElement('a');  
+  const today = new Date().toISOString().split('T')[0];  
+  a.href = url;  
+  a.download = `madrasa-backup-${today}.json`;  
+  document.body.appendChild(a);  
+  a.click();  
+  document.body.removeChild(a);  
+  URL.revokeObjectURL(url);  
+  toast('ബാക്കപ്പ് ഡൗൺലോഡ് ചെയ്തു', 'success');  
+}  
+  
+function triggerRestoreFile() {  
+  if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');  
+  document.getElementById('restoreFileInput').click();  
+}  
+  
+function restoreBackup(input) {  
+  if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');  
+  const file = input.files && input.files[0];  
+  if (!file) return;  
+  if (!confirm('നിലവിലുള്ള എല്ലാ ഡാറ്റയും ബാക്കപ്പ് ഫയലിലെ ഡാറ്റ ഉപയോഗിച്ച് മാറ്റിസ്ഥാപിക്കും. തുടരണോ?')) { input.value = ''; return; }  
+  const reader = new FileReader();  
+  reader.onload = function(ev) {  
+    try {  
+      const restored = JSON.parse(ev.target.result);  
+      if (!restored || typeof restored !== 'object' || !Array.isArray(restored.students)) {  
+        toast('തെറ്റായ ബാക്കപ്പ് ഫയൽ', 'error'); return;  
+      }  
+      const currentUserBackup = data.currentUser;  
+      data = { ...data, ...restored };  
+      data.currentUser = currentUserBackup;  
+      if(!data.expenses) data.expenses = [];  
+      if(!data.leaves) data.leaves = [];  
+      if(!data.feeStructure) data.feeStructure = {};  
+      if(!data.teacherAttendance) data.teacherAttendance = [];  
+      if(!data.remarks) data.remarks = [];  
+      normalizeSubjects();  
+      saveData();  
+      applyLogo();  
+      renderLogoPreview();  
+      if (typeof renderAll === 'function') renderAll();  
+      toast('ബാക്കപ്പ് വിജയകരമായി പുനഃസ്ഥാപിച്ചു', 'success');  
+    } catch(e) {  
+      toast('ഫയൽ വായിക്കാൻ കഴിഞ്ഞില്ല', 'error');  
+    }  
+    input.value = '';  
+  };  
+  reader.readAsText(file);  
 }  
   
 function toast(msg, type) {  
@@ -1204,6 +1402,7 @@ function enterApp() {
   
   // Settings visibility logic  
   document.getElementById('adminSettingsSection').classList.toggle('hide', !isAdminOrSuper);  
+  document.getElementById('backupRestoreSection').classList.toggle('hide', !isAdminOrSuper);  
   
   if (isSuper) {  
     document.getElementById('userRole').textContent = '🛡️ സൂപ്പർ അഡ്മിൻ';  
@@ -1226,7 +1425,7 @@ function enterApp() {
   document.getElementById('reportStudentSelect').classList.toggle('hide', isStudent);  
   
   // Tab Menu Visbility  
-  const allowedForStudent = ['dashboard', 'report', 'messages', 'homework', 'timetable', 'settings', 'leave'];  
+  const allowedForStudent = ['dashboard', 'report', 'messages', 'homework', 'timetable', 'settings', 'leave', 'about'];  
   document.querySelectorAll('#tabBar button').forEach(btn => {  
     const tab = btn.dataset.tab;  
     if (isStudent && !allowedForStudent.includes(tab)) btn.style.display = 'none';  
@@ -1684,7 +1883,7 @@ function renderDashboardAlerts() {
             const msg = encodeURIComponent(`പ്രിയ രക്ഷിതാവേ, ${a.student.name} യുടെ മദ്രസ സബ്സ്ക്രിപ്ഷൻ ${a.remaining > 0 ? a.remaining + ' ദിവസത്തിനുള്ളിൽ അവസാനിക്കും' : 'അവസാനിച്ചിരിക്കുന്നു'}. ദയവായി പുതുക്കുക.`);  
             const waLink = (a.student.whatsapp || a.student.phone) ? `https://wa.me/91${a.student.whatsapp || a.student.phone}?text=${msg}` : `https://wa.me/?text=${msg}`;  
             return `<div class="co-item">  
-                <div><span class="co-student">${a.student.name}</span><br><span class="text-muted" style="font-size:12px;">ക്ലാസ്: ${a.student.class} | ബാക്കി: ${a.remaining} ദിവസം</span></div>  
+                <div><span class="co-student">${a.student.name}</span><br><span class="text-muted" style="font-size:12px;">ക്ലാസ്: ${classLabel(a.student)} | ബാക്കി: ${a.remaining} ദിവസം</span></div>  
                 <a href="${waLink}" target="_blank" class="btn btn-success btn-sm"><i class="fab fa-whatsapp"></i> അറിയിക്കുക</a>  
             </div>`;  
         }).join('');  
@@ -1869,7 +2068,7 @@ function renderStudents() {
       <td class="mal">${s.houseName || '—'}</td>  
       <td class="mal" style="font-size:12px;">${[s.fatherName, s.motherName].filter(Boolean).join(' / ') || '—'}</td>  
       <td>${s.phone || '—'}</td>  
-      <td>${s.class}</td>  
+      <td>${classLabel(s)}</td>  
       <td>${s.user}</td>  
       <td><span class="badge ${statusClass}">${statusText}</span></td>  
       ${isAdminOrSuper ? `  
@@ -1923,7 +2122,7 @@ function renderAttendance() {
     tr.innerHTML = `  
       <td>${idx + 1}</td>  
       <td class="mal"><strong>${s.name}</strong></td>  
-      <td>${s.class}</td>  
+      <td>${classLabel(s)}</td>  
       <td><span class="badge ${present ? 'badge-success' : 'badge-danger'}">${present ? '✅ ഹാജർ' : '❌ ഹാജരില്ല'}</span></td>  
       <td>${isEditable && canManageStudent(s.id) ? `<button class="btn ${present ? 'btn-warning' : 'btn-success'} btn-sm" onclick="toggleAttendance(${s.id}, '${date}')">${present ? '<i class="fas fa-times"></i>' : '<i class="fas fa-check"></i>'}</button>` : '-'}</td>`;  
     tbody.appendChild(tr);  
@@ -2387,7 +2586,7 @@ function renderFeeReminders() {
     const msg = encodeURIComponent(`പ്രിയ രക്ഷിതാവേ, ${s.name} യുടെ ഈ മാസത്തെ (${curMonth}) മദ്രസ ഫീസ് ₹${amt} ഇതുവരെ ലഭിച്ചിട്ടില്ല. ദയവായി എത്രയും വേഗം അടയ്ക്കുക.`);  
     const waLink = (s.whatsapp || s.phone) ? `https://wa.me/91${s.whatsapp || s.phone}?text=${msg}` : `https://wa.me/?text=${msg}`;  
     return `<div class="co-item">  
-      <div><span class="co-student">${s.name}</span><br><span class="text-muted" style="font-size:12px;">ക്ലാസ്: ${s.class} | തുക: ₹${amt}</span></div>  
+      <div><span class="co-student">${s.name}</span><br><span class="text-muted" style="font-size:12px;">ക്ലാസ്: ${classLabel(s)} | തുക: ₹${amt}</span></div>  
       <a href="${waLink}" target="_blank" class="btn btn-success btn-sm"><i class="fab fa-whatsapp"></i> റിമൈൻഡ് ചെയ്യുക</a>  
     </div>`;  
   }).join('');  
@@ -2482,7 +2681,7 @@ function idCardHTML(s) {
       <div style="padding:14px;text-align:center;">  
         <div style="width:56px;height:56px;border-radius:50%;background:#EDE4CD;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#95701E;"><i class="fas fa-user"></i></div>  
         <div style="font-size:14px;font-weight:800;color:#0B3D2E;">${s.name}</div>  
-        <div style="font-size:11px;color:#7C8A81;margin-bottom:8px;">ക്ലാസ്: ${s.class}</div>  
+        <div style="font-size:11px;color:#7C8A81;margin-bottom:8px;">ക്ലാസ്: ${classLabel(s)}</div>  
         <div style="text-align:left;font-size:11px;border-top:1px dashed #C9972F;padding-top:8px;">  
           <div style="display:flex;justify-content:space-between;padding:2px 0;"><span style="color:#7C8A81;">ID</span><strong>${s.id}</strong></div>  
           <div style="display:flex;justify-content:space-between;padding:2px 0;"><span style="color:#7C8A81;">വീട്ട് പേര്</span><strong>${s.houseName || '—'}</strong></div>  
@@ -2531,6 +2730,8 @@ function printGradeCard() {
   
   const attPctEl = document.getElementById('reportAttPct');  
   const attPct = attPctEl ? attPctEl.textContent : '—';  
+  const perf = computeOverallPerformance(student.id, year);  
+  const remark = getReportRemark(student.id, year);  
   
   const coList = data.coCurricular.filter(c => c.studentId == student.id && (c.year || getAcademicYear(new Date())) === year);  
   const coHtml = coList.length  
@@ -2542,13 +2743,15 @@ function printGradeCard() {
     <div style="width:100%;max-width:700px;margin:0 auto;padding:32px;border:2px solid #111;border-radius:10px;font-family:sans-serif;">  
       <div style="text-align:center;border-bottom:2px solid #111;padding-bottom:14px;margin-bottom:20px;">  
         <h1 style="margin:0 0 6px;font-size:24px;">${data.schoolName}</h1>  
-        <div style="display:inline-block;background:#111;color:#fff;padding:5px 16px;border-radius:20px;font-size:13px;font-weight:bold;">ഗ്രേഡ് കാർഡ് / അധ്യയന വർഷ റിപ്പോർട്ട്</div>  
+        <div style="display:inline-block;background:#111;color:#fff;padding:5px 16px;border-radius:20px;font-size:13px;font-weight:bold;">പ്രോഗ്രസ് കാർഡ് / അധ്യയന വർഷ റിപ്പോർട്ട്</div>  
       </div>  
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;font-size:14px;">  
         <div><strong>പേര്:</strong> ${student.name}</div>  
-        <div><strong>ക്ലാസ്:</strong> ${student.class}</div>  
+        <div><strong>ക്ലാസ്:</strong> ${classLabel(student)}</div>  
         <div><strong>അധ്യയന വർഷം:</strong> ${year}</div>  
         <div><strong>ഹാജർ ശതമാനം:</strong> ${attPct}</div>  
+        <div><strong>ശരാശരി മാർക്ക്:</strong> ${perf ? perf.avg : '—'}</div>  
+        <div><strong>ഗ്രേഡ്:</strong> ${perf ? perf.grade : '—'}</div>  
       </div>  
       <h3 style="font-size:15px;margin-bottom:8px;">മാർക്ക് വിവരങ്ങൾ</h3>  
       <table style="width:100%;border-collapse:collapse;margin-bottom:22px;font-size:13px;">  
@@ -2563,6 +2766,7 @@ function printGradeCard() {
       </table>  
       <h3 style="font-size:15px;margin-bottom:8px;">പാഠ്യേതര നേട്ടങ്ങൾ</h3>  
       ${coHtml}  
+      ${remark && remark.text ? `<h3 style="font-size:15px;margin:16px 0 8px;">അധ്യാപകന്റെ അഭിപ്രായം</h3><p style="font-size:13px;color:#333;">${remark.text}</p>` : ''}  
       <div style="display:flex;justify-content:space-between;margin-top:55px;font-size:13px;text-align:center;">  
         <div>ക്ലാസ് ടീച്ചർ</div>  
         <div>സദർ മുഅല്ലിം</div>  
@@ -2609,7 +2813,7 @@ function printReceipt(feeId) {
                     <div><span style="color:#7C8A81;font-size:12px;">രസീത് നമ്പർ</span><br><strong>#${f.id}</strong></div>  
                     <div style="text-align:right;"><span style="color:#7C8A81;font-size:12px;">തിയ്യതി</span><br><strong>${new Date(f.date).toLocaleDateString('ml-IN')}</strong></div>  
                     <div><span style="color:#7C8A81;font-size:12px;">വിദ്യാർത്ഥി</span><br><strong>${s.name}</strong></div>  
-                    <div style="text-align:right;"><span style="color:#7C8A81;font-size:12px;">ക്ലാസ്</span><br><strong>${s.class}</strong></div>  
+                    <div style="text-align:right;"><span style="color:#7C8A81;font-size:12px;">ക്ലാസ്</span><br><strong>${classLabel(s)}</strong></div>  
                     ${f.forMonth ? `<div style="grid-column:1 / -1;"><span style="color:#7C8A81;font-size:12px;">ഏത് മാസത്തേക്ക്</span><br><strong>${f.forMonth}</strong></div>` : ''}  
                 </div>  
   
@@ -2696,6 +2900,7 @@ function addStudent() {
   const phone = document.getElementById('sPhone').value.trim();
   const whatsapp = document.getElementById('sWhatsapp').value.trim();
   const cls = parseInt(document.getElementById('sClass').value);
+  const division = document.getElementById('sDivision').value.trim().toUpperCase();
   const user = document.getElementById('sUser').value.trim();
   const pass = document.getElementById('sPass').value.trim();
   const expiryDays = parseInt(document.getElementById('sExpiry').value) || data.expiryDays;
@@ -2706,13 +2911,17 @@ function addStudent() {
   data.students.push({
       id: getNextId(data.students), firstName: f, lastName: l, houseName: h, regNo,
       motherName: mother, fatherName: father, name: fullName,
-      phone, whatsapp: whatsapp || phone, class: cls, user, pass, active: true, created: Date.now(), expiryDays,
+      phone, whatsapp: whatsapp || phone, class: cls, division, user, pass, active: true, created: Date.now(), expiryDays,
       tcIssued: false, tcNumber: '', tcReason: '', tcDate: ''
   });
   saveData();
-  ['sFirst','sLast','sHouse','sRegNo','sMother','sFather','sPhone','sWhatsapp','sClass','sUser','sPass'].forEach(id => document.getElementById(id).value = '');
+  ['sFirst','sLast','sHouse','sRegNo','sMother','sFather','sPhone','sWhatsapp','sClass','sDivision','sUser','sPass'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('addStudentForm').classList.add('hide');
   toast('വിദ്യാർത്ഥിയെ ചേർത്തു', 'success'); renderAll();
+}
+
+function classLabel(s) {
+  return s.division ? `${s.class} - ${s.division}` : `${s.class}`;
 }
 
 function editStudent(id) {
@@ -2723,6 +2932,8 @@ function editStudent(id) {
   if (newName && newName.trim()) s.name = newName.trim();
   const newRegNo = prompt('രജിസ്ട്രേഷൻ നമ്പർ:', s.regNo || '');
   if (newRegNo !== null) s.regNo = newRegNo.trim();
+  const newDivision = prompt('ഡിവിഷൻ (ഉദാ: A, B):', s.division || '');
+  if (newDivision !== null) s.division = newDivision.trim().toUpperCase();
   const newMother = prompt('മാതാവിന്റെ പേര്:', s.motherName || '');
   if (newMother !== null) s.motherName = newMother.trim();
   const newFather = prompt('പിതാവിന്റെ പേര്:', s.fatherName || '');
@@ -2781,7 +2992,7 @@ function printTC(id) {
         <p><strong>രജിസ്ട്രേഷൻ നമ്പർ:</strong> ${s.regNo || '—'}</p>
         <p><strong>വീട്ട് പേര്:</strong> ${s.houseName || '—'}</p>
         <p><strong>രക്ഷിതാവ്:</strong> ${[s.fatherName, s.motherName].filter(Boolean).join(' / ') || '—'}</p>
-        <p><strong>ക്ലാസ്:</strong> ${s.class}</p>
+        <p><strong>ക്ലാസ്:</strong> ${classLabel(s)}</p>
         <p><strong>TC തിയ്യതി:</strong> ${new Date(s.tcDate).toLocaleDateString('ml-IN')}</p>
         ${s.tcReason ? `<p><strong>കാരണം:</strong> ${s.tcReason}</p>` : ''}
       </div>
@@ -2942,7 +3153,7 @@ function renderReport() {
   const student = sid ? getStudent(sid) : null;  
   
   document.getElementById('reportStudentName').textContent = student ? student.name : 'വിദ്യാർത്ഥിയെ തിരഞ്ഞെടുക്കുക';  
-  document.getElementById('reportStudentMeta').textContent = student ? `ക്ലാസ് ${student.class} • അധ്യയന വർഷം ${year}` : '';  
+  document.getElementById('reportStudentMeta').textContent = student ? `ക്ലാസ് ${classLabel(student)} • അധ്യയന വർഷം ${year}` : '';  
   
   if (!student) {  
     document.getElementById('reportAttPct').textContent = '—';  
@@ -2951,6 +3162,10 @@ function renderReport() {
     document.getElementById('rPresentDays').textContent = '0';  
     document.getElementById('reportCoList').innerHTML = '';  
     document.getElementById('reportMarksBody').innerHTML = '';  
+    document.getElementById('rAvgPercent').textContent = '—';  
+    document.getElementById('rGrade').textContent = '—';  
+    document.getElementById('reportRemarkView').textContent = '—';  
+    document.getElementById('reportRemarkEdit').classList.add('hide');  
     return;  
   }  
   
@@ -2992,6 +3207,50 @@ function renderReport() {
     return `<tr><td class="mal"><strong>${sub}</strong></td>${cells}</tr>`;  
   }).join('') : `<tr><td colspan="5" class="text-muted text-center" style="padding:20px;">ഈ വർഷം മാർക്ക് രേഖപ്പെടുത്തിയിട്ടില്ല</td></tr>`;  
   document.getElementById('reportMarksBody').innerHTML = body;  
+  
+  const perf = computeOverallPerformance(student.id, year);  
+  document.getElementById('rAvgPercent').textContent = perf ? perf.avg : '—';  
+  document.getElementById('rGrade').textContent = perf ? perf.grade : '—';  
+  
+  const remark = getReportRemark(student.id, year);  
+  const canEditRemark = ['super', 'admin', 'teacher'].includes(data.currentUser?.role);  
+  document.getElementById('reportRemarkEdit').classList.toggle('hide', !canEditRemark);  
+  document.getElementById('reportRemarkView').textContent = remark && remark.text ? remark.text : 'അഭിപ്രായം രേഖപ്പെടുത്തിയിട്ടില്ല';  
+  if (canEditRemark) document.getElementById('reportRemarkInput').value = remark ? remark.text : '';  
+}  
+  
+function computeOverallPerformance(studentId, year) {  
+  const marks = data.marks.filter(m => m.studentId == studentId && (m.year || getAcademicYear(new Date())) === year);  
+  if (!marks.length) return null;  
+  const total = marks.reduce((sum, m) => sum + (parseFloat(m.mark) || 0), 0);  
+  const avg = Math.round((total / marks.length) * 10) / 10;  
+  let grade = 'E';  
+  if (avg >= 90) grade = 'A+';  
+  else if (avg >= 80) grade = 'A';  
+  else if (avg >= 70) grade = 'B+';  
+  else if (avg >= 60) grade = 'B';  
+  else if (avg >= 50) grade = 'C';  
+  else if (avg >= 35) grade = 'D';  
+  return { avg, grade };  
+}  
+  
+function getReportRemark(studentId, year) {  
+  return (data.remarks || []).find(r => r.studentId == studentId && r.year === year);  
+}  
+  
+function saveReportRemark() {  
+  if (!['super', 'admin', 'teacher'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');  
+  const sid = getReportStudentId();  
+  if (!sid) return;  
+  const yrSel = document.getElementById('reportYearSelect');  
+  const year = (yrSel && yrSel.value) || getAcademicYear(new Date());  
+  const text = document.getElementById('reportRemarkInput').value.trim();  
+  if (!data.remarks) data.remarks = [];  
+  let rec = data.remarks.find(r => r.studentId == sid && r.year === year);  
+  if (!rec) { rec = { studentId: sid, year }; data.remarks.push(rec); }  
+  rec.text = text; rec.by = data.currentUser.user; rec.date = Date.now();  
+  saveData(); renderReport();  
+  toast('അഭിപ്രായം സേവ് ചെയ്തു', 'success');  
 }  
   
 function switchTab(tab) {  
@@ -3026,6 +3285,14 @@ function switchTab(tab) {
 // INIT  
 loadData();  
 document.getElementById('attendanceDate').value = new Date().toISOString().split('T')[0];  
+  
+// ഓഫ്‌ലൈൻ സപ്പോർട്ടിനായി Service Worker രജിസ്റ്റർ ചെയ്യുന്നു  
+// (index.html-നൊപ്പം sw.js ഫയലും അതേ ഫോൾഡറിൽ അപ്‌ലോഡ് ചെയ്തിരിക്കണം)  
+if ('serviceWorker' in navigator) {  
+  window.addEventListener('load', () => {  
+    navigator.serviceWorker.register('sw.js').catch(e => console.warn('Service worker registration failed:', e));  
+  });  
+}  
 </script>  
   
 </body>  
