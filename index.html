@@ -64,7 +64,8 @@ button{font-family:inherit;}
   background-size:64px 64px;  
 }  
 .star-bullet::before{content:"✦";color:var(--gold-600);font-size:.78em;margin-inline-end:8px;position:relative;top:-1px;}  
-.arch{border-radius:50% 50% 6px 6px / 62% 62% 6px 6px;}  
+.arch{border-radius:50% 50% 6px 6px / 62% 62% 6px 6px;overflow:hidden;}  
+.arch.has-logo{background:#fff !important;}  
   
 /* LOGIN */  
 .login-shell{min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr;}  
@@ -334,7 +335,7 @@ tbody tr:hover{background:var(--paper);}
         </div>  
         <button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> ലോഗിൻ ചെയ്യുക</button>  
       </form>  
-      <div style="text-align:center;font-size:11.5px;color:var(--ink-faint);margin-top:22px;">© 2026 AFKIGEMS iT Solution</div>  
+      <div style="text-align:center;font-size:11.5px;color:var(--ink-faint);margin-top:22px;">© Designed and developed by AFKIGEMS iT Solution</div>  
     </div>  
   </div>  
 </div>  
@@ -356,7 +357,6 @@ tbody tr:hover{background:var(--paper);}
       <button data-tab="students" onclick="switchTab('students')"><i class="fas fa-users"></i> വിദ്യാർത്ഥികൾ</button>  
       <button data-tab="attendance" onclick="switchTab('attendance')"><i class="fas fa-clipboard-check"></i> ഹാജർ</button>  
       <button data-tab="leave" onclick="switchTab('leave')"><i class="fas fa-calendar-minus"></i> അവധി അപേക്ഷ</button>  
-      <button data-tab="about" onclick="switchTab('about')"><i class="fas fa-circle-info"></i> ഞങ്ങളെക്കുറിച്ച്</button>  
       <button data-tab="marks" onclick="switchTab('marks')"><i class="fas fa-graduation-cap"></i> മാർക്ക്</button>  
       <button data-tab="co-curricular" onclick="switchTab('co-curricular')"><i class="fas fa-palette"></i> പാഠ്യേതരം</button>  
       <button data-tab="report" onclick="switchTab('report')"><i class="fas fa-file-invoice"></i> റിപ്പോർട്ട്</button>  
@@ -366,6 +366,7 @@ tbody tr:hover{background:var(--paper);}
       <button data-tab="teachers" onclick="switchTab('teachers')" id="teachersTab"><i class="fas fa-chalkboard-teacher"></i> ടീച്ചർമാർ</button>  
       <button data-tab="admins" onclick="switchTab('admins')" id="adminsTab"><i class="fas fa-user-shield"></i> അഡ്മിൻ</button>  
       <button data-tab="settings" onclick="switchTab('settings')" id="settingsTab"><i class="fas fa-cog"></i> സെറ്റിംഗ്സ്</button>  
+      <button data-tab="about" onclick="switchTab('about')"><i class="fas fa-circle-info"></i> ഞങ്ങളെക്കുറിച്ച്</button>  
     </nav>  
     <div class="foot">  
       <div class="who" id="userName">അഡ്മിൻ</div>  
@@ -545,6 +546,10 @@ tbody tr:hover{background:var(--paper);}
           <div class="card">  
             <div class="card-title star-bullet">ഏറ്റവും പുതിയ മാർക്ക്</div>  
             <div id="recentMarks" class="text-muted">മാർക്ക് ലഭ്യമല്ല</div>  
+          </div>  
+          <div class="card">  
+            <div class="card-title star-bullet"><i class="fas fa-book-open"></i> ഹോംവർക്ക്</div>  
+            <div id="dashboardHomework" class="text-muted">ഹോംവർക്ക് ലഭ്യമല്ല</div>  
           </div>  
         </div>  
   
@@ -853,8 +858,8 @@ tbody tr:hover{background:var(--paper);}
           <p class="mal" style="line-height:1.9;font-size:14.5px;">സദാചാര മൂല്യങ്ങളിലധിഷ്ഠിതമായ ഇസ്ലാമിക വിദ്യാഭ്യാസം വരുംതലമുറയ്ക്ക് കൂടുതൽ വ്യവസ്ഥാപിതമായി പകർന്നുനൽകാൻ ഈ ഡിജിറ്റൽ സംവിധാനം സഹായിക്കുമെന്ന് ഞങ്ങൾ ഉറച്ചുവിശ്വസിക്കുന്നു.</p>  
   
           <div style="text-align:center;margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-faint);">  
-            <div>Web Application Version: 1.0.0</div>  
-            <div style="margin-top:4px;">© AFKIGEMS iT Solution</div>  
+            <div>Web App Version: 1.0.0</div>  
+            <div style="margin-top:4px;">© Developed by AFKIGEMS iT Solution</div>  
           </div>  
         </div>  
       </div>  
@@ -1048,7 +1053,7 @@ tbody tr:hover{background:var(--paper);}
 // ============================================================  
 // ഗൂഗിൾ ആപ്പ് സ്ക്രിപ്റ്റ് ലിങ്ക് ഇവിടെ നൽകുക   
 // ============================================================  
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxoJvZmh8pEOJ9SmRdac7mG0W821H5CDAVz36o2zjr9eLCXzFiAU_WN-vCOhmS-FWX3Pg/exec'; // ഇവിടെ നിങ്ങളുടെ പുതിയ SCRIPT URL നൽകുക  
+const SCRIPT_URL = 'YOUR_WEB_APP_URL_HERE'; // ഇവിടെ നിങ്ങളുടെ പുതിയ SCRIPT URL നൽകുക  
   
 // ============================================================  
 // DATA LAYER  
@@ -1087,62 +1092,87 @@ let data = {
   
 let attendanceView = 'day';  
   
+function withTimeout(promise, ms) {  
+  return Promise.race([  
+    promise,  
+    new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))  
+  ]);  
+}  
+  
 async function loadData() {  
   const loader = document.getElementById('loaderOverlay');  
-    
+  let localData = null;  
+  
   try {  
     const saved = localStorage.getItem('madrasaDataPremiumV12');  
-    if (saved) {   
-        data = { ...data, ...JSON.parse(saved) };   
-        if(!data.expenses) data.expenses = [];  
-        if(!data.leaves) data.leaves = [];  
-        if(!data.feeStructure) data.feeStructure = {};  
-        if(!data.teacherAttendance) data.teacherAttendance = [];  
-        if(!data.remarks) data.remarks = [];  
-        if(!data.lastModified) data.lastModified = 0;  
-        normalizeSubjects();  
-    } else {   
-        initDefaults();   
+    if (saved) localData = JSON.parse(saved);  
+  } catch (err) {  
+    localData = null;  
+  }  
+  
+  if (localData) {  
+    data = { ...data, ...localData };  
+    if(!data.expenses) data.expenses = [];  
+    if(!data.leaves) data.leaves = [];  
+    if(!data.feeStructure) data.feeStructure = {};  
+    if(!data.teacherAttendance) data.teacherAttendance = [];  
+    if(!data.remarks) data.remarks = [];  
+    if(!data.lastModified) data.lastModified = 0;  
+    normalizeSubjects();  
+  }  
+  
+  document.getElementById('loginSchoolName').textContent = data.schoolName || 'നൂറുൽ ഈമാൻ മദ്രസ';  
+  applyLogo();  
+  
+  // പ്രധാനം: സെർവറിൽ ഇതിനകം ഡാറ്റ ഉണ്ടോ എന്ന് ഉറപ്പുവരുത്തിയ ശേഷം മാത്രമേ  
+  // ലോഗിൻ സ്ക്രീൻ കാണിക്കൂ / initDefaults() പ്രവർത്തിക്കൂ —   
+  // ഇല്ലെങ്കിൽ ഒരു പുതിയ ഉപകരണം സെർവറിലെ യഥാർത്ഥ ഡാറ്റയെ ഡിഫോൾട്ട് ഡാറ്റ കൊണ്ട് മായ്ച്ചു കളയാൻ സാധ്യതയുണ്ട്  
+  let remoteData = null;  
+  if (navigator.onLine && SCRIPT_URL && SCRIPT_URL !== 'YOUR_WEB_APP_URL_HERE') {  
+    setSyncStatus('syncing');  
+    try {  
+      const res = await withTimeout(fetch(SCRIPT_URL), 12000);  
+      remoteData = await res.json();  
+      setSyncStatus('synced');  
+    } catch (e) {  
+      console.warn('Initial sync fetch failed', e);  
+      setSyncStatus('error');  
     }  
-  } catch(err) {  
+  } else if (!navigator.onLine) {  
+    setSyncStatus('offline');  
+  } else {  
+    setSyncStatus('nourl');  
+  }  
+  
+  const remoteHasData = remoteData && remoteData.admins && remoteData.admins.length > 0;  
+  
+  if (remoteHasData) {  
+    const remoteTime = remoteData.lastModified || 0;  
+    const localTime = data.lastModified || 0;  
+    if (!localData || remoteTime >= localTime) {  
+      // സെർവർ ഡാറ്റ ഇല്ലാത്തതോ, തുല്യമോ, പുതിയതോ ആണ് — അത് സ്വീകരിക്കുക  
+      const currentUserBackup = data.currentUser;  
+      data = { ...data, ...remoteData };  
+      data.currentUser = currentUserBackup;  
+      if(!data.expenses) data.expenses = [];  
+      if(!data.leaves) data.leaves = [];  
+      if(!data.feeStructure) data.feeStructure = {};  
+      if(!data.teacherAttendance) data.teacherAttendance = [];  
+      if(!data.remarks) data.remarks = [];  
+      normalizeSubjects();  
+      localStorage.setItem('madrasaDataPremiumV12', JSON.stringify(data));  
+      applyLogo();  
+    } else if (localTime > remoteTime) {  
+      // ഈ ഉപകരണത്തിൽ സമന്വയിക്കാത്ത പുതിയ മാറ്റങ്ങൾ ഉണ്ട് — അത് സെർവറിലേക്ക് അയക്കുക  
+      syncPush();  
+    }  
+  } else if (!localData) {  
+    // ഇത് ആദ്യമായി തുറക്കുന്നതും (ലോക്കൽ ഡാറ്റ ഇല്ല) സെർവറിലും ഒന്നും ഇല്ലാത്തതും ആണെങ്കിൽ  
+    // മാത്രമേ ഡിഫോൾട്ട് അഡ്മിൻ/ടീച്ചർ ഉണ്ടാക്കി സേവ് ചെയ്യൂ  
     initDefaults();  
   }  
   
   if(loader) loader.classList.add('hide-loader');  
-  document.getElementById('loginSchoolName').textContent = data.schoolName || 'നൂറുൽ ഈമാൻ മദ്രസ';  
-  applyLogo();  
-  
-  if (!navigator.onLine) {  
-    setSyncStatus('offline');  
-  } else if (SCRIPT_URL && SCRIPT_URL !== 'YOUR_WEB_APP_URL_HERE') {  
-    if (data.pendingSync) { syncPush(); }  
-    setSyncStatus('syncing');  
-    fetch(SCRIPT_URL).then(res => res.json()).then(fetchedData => {    
-      if (fetchedData && fetchedData.admins && fetchedData.admins.length > 0) {  
-        const remoteTime = fetchedData.lastModified || 0;  
-        const localTime = data.lastModified || 0;  
-        // റിമോട്ട് ഡാറ്റ പുതിയതാണെങ്കിൽ മാത്രം ലോക്കൽ ഡാറ്റ മാറ്റിസ്ഥാപിക്കുക —  
-        // പഴയ റിമോട്ട് ഡാറ്റ ലോക്കൽ ഡാറ്റയെ തിരുത്തി എഴുതുന്നത് ഒഴിവാക്കാൻ  
-        if (remoteTime > localTime) {  
-          const currentUserBackup = data.currentUser;  
-          data = { ...data, ...fetchedData };  
-          data.currentUser = currentUserBackup;  
-          if(!data.expenses) data.expenses = [];  
-          if(!data.leaves) data.leaves = [];  
-          if(!data.feeStructure) data.feeStructure = {};  
-          if(!data.teacherAttendance) data.teacherAttendance = [];  
-          if(!data.remarks) data.remarks = [];  
-          normalizeSubjects();  
-          localStorage.setItem('madrasaDataPremiumV12', JSON.stringify(data));  
-          applyLogo();  
-          if (data.currentUser && typeof renderAll === 'function') renderAll();  
-        }  
-      }  
-      setSyncStatus('synced');  
-    }).catch(e => { console.warn('Background sync failed', e); setSyncStatus('error'); });  
-  } else {  
-    setSyncStatus('nourl');  
-  }  
 }  
   
 window.addEventListener('online', () => {  
@@ -1210,12 +1240,12 @@ async function testConnection() {
 }  
   
 function initDefaults() {  
-  if (!data.admins.find(a => a.user === 'admin')) data.admins.push({ user: 'admin', pass: '1319', role: 'super' });  
-  if (!data.admins.find(a => a.user === 'sadar')) {  
-      data.admins.push({ user: 'headmaster', pass: '1234', role: 'admin' });  
+  if (!data.admins.find(a => a.user === 'admin')) data.admins.push({ user: 'admin', pass: 'admin123', role: 'super' });  
+  if (!data.admins.find(a => a.user === 'headmaster')) {  
+      data.admins.push({ user: 'headmaster', pass: 'head123', role: 'admin' });  
       data.contactAdmin = 'headmaster';  
   }  
-  if (!data.teachers.find(t => t.user === 'teacher')) data.teachers.push({ user: 'usthad8', pass: '1234', class: 8 });  
+  if (!data.teachers.find(t => t.user === 'teacher')) data.teachers.push({ user: 'teacher', pass: 'teacher123', class: 5 });  
   normalizeSubjects();  
   saveData();  
 }  
@@ -1227,7 +1257,7 @@ function saveData() {
 }  
   
 function syncPush() {  
-  if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') { setSyncStatus('nourl'); return; }  
+  if (!SCRIPT_URL || SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbxoJvZmh8pEOJ9SmRdac7mG0W821H5CDAVz36o2zjr9eLCXzFiAU_WN-vCOhmS-FWX3Pg/exec') { setSyncStatus('nourl'); return; }  
   if (!navigator.onLine) {  
     data.pendingSync = true;  
     localStorage.setItem('madrasaDataPremiumV12', JSON.stringify(data));  
@@ -1615,9 +1645,13 @@ function updateAlertDays() {
 }  
   
 function applyLogo() {  
-  const html = data.schoolLogo ? `<img src="${data.schoolLogo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">` : '📖';  
-  const a1 = document.getElementById('loginArch'); if (a1) a1.innerHTML = html;  
-  const a2 = document.getElementById('sidebarArch'); if (a2) a2.innerHTML = html;  
+  const hasLogo = !!data.schoolLogo;  
+  const html = hasLogo ? `<img src="${data.schoolLogo}" style="width:100%;height:100%;object-fit:cover;display:block;">` : '📖';  
+  [document.getElementById('loginArch'), document.getElementById('sidebarArch')].forEach(el => {  
+    if (!el) return;  
+    el.innerHTML = html;  
+    el.classList.toggle('has-logo', hasLogo);  
+  });  
 }  
   
 function renderLogoPreview() {  
@@ -2038,6 +2072,24 @@ function renderStudentDashboard() {
     }).join('');  
   } else {  
     el.textContent = 'മാർക്ക് ഇതുവരെ രേഖപ്പെടുത്തിയിട്ടില്ല';  
+  }  
+  
+  const hwEl = document.getElementById('dashboardHomework');  
+  if (hwEl && data.currentUser) {  
+    const hwList = (data.homework || []).filter(h => h.class == data.currentUser.class).slice().reverse().slice(0, 3);  
+    if (hwList.length) {  
+      hwEl.innerHTML = hwList.map(h => `  
+        <div style="padding:8px 0;border-bottom:1px solid var(--sand);">  
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-faint);">  
+            <span>${new Date(h.date).toLocaleDateString('ml-IN')}</span><span>${h.by}</span>  
+          </div>  
+          <div style="font-weight:700;color:var(--emerald-800);">${h.subject}</div>  
+          ${h.desc ? `<div style="font-size:13px;margin-top:2px;">${h.desc}</div>` : ''}  
+        </div>  
+      `).join('');  
+    } else {  
+      hwEl.textContent = 'ഹോംവർക്ക് ലഭ്യമല്ല';  
+    }  
   }  
 }  
   
@@ -2476,10 +2528,24 @@ function renderTeachers() {
     `<div class="chip">  
         <i class="fas fa-chalkboard-teacher" style="color:var(--gold-600);"></i> ${t.user} (ക്ലാസ് ${t.class})   
         <div style="margin-left:8px;">  
-            ${data.currentUser?.role === 'super' || data.currentUser?.role === 'admin' ? `<button class="btn btn-secondary btn-sm" onclick="resetUserPassword('teacher', '${t.user}')" title="പാസ്സ്‌വേർഡ് റീസെറ്റ്"><i class="fas fa-key"></i></button> <button class="btn btn-danger btn-sm" onclick="removeTeacher(${i})"><i class="fas fa-times"></i></button>` : ''}  
+            ${data.currentUser?.role === 'super' || data.currentUser?.role === 'admin' ? `<button class="btn btn-outline btn-sm" onclick="changeTeacherClass(${i})" title="ക്ലാസ് മാറ്റുക"><i class="fas fa-exchange-alt"></i></button> <button class="btn btn-secondary btn-sm" onclick="resetUserPassword('teacher', '${t.user}')" title="പാസ്സ്‌വേർഡ് റീസെറ്റ്"><i class="fas fa-key"></i></button> <button class="btn btn-danger btn-sm" onclick="removeTeacher(${i})"><i class="fas fa-times"></i></button>` : ''}  
         </div>  
     </div>`  
   ).join('');  
+}  
+  
+function changeTeacherClass(i) {  
+  if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');  
+  const t = data.teachers[i];  
+  if (!t) return;  
+  const newClass = prompt(`${t.user} ന്റെ പുതിയ ക്ലാസ് നൽകുക (നിലവിൽ: ${t.class}):`, t.class);  
+  if (newClass === null) return;  
+  const cls = parseInt(newClass);  
+  if (!cls || cls < 1 || cls > 12) return toast('ശരിയായ ക്ലാസ് നമ്പർ നൽകുക (1-12)', 'error');  
+  const oldClass = t.class;  
+  t.class = cls;  
+  saveData(); renderTeachers(); renderDashboard();  
+  toast(`${t.user} ന്റെ ക്ലാസ് ${oldClass} ൽ നിന്ന് ${cls} ലേക്ക് മാറ്റി`, 'success');  
 }  
   
 function renderAdmins() {  
