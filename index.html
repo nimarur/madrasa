@@ -493,7 +493,7 @@ tbody tr:hover{background:var(--paper);}
             <i class="fas fa-triangle-exclamation" style="font-size:26px;color:var(--danger);"></i>  
             <div style="flex:1;min-width:200px;">  
               <div style="font-weight:800;color:var(--danger);margin-bottom:4px;">⚠️ ക്ലൗഡ് സമന്വയം സജ്ജീകരിച്ചിട്ടില്ല!</div>  
-              <div style="font-size:13px;color:var(--ink);">ഈ ഡാറ്റ ഈ ഉപകരണത്തിൽ / ഈ ബ്രൗസറിൽ മാത്രമേ ഉള്ളൂ — Cloud-ലേക്ക് സേവ് ആകുന്നില്ല. ബ്രൗസർ ഡാറ്റ മായ്ച്ചാൽ എല്ലാം നഷ്ടപ്പെടും. index.html-ലെ SCRIPT_URL ശരിയാക്കാൻ "സെറ്റിംഗ്സ്" പരിശോധിക്കുക.</div>  
+              <div style="font-size:13px;color:var(--ink);">ഈ ഡാറ്റ ഈ ഉപകരണത്തിൽ / ഈ ബ്രൗസറിൽ മാത്രമേ ഉള്ളൂ — Google Sheets-ലേക്ക് സേവ് ആകുന്നില്ല. ബ്രൗസർ ഡാറ്റ മായ്ച്ചാൽ എല്ലാം നഷ്ടപ്പെടും. index.html-ലെ SCRIPT_URL ശരിയാക്കാൻ "സെറ്റിംഗ്സ്" പരിശോധിക്കുക.</div>  
             </div>  
             <button class="btn btn-outline btn-sm" onclick="switchTab('settings')">സെറ്റിംഗ്സിലേക്ക്</button>  
           </div>  
@@ -665,6 +665,11 @@ tbody tr:hover{background:var(--paper);}
               <div class="form-group"><label>യൂസർ ഐഡി (ലോഗിൻ ചെയ്യാൻ)</label><input id="sUser" placeholder="യൂസർ ഐഡി"></div>  
               <div class="form-group"><label>പാസ്സ്‌വേർഡ്</label><input id="sPass" placeholder="പാസ്സ്‌വേർഡ്"></div>  
               <div class="form-group"><label>അക്കൗണ്ട് എക്സ്പയറി (ദിവസം)</label><input type="number" id="sExpiry" placeholder="എക്സ്പയറി ദിവസം" value="330"></div>  
+              <div class="form-group">  
+                <label>ഫോട്ടോ (ഓപ്ഷണൽ)</label>  
+                <input type="file" id="sPhoto" accept="image/*" onchange="previewNewStudentPhoto(this)">  
+                <div id="sPhotoPreview" style="margin-top:8px;"></div>  
+              </div>  
             </div>  
             <div style="display:flex;gap:8px;margin-top:10px;">  
               <button class="btn btn-success" onclick="addStudent()"><i class="fas fa-save"></i> രജിസ്റ്റർ ചെയ്യുക</button>  
@@ -858,8 +863,8 @@ tbody tr:hover{background:var(--paper);}
           <p class="mal" style="line-height:1.9;font-size:14.5px;">സദാചാര മൂല്യങ്ങളിലധിഷ്ഠിതമായ ഇസ്ലാമിക വിദ്യാഭ്യാസം വരുംതലമുറയ്ക്ക് കൂടുതൽ വ്യവസ്ഥാപിതമായി പകർന്നുനൽകാൻ ഈ ഡിജിറ്റൽ സംവിധാനം സഹായിക്കുമെന്ന് ഞങ്ങൾ ഉറച്ചുവിശ്വസിക്കുന്നു.</p>  
   
           <div style="text-align:center;margin-top:26px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-faint);">  
-            <div>Web Application Version: 1.0.0</div>  
-            <div style="margin-top:4px;">© Designed and Developed by AFKIGEMS iT Solution</div>  
+            <div>Version: 1.0.0</div>  
+            <div style="margin-top:4px;">© Designed and Developed by AFKIGEMS iT Solution </div>  
           </div>  
         </div>  
       </div>  
@@ -1663,39 +1668,48 @@ function renderLogoPreview() {
     : '<span class="text-muted" style="font-size:12px;">ലോഗോ ചേർത്തിട്ടില്ല</span>';  
 }  
   
+function resizeImageFile(file, maxSize, quality) {  
+  return new Promise((resolve, reject) => {  
+    if (!file) return reject(new Error('no file'));  
+    if (!file.type.startsWith('image/')) return reject(new Error('not an image'));  
+    const reader = new FileReader();  
+    reader.onload = function(ev) {  
+      const img = new Image();  
+      img.onload = function() {  
+        let w = img.width, h = img.height;  
+        if (w > h && w > maxSize) { h = Math.round(h * maxSize / w); w = maxSize; }  
+        else if (h >= w && h > maxSize) { w = Math.round(w * maxSize / h); h = maxSize; }  
+        const canvas = document.createElement('canvas');  
+        canvas.width = w; canvas.height = h;  
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);  
+        resolve(canvas.toDataURL('image/jpeg', quality));  
+      };  
+      img.onerror = () => reject(new Error('image load failed'));  
+      img.src = ev.target.result;  
+    };  
+    reader.onerror = () => reject(new Error('file read failed'));  
+    reader.readAsDataURL(file);  
+  });  
+}  
+  
 function uploadSchoolLogo() {  
   if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');  
   const inp = document.getElementById('schoolLogoInput');  
   const file = inp.files && inp.files[0];  
   if (!file) return toast('ഒരു ഇമേജ് ഫയൽ തിരഞ്ഞെടുക്കുക', 'error');  
-  if (!file.type.startsWith('image/')) return toast('ഇമേജ് ഫയൽ മാത്രം അനുവദനീയം', 'error');  
   
-  const reader = new FileReader();  
-  reader.onload = function(ev) {  
-    const img = new Image();  
-    img.onload = function() {  
-      const maxSize = 220;  
-      let w = img.width, h = img.height;  
-      if (w > h && w > maxSize) { h = Math.round(h * maxSize / w); w = maxSize; }  
-      else if (h >= w && h > maxSize) { w = Math.round(w * maxSize / h); h = maxSize; }  
-      const canvas = document.createElement('canvas');  
-      canvas.width = w; canvas.height = h;  
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);  
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.72);  
-      if (dataUrl.length > 45000) {  
-        toast('ലോഗോ ഫയലിന്റെ വലുപ്പം കൂടുതലാണ്, ചെറിയ ഇമേജ് ഉപയോഗിക്കുക', 'error');  
-        return;  
-      }  
-      data.schoolLogo = dataUrl;  
-      saveData();  
-      applyLogo();  
-      renderLogoPreview();  
-      inp.value = '';  
-      toast('ലോഗോ അപ്‌ലോഡ് ചെയ്തു', 'success');  
-    };  
-    img.src = ev.target.result;  
-  };  
-  reader.readAsDataURL(file);  
+  resizeImageFile(file, 220, 0.72).then(dataUrl => {  
+    if (dataUrl.length > 45000) {  
+      toast('ലോഗോ ഫയലിന്റെ വലുപ്പം കൂടുതലാണ്, ചെറിയ ഇമേജ് ഉപയോഗിക്കുക', 'error');  
+      return;  
+    }  
+    data.schoolLogo = dataUrl;  
+    saveData();  
+    applyLogo();  
+    renderLogoPreview();  
+    inp.value = '';  
+    toast('ലോഗോ അപ്‌ലോഡ് ചെയ്തു', 'success');  
+  }).catch(() => toast('ഇമേജ് ഫയൽ മാത്രം അനുവദനീയം', 'error'));  
 }  
   
 function removeSchoolLogo() {  
@@ -2186,6 +2200,7 @@ function renderStudents() {
           <button class="btn ${active ? 'btn-warning' : 'btn-success'} btn-sm" onclick="toggleStudent(${s.id})">${active ? '<i class="fas fa-ban"></i>' : '<i class="fas fa-check"></i>'}</button>  
           <button class="btn btn-primary btn-sm" onclick="editStudent(${s.id})"><i class="fas fa-edit"></i></button>  
           <button class="btn btn-outline btn-sm" onclick="printIDCard(${s.id})" title="ID കാർഡ്"><i class="fas fa-id-card"></i></button>  
+          <button class="btn btn-outline btn-sm" onclick="changeStudentPhoto(${s.id})" title="ഫോട്ടോ അപ്‌ലോഡ്"><i class="fas fa-camera"></i></button>  
           <button class="btn ${s.tcIssued ? 'btn-warning' : 'btn-secondary'} btn-sm" onclick="issueTC(${s.id})" title="TC രേഖപ്പെടുത്തുക"><i class="fas fa-file-export"></i></button>  
           ${s.tcIssued ? `<button class="btn btn-outline btn-sm" onclick="printTC(${s.id})" title="TC പ്രിന്റ്"><i class="fas fa-print"></i></button>` : ''}  
           <button class="btn btn-secondary btn-sm" onclick="resetUserPassword('student', ${s.id})" title="പാസ്സ്‌വേർഡ് റീസെറ്റ്"><i class="fas fa-key"></i></button>  
@@ -2795,6 +2810,9 @@ function idCardHTML(s) {
   const logoHtml = data.schoolLogo  
     ? `<img src="${data.schoolLogo}" style="width:50px;height:50px;object-fit:cover;border-radius:50%;border:2px solid #C9972F;">`  
     : `<div style="width:50px;height:50px;border-radius:50%;background:#C9972F;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto;">📖</div>`;  
+  const photoHtml = s.photo  
+    ? `<img src="${s.photo}" style="width:56px;height:56px;object-fit:cover;border-radius:50%;margin:0 auto 8px;display:block;border:2px solid #C9972F;">`  
+    : `<div style="width:56px;height:56px;border-radius:50%;background:#EDE4CD;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#95701E;"><i class="fas fa-user"></i></div>`;  
   return `  
     <div style="width:320px;border-radius:16px;overflow:hidden;border:1px solid #ccc;font-family:sans-serif;box-shadow:0 4px 10px rgba(0,0,0,.15);">  
       <div style="background:linear-gradient(135deg,#0B3D2E,#155943);color:#F4E7C8;padding:14px;text-align:center;">  
@@ -2803,7 +2821,7 @@ function idCardHTML(s) {
         <div style="font-size:9.5px;opacity:.85;">വിദ്യാർത്ഥി തിരിച്ചറിയൽ കാർഡ്</div>  
       </div>  
       <div style="padding:14px;text-align:center;">  
-        <div style="width:56px;height:56px;border-radius:50%;background:#EDE4CD;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#95701E;"><i class="fas fa-user"></i></div>  
+        ${photoHtml}  
         <div style="font-size:14px;font-weight:800;color:#0B3D2E;">${s.name}</div>  
         <div style="font-size:11px;color:#7C8A81;margin-bottom:8px;">ക്ലാസ്: ${classLabel(s)}</div>  
         <div style="text-align:left;font-size:11px;border-top:1px dashed #C9972F;padding-top:8px;">  
@@ -3009,7 +3027,29 @@ function renderMarkList() {
   container.innerHTML = marks.map(m => `<div style="padding:7px 0;border-bottom:1px solid var(--sand);">📌 <strong>${examLabel(m.exam)}</strong> - ${m.subject} : <strong>${m.mark}</strong></div>`).join('');  
 }  
   
-function showAddStudent() { document.getElementById('addStudentForm').classList.toggle('hide'); document.getElementById('sExpiry').value = data.expiryDays; }
+let pendingStudentPhoto = '';
+
+function showAddStudent() {
+  document.getElementById('addStudentForm').classList.toggle('hide');
+  document.getElementById('sExpiry').value = data.expiryDays;
+  pendingStudentPhoto = '';
+  document.getElementById('sPhotoPreview').innerHTML = '';
+  document.getElementById('sPhoto').value = '';
+}
+
+function previewNewStudentPhoto(input) {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  resizeImageFile(file, 200, 0.7).then(dataUrl => {
+    if (dataUrl.length > 40000) {
+      toast('ഫോട്ടോയുടെ വലുപ്പം കൂടുതലാണ്, ചെറിയ ഫോട്ടോ ഉപയോഗിക്കുക', 'error');
+      input.value = '';
+      return;
+    }
+    pendingStudentPhoto = dataUrl;
+    document.getElementById('sPhotoPreview').innerHTML = `<img src="${dataUrl}" style="width:70px;height:70px;object-fit:cover;border-radius:50%;border:2px solid var(--gold-500);">`;
+  }).catch(() => { toast('ഇമേജ് ഫയൽ മാത്രം അനുവദനീയം', 'error'); input.value = ''; });
+}
 
 function addStudent() {
   if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');
@@ -3034,14 +3074,37 @@ function addStudent() {
 
   data.students.push({
       id: getNextId(data.students), firstName: f, lastName: l, houseName: h, regNo,
-      motherName: mother, fatherName: father, name: fullName,
+      motherName: mother, fatherName: father, name: fullName, photo: pendingStudentPhoto,
       phone, whatsapp: whatsapp || phone, class: cls, division, user, pass, active: true, created: Date.now(), expiryDays,
       tcIssued: false, tcNumber: '', tcReason: '', tcDate: ''
   });
   saveData();
   ['sFirst','sLast','sHouse','sRegNo','sMother','sFather','sPhone','sWhatsapp','sClass','sDivision','sUser','sPass'].forEach(id => document.getElementById(id).value = '');
+  pendingStudentPhoto = '';
+  document.getElementById('sPhotoPreview').innerHTML = '';
+  document.getElementById('sPhoto').value = '';
   document.getElementById('addStudentForm').classList.add('hide');
   toast('വിദ്യാർത്ഥിയെ ചേർത്തു', 'success'); renderAll();
+}
+
+function changeStudentPhoto(id) {
+  if (!['super', 'admin'].includes(data.currentUser?.role)) return toast('അനുമതിയില്ല', 'error');
+  const s = getStudent(id);
+  if (!s) return;
+  const tempInput = document.createElement('input');
+  tempInput.type = 'file';
+  tempInput.accept = 'image/*';
+  tempInput.onchange = function() {
+    const file = tempInput.files && tempInput.files[0];
+    if (!file) return;
+    resizeImageFile(file, 200, 0.7).then(dataUrl => {
+      if (dataUrl.length > 40000) return toast('ഫോട്ടോയുടെ വലുപ്പം കൂടുതലാണ്, ചെറിയ ഫോട്ടോ ഉപയോഗിക്കുക', 'error');
+      s.photo = dataUrl;
+      saveData(); renderStudents();
+      toast('ഫോട്ടോ അപ്‌ലോഡ് ചെയ്തു', 'success');
+    }).catch(() => toast('ഇമേജ് ഫയൽ മാത്രം അനുവദനീയം', 'error'));
+  };
+  tempInput.click();
 }
 
 function classLabel(s) {
