@@ -1,0 +1,10 @@
+{
+  "name": "മദ്രസ മാനേജ്മെന്റ് സിസ്റ്റം",
+  "short_name": "Madrasa MS",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FBF7EE",
+  "theme_color": "#0B3D2E",
+  "description": "Madrasa Management System — offline-capable madrasa administration app",
+  "icons": []
+}
